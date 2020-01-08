@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import * as serviceWorker from "./serviceWorker"
 
 // THEME
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider"
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme/muiTheme"
 
 // App
