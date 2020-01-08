@@ -1,5 +1,4 @@
 import React from "react"
-import { useSelector, useDispatch } from "react-redux"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
 // component
