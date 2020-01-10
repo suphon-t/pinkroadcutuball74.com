@@ -1,10 +1,9 @@
-
 import React, { Suspense, lazy } from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
 // component
-import Demo from "./components/Demo"
 import Register from "./pages/register"
+import Landing from "./pages/landing"
 
 const Admin = lazy(() => import('./admin'));
 
@@ -13,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route path="/" exact component={Demo} />
+          <Route path="/" exact component={Landing} />
           <Route path="/register" component={Register} />
           <Route path="/admin" component={Admin} />
         </Switch>
