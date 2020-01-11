@@ -1,7 +1,9 @@
 import React, { useReducer, useCallback, useMemo } from "react"
 
-import { PageHeader, Row, Col, Form, Input, Select, Checkbox, Button } from "antd"
+import { Form, Select, Checkbox } from "antd"
 import { validateIdNumber, idNumberPattern } from "../utils"
+
+import '../styles/register.scss'
 
 const { Option } = Select
 
@@ -46,49 +48,45 @@ function Register() {
     }
   })
   return (
-    <div>
-      <PageHeader
-        title="Register" />
-      <Form style={{padding: 24}} layout="vertical">
-        <Form.Item label="ID Number" hasFeedback validateStatus={idStatus} required>
-          <Input name="idNumber" pattern={idNumberPattern} value={idNumber} onChange={onChangeHandler} />
-        </Form.Item>
-        <Row gutter={8}>
-          <Col span={12}>
-            <Form.Item label="First Name" required>
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Last Name" required>
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Form.Item label="Phone Number" required>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Email" required>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Department" required>
-          <Select 
-            showSearch 
-            filterOption={(input, option) =>
-              option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }>
-            <Option value="21">Engineering</Option>
-            <Option value="-1">Not a student</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item>
-          <Checkbox>I have read the agreement</Checkbox>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary">Register</Button>
-        </Form.Item>
-      </Form>
-    </div>
+    <>
+      <div className="logo-small" />
+      <div className="content-card">
+        <div className="form-container">
+          <h1 className="title">ลงทะเบียนล่วงหน้า</h1>
+          <p className="subtitle">กรุณากรอกข้อมูลให้ครบถ้วน</p>
+          <Form layout="vertical">
+            <label>ชื่อ-นามสกุล</label>
+            <input placeholder="ชื่อ-นามสกุล" />
+            <label>เลขประจำตัวประชาชน</label>
+            <input placeholder="เลขประจำตัวประชาชน" />
+            <label>เบอร์โทรศัพท์</label>
+            <input placeholder="เบอร์โทรศัพท์" />
+            <label>อีเมล</label>
+            <input placeholder="อีเมล" />
+            <label>คณะ</label>
+            <Select
+              size="small"
+              showSearch 
+              filterOption={(input, option) =>
+                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }>
+              <Option value="21">วิศวกรรมศาสตร์</Option>
+              <Option value="-1">บุคคลภายนอกหรือนิสิตเก่า</Option>
+            </Select>
+            <div id="tos-checkbox-container">
+              <Checkbox id="tos-checkbox" />
+              <label for="tos-checkbox" id="tos-checkbox-label">
+                ฉันยอมรับ
+                <a> ข้อตกลงการให้บริการ </a>
+                และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
+                <a> นโยบายความเป็นส่วนตัว</a>
+              </label>
+            </div>
+            <button>ลงทะเบียน</button>
+          </Form>
+        </div>
+      </div>
+    </>
   )
 }
 

@@ -1,0 +1,31 @@
+$white: #ffffff;
+$pink: #ee7398;
+$orange: #f9c455;
+$dark-blue: #192134;
+$light-grey: rgba(25, 33, 52, 0.2);
+
+$transition-length: .3s;
+
+@mixin media-breakpoint-down($width) {
+  @media screen and (max-width: $width - 1) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-up($width) {
+  @media screen and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin small-mobile {
+  @include media-breakpoint-down(350px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include media-breakpoint-up(600px) {
+    @content;
+  }
+}

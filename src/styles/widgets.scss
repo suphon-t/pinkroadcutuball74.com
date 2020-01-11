@@ -1,0 +1,52 @@
+.logo-small {
+  position: absolute;
+  width: 42.26px;
+  height: 33.5px;
+  left: 10px;
+  top: 15px;
+
+  background: url('../images/logo.png');
+  background-size: contain;
+}
+
+.orange-button {
+  display: block;
+
+  background: $orange;
+  border: none;
+  border-radius: 9999px;
+  box-shadow: 0px 4px 30px $light-grey;
+  color: $dark-blue;
+
+  font-weight: 500;
+
+  transition: all $transition-length;
+
+  &:hover {
+    background: darken($color: $orange, $amount: 5);
+    box-shadow: 0px 4px 30px $orange;
+  }
+}
+
+input {
+  width: 100%;
+
+  padding: 0 0 4px 0;
+
+  border: none;
+  border-bottom: 1px solid #192134;
+
+  transition: all $transition-length;
+
+  &:focus {
+    border-bottom-color: $pink;
+  }
+
+  &::placeholder {
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 21px;
+
+    color: rgba(25, 33, 52, 0.4);
+  }
+}
