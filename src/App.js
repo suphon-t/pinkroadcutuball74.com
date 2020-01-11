@@ -16,6 +16,7 @@ function App() {
   return (
     <>
       <div className="background" />
+      <div className="background art" />
       <div className="App">
         <BrowserRouter>
           <Suspense fallback={<div>Loading...</div>}>

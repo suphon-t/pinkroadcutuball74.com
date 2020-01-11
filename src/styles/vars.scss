@@ -29,3 +29,9 @@ $transition-length: .3s;
     @content;
   }
 }
+
+@mixin orientation($orientation) {
+  @media screen and (orientation: $orientation) { 
+    @content;
+  }
+}
