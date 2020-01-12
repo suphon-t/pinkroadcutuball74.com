@@ -66,6 +66,7 @@ function Register() {
   }, [executePost, getValues, history])
 
   const confirmModal = <Modal
+    className="register-confirm-modal"
     visible={modalVisible}
     centered
     closable={false}
