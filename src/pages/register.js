@@ -2,11 +2,12 @@ import React, { useCallback, useState, } from "react"
 
 import { Form, Select, Checkbox, Input, Modal, Button } from "antd"
 import { validateIdNumber, idNumberPattern, emailPattern } from "../utils"
+import { useForm, FormContext, useFormContext, Controller } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
+import ContentCard from "../components/ContentCard"
 import facultyCodes from '../i18n/faculty-codes'
 import '../styles/register.scss'
-import { useForm, FormContext, useFormContext, Controller } from "react-hook-form"
 import { usePost } from "../api"
 import { useHistory } from "react-router-dom"
 
@@ -79,8 +80,7 @@ function Register() {
 
   return (
     <FormContext {...methods}>
-      <div className="logo-small" />
-      <div className="content-card">
+      <ContentCard>
         <div className="form-container">
           <h1 className="title">{t('register.title')}</h1>
           <p className="subtitle">{t('register.subtitle')}</p>
@@ -145,7 +145,7 @@ function Register() {
             { confirmModal }
           </Form>
         </div>
-      </div>
+      </ContentCard>
     </FormContext>
   )
 }
