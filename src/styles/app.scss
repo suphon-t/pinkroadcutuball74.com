@@ -1,9 +1,9 @@
-@import 'reset-css';
-@import 'vars';
-@import 'reset';
-@import 'widgets';
+@import "reset-css";
+@import "vars";
+@import "reset";
+@import "widgets";
 
-@import url('https://fonts.googleapis.com/css?family=Prompt&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Prompt&display=swap");
 
 body {
   font-family: Prompt;
@@ -24,12 +24,12 @@ body {
   left: 0;
   z-index: -1;
 
-  background: linear-gradient(180deg, #F9C455 0%, #EE7398 35.42%);
+  background: linear-gradient(180deg, #f9c455 0%, #ee7398 35.42%);
   background-attachment: fixed;
 
   @include orientation(portrait) {
     &.art {
-      background: url('../images/background.svg') bottom no-repeat;
+      background: url("../images/background.svg") bottom no-repeat;
       background-attachment: fixed;
       background-size: contain;
     }
@@ -45,7 +45,7 @@ body {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 
-  @include small-mobile {
+  @include xs-down {
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 0px;
@@ -53,7 +53,7 @@ body {
     border-radius: 0px;
   }
 
-  @include tablet {
+  @include md-down {
     width: 400px;
     margin-left: auto;
     margin-right: auto;
@@ -70,7 +70,7 @@ body {
   margin: 0 16px;
   border-radius: 10px;
 
-  @include small-mobile {
+  @include xs-down {
     margin: 0;
   }
 }

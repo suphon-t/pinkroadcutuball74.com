@@ -1,5 +1,5 @@
-@import 'vars';
-@import 'widgets';
+@import "vars";
+@import "widgets";
 
 #register-form {
   .title {
@@ -68,13 +68,13 @@
 .register-modal {
   .confirmation-text {
     margin: 0 30px;
-    
+
     color: $pink;
     font-weight: 600;
     font-size: 20px;
     text-align: center;
 
-    @include small-mobile {
+    @include sm-down {
       margin: 0 8px;
     }
   }

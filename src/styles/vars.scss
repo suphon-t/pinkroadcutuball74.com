@@ -1,16 +1,19 @@
+// theme color
 $white: #ffffff;
 $pink: #ee7398;
 $orange: #f9c455;
 $dark-blue: #192134;
+
+// spacing number
+$space: 8px;
+
+// grey tone
 $grey2: rgba(25, 33, 52, 0.2);
 $grey4: rgba(25, 33, 52, 0.4);
 $grey5: rgba(25, 33, 52, 0.5);
+$transition-length: 0.3s;
 
-$light-grey: $grey2;
-$mid-grey: $grey4;
-
-$transition-length: .3s;
-
+// breakpoint
 @mixin media-breakpoint-down($width) {
   @media screen and (max-width: $width - 1) {
     @content;
@@ -23,20 +26,127 @@ $transition-length: .3s;
   }
 }
 
-@mixin small-mobile {
-  @include media-breakpoint-down(350px) {
+// break point down
+@mixin xs-down {
+  @include media-breakpoint-down(360px) {
     @content;
   }
 }
 
-@mixin tablet {
-  @include media-breakpoint-up(600px) {
+@mixin sm-down {
+  @include media-breakpoint-down(576px) {
     @content;
   }
 }
 
+@mixin md-down {
+  @include media-breakpoint-down(768px) {
+    @content;
+  }
+}
+
+@mixin lg-down {
+  @include media-breakpoint-down(992px) {
+    @content;
+  }
+}
+
+@mixin xl-down {
+  @include media-breakpoint-down(1200px) {
+    @content;
+  }
+}
+
+@mixin xxl-down {
+  @include media-breakpoint-down(1600px) {
+    @content;
+  }
+}
+
+// breakpoint up
+@mixin xs-up {
+  @include media-breakpoint-up(480px) {
+    @content;
+  }
+}
+
+@mixin sm-up {
+  @include media-breakpoint-up(576px) {
+    @content;
+  }
+}
+
+@mixin md-up {
+  @include media-breakpoint-up(768px) {
+    @content;
+  }
+}
+
+@mixin lg-up {
+  @include media-breakpoint-up(992px) {
+    @content;
+  }
+}
+
+@mixin xl-up {
+  @include media-breakpoint-up(1200px) {
+    @content;
+  }
+}
+
+@mixin xxl-up {
+  @include media-breakpoint-up(1600px) {
+    @content;
+  }
+}
+
+// orientation
 @mixin orientation($orientation) {
-  @media screen and (orientation: $orientation) { 
+  @media screen and (orientation: $orientation) {
     @content;
+  }
+}
+
+// device display
+.mobile {
+  display: initial;
+  &.up {
+    @include sm-down {
+      display: none;
+    }
+  }
+  &.down {
+    @include sm-up {
+      $fontSize: 100px;
+      display: none;
+    }
+  }
+}
+
+.tablet {
+  display: initial;
+  &.up {
+    @include sm-down {
+      display: none;
+    }
+  }
+  &.down {
+    @include sm-up {
+      display: none;
+    }
+  }
+}
+
+.desktop {
+  display: initial;
+  &.up {
+    @include sm-down {
+      display: none;
+    }
+  }
+  &.down {
+    @include sm-up {
+      display: none;
+    }
   }
 }

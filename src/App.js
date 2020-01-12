@@ -6,11 +6,13 @@ import "./yup-init"
 // components
 import Register from "./pages/Register"
 import RegisterSuccess from "./pages/RegisterSuccess"
-import Landing from "./pages/landing"
+import Landing from "./pages/Landing"
 
+// style
 import "./styles/app.scss"
 
-const Admin = lazy(() => import('./admin'))
+// lazy
+const Admin = lazy(() => import("./admin"))
 
 function App() {
   return (
