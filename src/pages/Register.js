@@ -129,7 +129,7 @@ function Register() {
                     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }>
                   {facultyCodes.map(code => <Option key={code} value={code}>
-                    {`${code} ${t(`facultyNames.${code}`)}`}
+                    {(code !== '99' ? `${code} ` : '') + t(`facultyNames.${code}`)}
                   </Option>)}
                 </Select>
               }

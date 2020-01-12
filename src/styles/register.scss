@@ -3,9 +3,10 @@
 
 #register-form {
   .title {
-    margin-bottom: -4px;
+    margin-bottom: -10px;
     font-size: 24px;
     font-weight: bold;
+    line-height: 45px;
     color: $dark-blue;
   }
 
@@ -69,7 +70,7 @@
     }
 
     #input-container-faculty > .ant-form-item {
-      margin-top: 4px;
+      margin-top: 0px;
     }
   }
 }
