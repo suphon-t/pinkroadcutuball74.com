@@ -11,6 +11,9 @@ export default {
     },
     success: {
       title: 'ลงทะเบียนสำเร็จ',
+      subtitle: 'พบกันวันงาน ที่สแตนด์จุฬานะคะ!',
+      backtohome: 'กลับหน้าแรก',
+      checkinfo: 'ตรวจสอบข้อมูล',
     },
   },
   fullname: 'ชื่อ-นามสกุล',
