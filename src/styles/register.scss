@@ -45,22 +45,12 @@
       margin-bottom: -4px;
     }
 
-    #tos-checkbox-container {
-      display: flex;
+    #tos-label {
       margin-top: 23px;
 
-      .ant-checkbox-wrapper {
-        margin-top: -4px;
-      }
-
-      #tos-checkbox-label {
-        margin-top: 0;
-        margin-left: 6px;
-
-        font-weight: normal;
-        font-size: 12px;
-        line-height: 14px;
-      }
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 14px;
     }
 
     button {
@@ -75,7 +65,7 @@
   }
 }
 
-.register-confirm-modal {
+.register-modal {
   .confirmation-text {
     margin: 0 30px;
     
@@ -87,6 +77,12 @@
     @include small-mobile {
       margin: 0 8px;
     }
+  }
+
+  .tos-title {
+    @extend .confirmation-text;
+
+    margin: 0 8px;
   }
 
   .modal-footer {

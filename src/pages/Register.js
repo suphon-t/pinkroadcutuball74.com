@@ -1,7 +1,7 @@
 import React, { useCallback, useState, } from "react"
 import * as yup from "yup"
 
-import { Form, Select, Checkbox, Modal, Button } from "antd"
+import { Form, Select, Modal, Button } from "antd"
 import { emailPattern, telPattern, optionContains } from "../utils"
 import { useForm, FormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -51,7 +51,7 @@ function Register() {
   }, [executePost, getValues, history])
 
   const confirmModal = <Modal
-    className="register-confirm-modal"
+    className="register-modal"
     visible={modalVisible}
     centered
     closable={false}
@@ -83,21 +83,46 @@ function Register() {
                 </Option>)}
               </Select>
             </Field>
-            <div id="tos-checkbox-container">
-              <Checkbox id="tos-checkbox" />
-              <label htmlFor="tos-checkbox" id="tos-checkbox-label">
-                ฉันยอมรับ
-                <a href="#tos"> ข้อตกลงการให้บริการ </a>
-                และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
-                <a href="#privacy-policy"> นโยบายความเป็นส่วนตัว</a>
-              </label>
-            </div>
+            <label id="tos-label">
+              ในการกดลงทะเบียน ฉันยอมรับ
+              <TosModal title="ข้อตกลงการให้บริการ" />
+              และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
+              <TosModal title="นโยบายความเป็นส่วนตัว" />
+            </label>
             <button type="submit">{t('register.submit')}</button>
             { confirmModal }
           </Form>
         </div>
       </ContentCard>
     </FormContext>
+  )
+}
+
+function TosModal({ title, children, ...rest }) {
+  const { t } = useTranslation()
+  const [visible, setVisible] = useState(false)
+  const handleClick = useCallback(e => {
+    e.preventDefault()
+    setVisible(true)
+  }, [])
+  const close = useCallback(() => setVisible(false), [])
+  return (
+    <>
+      <a {...rest} onClick={handleClick}>{title}</a>
+      <Modal
+        className="register-modal"
+        visible={visible}
+        centered
+        closable={false}
+        footer={null}
+        onCancel={close} >
+        <p className="tos-title">{title}</p>
+        { children }
+        <div className="modal-footer">
+          <Button shape="round" onClick={close} type="primary">{t('register.dialog.ok')}</Button>
+        </div>
+      </Modal>
+    </>
   )
 }
 
