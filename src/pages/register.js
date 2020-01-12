@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback, useContext, useState } from "react"
 
-import { Form, Select, Checkbox, Input } from "antd"
+import { Form, Select, Checkbox, Input, Modal, Button } from "antd"
 import { validateIdNumber, idNumberPattern } from "../utils"
 
 import '../styles/register.scss'
@@ -111,6 +111,7 @@ function InputRow(props) {
 
 function Register() {
   const [formData, dispatch] = useReducer(reducer, initialState)
+  const [modalVisible, setModalVisible] = useState(false)
   const idValidator = useCallback(idNumber => {
     return validateIdNumber(idNumber)
   }, [])
@@ -120,6 +121,19 @@ function Register() {
     }
     return validateIdNumber(idNumber)
   }, [])
+
+  const confirmModal = <Modal
+    visible={modalVisible}
+    centered
+    closable={false}
+    footer={null}
+    onCancel={() => setModalVisible(false)} >
+    <p className="confirmation-text">กรุณาตรวจสอบข้อมูลให้แน่ใจก่อนยืนยัน</p>
+    <div className="modal-footer">
+      <Button shape="round" onClick={() => setModalVisible(false)}>แก้ไข</Button>
+      <Button shape="round" type="primary">ยืนยัน</Button>
+    </div>
+  </Modal>
 
   return (
     <FormContext.Provider value={{ formData, dispatch }}>
@@ -159,7 +173,8 @@ function Register() {
                 <a> นโยบายความเป็นส่วนตัว</a>
               </label>
             </div>
-            <button>ลงทะเบียน</button>
+            <button onClick={() => setModalVisible(true)}>ลงทะเบียน</button>
+            { confirmModal }
           </Form>
         </div>
       </div>

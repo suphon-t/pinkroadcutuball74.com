@@ -21,9 +21,14 @@
 
   transition: all $transition-length;
 
-  &:hover {
-    background: darken($color: $orange, $amount: 5);
-    box-shadow: 0px 4px 30px $orange;
+  &:hover, &:focus {
+    $hover-color: lighten($color: $orange, $amount: 5);
+    background: $hover-color;
+    box-shadow: 0px 4px 30px $hover-color;
+  }
+
+  &:active {
+    background: darken($color: $orange, $amount: 10);
   }
 }
 
