@@ -2,7 +2,9 @@ import React, { useReducer, useCallback, useContext, useRef, useState, useEffect
 
 import { Form, Select, Checkbox, Input, Modal, Button } from "antd"
 import { validateIdNumber, idNumberPattern } from "../utils"
+import { useTranslation } from "react-i18next"
 
+import facultyCodes from '../i18n/faculty-codes'
 import '../styles/register.scss'
 
 const { Option } = Select
@@ -115,11 +117,12 @@ function InputRow(props) {
 }
 
 function Register() {
+  const { t } = useTranslation()
   const [formData, dispatch] = useReducer(reducer, initialState)
   const [modalVisible, setModalVisible] = useState(false)
   const idValidator = useCallback(idNumber => {
-    return validateIdNumber(idNumber) ? '' : 'เลขประจำตัวประชาชนไม่ถูกต้อง'
-  }, [])
+    return validateIdNumber(idNumber) ? '' : t('register.invalidIdNumber')
+  }, [t])
 
   const confirmModal = <Modal
     visible={modalVisible}
@@ -127,10 +130,10 @@ function Register() {
     closable={false}
     footer={null}
     onCancel={() => setModalVisible(false)} >
-    <p className="confirmation-text">กรุณาตรวจสอบข้อมูลให้แน่ใจก่อนยืนยัน</p>
+    <p className="confirmation-text">{t('register.dialog.title')}</p>
     <div className="modal-footer">
-      <Button shape="round" onClick={() => setModalVisible(false)}>แก้ไข</Button>
-      <Button shape="round" type="primary">ยืนยัน</Button>
+      <Button shape="round" onClick={() => setModalVisible(false)}>{t('register.dialog.cancel')}</Button>
+      <Button shape="round" type="primary">{t('register.dialog.ok')}</Button>
     </div>
   </Modal>
 
@@ -144,27 +147,28 @@ function Register() {
       <div className="logo-small" />
       <div className="content-card">
         <div className="form-container">
-          <h1 className="title">ลงทะเบียนล่วงหน้า</h1>
-          <p className="subtitle">กรุณากรอกข้อมูลให้ครบถ้วน</p>
+          <h1 className="title">{t('register.title')}</h1>
+          <p className="subtitle">{t('register.subtitle')}</p>
           <Form layout="vertical" onSubmit={handleSubmit}>
-            <InputRow name="name" title="ชื่อ-นามสกุล" required />
+            <InputRow name="name" title={t('fullname')} required />
             <InputRow 
               name="idNumber" 
-              title="เลขประจำตัวประชาชน" 
+              title={t('idNumber')} 
               pattern={idNumberPattern}
               validator={idValidator}
               required />
-            <InputRow name="phone" title="เบอร์โทรศัพท์" type="tel" required />
-            <InputRow name="email" title="อีเมล" type="email" required />
+            <InputRow name="phone" title={t('phoneNumber')} type="tel" required />
+            <InputRow name="email" title={t('email')} type="email" required />
             <div className="input-row">
-              <label>คณะ</label>
+              <label>{t('faculty')}</label>
               <Select
                 showSearch
                 filterOption={(input, option) =>
                   option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }>
-                <Option value="21">วิศวกรรมศาสตร์</Option>
-                <Option value="-1">บุคคลภายนอกหรือนิสิตเก่า</Option>
+                {facultyCodes.map(code => <Option value={code}>
+                  {t('facultyNames.' + code)}
+                </Option>)}
               </Select>
             </div>
             <div id="tos-checkbox-container">
@@ -176,7 +180,7 @@ function Register() {
                 <a> นโยบายความเป็นส่วนตัว</a>
               </label>
             </div>
-            <button type="submit">ลงทะเบียน</button>
+            <button type="submit">{t('register.submit')}</button>
             { confirmModal }
           </Form>
         </div>
