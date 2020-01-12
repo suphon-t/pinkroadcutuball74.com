@@ -14,6 +14,8 @@ export default {
   idNumber: 'เลขประจำตัวประชาชน',
   phoneNumber: 'เบอร์โทรศัพท์',
   email: 'อีเมล',
+  required: 'โปรดระบุ{{name}}',
+  invalidValue: '{{name}}ไม่ถูกต้อง',
   faculty: 'คณะ',
   facultyNames: {
     '01': 'สถาบันภาษาไทยสิรินธร',
