@@ -1,104 +1,106 @@
 @import 'vars';
 @import 'widgets';
 
-.title {
-  margin-bottom: -4px;
-  font-size: 24px;
-  font-weight: bold;
-  color: $dark-blue;
-}
+#register-form {
+  .title {
+    margin-bottom: -4px;
+    font-size: 24px;
+    font-weight: bold;
+    color: $dark-blue;
+  }
 
-.subtitle {
-  margin-bottom: 28px;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 20px;
+  .subtitle {
+    margin-bottom: 28px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
 
-  color: rgba(25, 33, 52, 0.4);
-}
+    color: rgba(25, 33, 52, 0.4);
+  }
 
-form {
-  .input-row {
-    label {
-      display: block;
-      margin-top: 15px;
+  form {
+    .input-row {
+      label {
+        display: block;
+        margin-top: 15px;
 
-      font-weight: 600;
-      font-size: 17px;
-      line-height: 26px;
+        font-weight: 600;
+        font-size: 17px;
+        line-height: 26px;
 
-      color: $dark-blue;
+        color: $dark-blue;
+      }
+
+      .ant-form-item {
+        margin-top: -4px;
+      }
+
+      .ant-input {
+        background-color: transparent;
+      }
     }
 
     .ant-form-item {
-      margin-top: -4px;
+      margin-bottom: -4px;
     }
 
-    .ant-input {
-      background-color: transparent;
+    #tos-checkbox-container {
+      display: flex;
+      margin-top: 23px;
+
+      .ant-checkbox-wrapper {
+        margin-top: -4px;
+      }
+
+      #tos-checkbox-label {
+        margin-top: 0;
+        margin-left: 6px;
+
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+      }
+    }
+
+    button {
+      @extend .orange-button;
+
+      margin: 34px auto 0 auto;
+    }
+
+    #input-container-faculty > .ant-form-item {
+      margin-top: 4px;
     }
   }
 
-  .ant-form-item {
-    margin-bottom: -4px;
+  .confirmation-text {
+    margin: 0 50px;
+    
+    color: $dark-blue;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
   }
 
-  #tos-checkbox-container {
-    display: flex;
-    margin-top: 23px;
+  .modal-footer {
+    margin: 24px 0 8px 0;
+    text-align: center;
 
-    .ant-checkbox-wrapper {
-      margin-top: -4px;
-    }
-
-    #tos-checkbox-label {
-      margin-top: 0;
-      margin-left: 6px;
-
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 14px;
+    button {
+      margin: 0 10px;
     }
   }
 
-  button {
-    @extend .orange-button;
-
-    margin: 34px auto 0 auto;
+  .ant-modal-mask {
+    background-color: rgba(51, 51, 51, 0.5);
   }
 
-  #input-container-faculty > .ant-form-item {
-    margin-top: 4px;
-  }
-}
+  .ant-modal-content {
+    margin: 0 16px;
+    border-radius: 10px;
 
-.confirmation-text {
-  margin: 0 50px;
-  
-  color: $dark-blue;
-  font-weight: 600;
-  font-size: 16px;
-  text-align: center;
-}
-
-.modal-footer {
-  margin: 24px 0 8px 0;
-  text-align: center;
-
-  button {
-    margin: 0 10px;
-  }
-}
-
-.ant-modal-mask {
-  background-color: rgba(51, 51, 51, 0.5);
-}
-
-.ant-modal-content {
-  margin: 0 16px;
-  border-radius: 10px;
-
-  @include small-mobile {
-    margin: 0;
+    @include small-mobile {
+      margin: 0;
+    }
   }
 }

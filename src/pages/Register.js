@@ -80,7 +80,7 @@ function Register() {
 
   return (
     <FormContext {...methods}>
-      <ContentCard>
+      <ContentCard id="register-form">
         <div className="form-container">
           <h1 className="title">{t('register.title')}</h1>
           <p className="subtitle">{t('register.subtitle')}</p>

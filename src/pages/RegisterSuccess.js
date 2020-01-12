@@ -10,7 +10,7 @@ function RegisterSuccess() {
   const { t } = useTranslation()
   return (
     <>
-      <ContentCard style={{ textAlign: 'center' }}>
+      <ContentCard id="register-success" style={{ textAlign: 'center' }}>
         <img className="success-tick" src={success} />
         <h1>{t('register.success.title')}</h1>
         <p>{t('register.success.subtitle')}</p>
