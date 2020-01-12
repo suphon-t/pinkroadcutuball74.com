@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next"
 import facultyCodes from '../i18n/faculty-codes'
 import '../styles/register.scss'
 import { useForm, FormContext, useFormContext, Controller } from "react-hook-form"
+import { usePost } from "../api"
+import { useHistory } from "react-router-dom"
 
 const { Option } = Select
 
@@ -38,11 +40,29 @@ function InputRow(props) {
 
 function Register() {
   const methods = useForm()
+  const { getValues, handleSubmit } = methods
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
   const idValidator = useCallback(v => {
     return validateIdNumber(v) || 'invalidValue'
   }, [])
+
+  const [executePost, , , loading] = usePost('/register')
+  const onSubmit = useCallback(data => {
+    console.log(data)
+    setModalVisible(true)
+  }, [])
+
+  const history = useHistory()
+  const confirmSubmit = useCallback(async data => {
+    try {
+      await executePost(getValues())
+      history.push('/register/success')
+    } catch (err) {
+      alert('error: ' + JSON.stringify(err))
+      setModalVisible(false)
+    }
+  }, [executePost, getValues, history])
 
   const confirmModal = <Modal
     visible={modalVisible}
@@ -53,14 +73,9 @@ function Register() {
     <p className="confirmation-text">{t('register.dialog.title')}</p>
     <div className="modal-footer">
       <Button shape="round" onClick={() => setModalVisible(false)}>{t('register.dialog.cancel')}</Button>
-      <Button shape="round" type="primary">{t('register.dialog.ok')}</Button>
+      <Button shape="round" onClick={confirmSubmit} type="primary" loading={loading}>{t('register.dialog.ok')}</Button>
     </div>
   </Modal>
-
-  const onSubmit = useCallback(data => {
-    console.log(data)
-    setModalVisible(true)
-  }, [])
 
   return (
     <FormContext {...methods}>
@@ -69,10 +84,10 @@ function Register() {
         <div className="form-container">
           <h1 className="title">{t('register.title')}</h1>
           <p className="subtitle">{t('register.subtitle')}</p>
-          <Form layout="vertical" onSubmit={methods.handleSubmit(onSubmit)}>
+          <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
             <InputRow name="name" title={t('fullname')} rules={{required: true}} />
             <InputRow 
-              name="idNumber" 
+              name="ID" 
               title={t('idNumber')} 
               pattern={idNumberPattern}
               rules={{
@@ -80,7 +95,7 @@ function Register() {
                 validate: idValidator,
               }} />
             <InputRow 
-              name="phone" 
+              name="tel" 
               title={t('phoneNumber')} 
               type="tel" 
               rules={{
