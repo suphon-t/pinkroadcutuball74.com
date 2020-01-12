@@ -89,7 +89,7 @@ function Register() {
             <InputRow 
               name="ID" 
               title={t('idNumber')} 
-              pattern={idNumberPattern}
+              pattern="\d*"
               rules={{
                 required: true,
                 validate: idValidator,
@@ -108,6 +108,7 @@ function Register() {
             <InputRow
               name="email"
               title={t('email')}
+              type="email"
               rules={{
                 required: true,
                 pattern: {
