@@ -18,19 +18,29 @@
 }
 
 form {
-  label {
-    display: block;
-    margin-top: 15px;
+  .input-row {
+    label {
+      display: block;
+      margin-top: 15px;
 
-    font-weight: 600;
-    font-size: 17px;
-    line-height: 26px;
+      font-weight: 600;
+      font-size: 17px;
+      line-height: 26px;
 
-    color: $dark-blue;
+      color: $dark-blue;
+    }
+
+    .ant-form-item {
+      margin-top: -4px;
+    }
+
+    .ant-input {
+      background-color: transparent;
+    }
   }
 
-  .ant-select-selection-selected-value, .ant-select-search__field {
-    font-size: 11px;
+  .ant-form-item {
+    margin-bottom: -4px;
   }
 
   #tos-checkbox-container {

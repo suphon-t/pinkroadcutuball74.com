@@ -1,81 +1,158 @@
-import React, { useReducer, useCallback, useMemo } from "react"
+import React, { useReducer, useCallback, useContext, useState } from "react"
 
-import { Form, Select, Checkbox } from "antd"
+import { Form, Select, Checkbox, Input } from "antd"
 import { validateIdNumber, idNumberPattern } from "../utils"
 
 import '../styles/register.scss'
 
 const { Option } = Select
+const FormContext = React.createContext()
+
+const initialValue = {
+  value: '',
+  valid: true,
+  touched: false,
+}
 
 const initialState = {
-  idNumber: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
+  idNumber: initialValue,
+  name: initialValue,
+  email: initialValue,
+  phone: initialValue,
 }
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'FORM_CHANGE':
-      return {
-        ...state,
-        [action.payload.key]: action.payload.value
+    case 'FIELD_CHANGE':
+      const { key, value } = action.payload
+      const newValue = {
+        ...state[key],
+        ...value,
+      }
+      if (Object.is(state[key], newValue)) {
+        return state
+      } else {
+        return {
+          ...state,
+          [key]: newValue
+        }
       }
     default:
       return state
   }
 }
 
-function Register() {
-  const [formData, dispatch] = useReducer(reducer, initialState)
-  const { idNumber } = formData
-  const idStatus = useMemo(() => {
-    if (idNumber.length < 13) {
-      return ''
-    }
-    return validateIdNumber(idNumber) ? 'success' : 'error'
-  }, [idNumber])
-  const onChangeHandler = useCallback(e => {
-    if (e.target.validity.valid) {
-      dispatch({
-        type: 'FORM_CHANGE',
-        payload: {
-          key: e.target.name,
-          value: e.target.value
-        }
+function InputRow(props) {
+  const { formData, dispatch } = useContext(FormContext)
+  const [focused, setFocused] = useState(false)
+  const { name, title, forceValid, validator, focusedValidator } = props
+  const rowValue = formData[name]
+  const { value, valid, touched } = rowValue
+  const validate = useCallback((e, focused, touched) => {
+    const customValidator = focused ? (focusedValidator || validator) : validator
+    const v = e.target.value
+    const { validity } = e.target
+    return (focused || !validity || validity.valid) && 
+      (!validator || customValidator(v, focused)) && 
+      (focused || !touched || v)
+  }, [validator, focusedValidator])
+
+  const dispatchChange = useCallback(value => {
+    dispatch({
+      type: 'FIELD_CHANGE',
+      payload: { key: name, value }
+    })
+  }, [dispatch, name])
+  const handleChange = useCallback(e => {
+    const { validity } = e.target
+    if (!forceValid || validity.valid) {
+      dispatchChange({
+        value: e.target.value, 
+        valid: validate(e, focused, touched)
       })
     }
-  })
+  }, [dispatchChange, forceValid, validate, focused, touched])
+  const handleFocus = useCallback(e => {
+    dispatchChange({
+      valid: validate(e, true, touched)
+    })
+    setFocused(true)
+  }, [dispatchChange, touched, validate])
+  const handleBlur = useCallback(e => {
+    dispatchChange({
+      valid: validate(e, false, true),
+      touched: true,
+    })
+    setFocused(false)
+  }, [dispatchChange, validate])
+
+  const id = `register-input-${name}`
+  const status = valid ? '' : 'error'
+  const rowProps = { ...props }
+  delete rowProps.validator
+  delete rowProps.focusedValidator
+  delete rowProps.forceValid
   return (
-    <>
+    <div className="input-row">
+      <label htmlFor={id}>{title}</label>
+      <Form.Item hasFeedback validateStatus={status}>
+        <Input
+          id={id}
+          placeholder={title}
+          {...rowProps}
+          value={value}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur} />
+      </Form.Item>
+    </div>
+  )
+}
+
+function Register() {
+  const [formData, dispatch] = useReducer(reducer, initialState)
+  const idValidator = useCallback(idNumber => {
+    return validateIdNumber(idNumber)
+  }, [])
+  const idFocusedValidator = useCallback(idNumber => {
+    if (idNumber.length < 13) {
+      return true
+    }
+    return validateIdNumber(idNumber)
+  }, [])
+
+  return (
+    <FormContext.Provider value={{ formData, dispatch }}>
       <div className="logo-small" />
       <div className="content-card">
         <div className="form-container">
           <h1 className="title">ลงทะเบียนล่วงหน้า</h1>
           <p className="subtitle">กรุณากรอกข้อมูลให้ครบถ้วน</p>
           <Form layout="vertical">
-            <label>ชื่อ-นามสกุล</label>
-            <input placeholder="ชื่อ-นามสกุล" />
-            <label>เลขประจำตัวประชาชน</label>
-            <input placeholder="เลขประจำตัวประชาชน" />
-            <label>เบอร์โทรศัพท์</label>
-            <input placeholder="เบอร์โทรศัพท์" />
-            <label>อีเมล</label>
-            <input placeholder="อีเมล" />
-            <label>คณะ</label>
-            <Select
-              size="small"
-              showSearch 
-              filterOption={(input, option) =>
-                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }>
-              <Option value="21">วิศวกรรมศาสตร์</Option>
-              <Option value="-1">บุคคลภายนอกหรือนิสิตเก่า</Option>
-            </Select>
+            <InputRow name="name" title="ชื่อ-นามสกุล" />
+            <InputRow 
+              name="idNumber" 
+              title="เลขประจำตัวประชาชน" 
+              pattern={idNumberPattern} 
+              validator={idValidator}
+              focusedValidator={idFocusedValidator}
+              forceValid />
+            <InputRow name="phone" title="เบอร์โทรศัพท์" type="tel" />
+            <InputRow name="email" title="อีเมล" type="email" />
+            <div className="input-row">
+              <label>คณะ</label>
+              <Select
+                showSearch
+                filterOption={(input, option) =>
+                  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }>
+                <Option value="21">วิศวกรรมศาสตร์</Option>
+                <Option value="-1">บุคคลภายนอกหรือนิสิตเก่า</Option>
+              </Select>
+            </div>
             <div id="tos-checkbox-container">
               <Checkbox id="tos-checkbox" />
-              <label for="tos-checkbox" id="tos-checkbox-label">
+              <label htmlFor="tos-checkbox" id="tos-checkbox-label">
                 ฉันยอมรับ
                 <a> ข้อตกลงการให้บริการ </a>
                 และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
@@ -86,7 +163,7 @@ function Register() {
           </Form>
         </div>
       </div>
-    </>
+    </FormContext.Provider>
   )
 }
 

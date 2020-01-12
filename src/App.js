@@ -8,8 +8,6 @@ import Landing from "./pages/landing"
 
 import "./styles/app.scss"
 
-const { Content } = Layout
-
 const Admin = lazy(() => import('./admin'))
 
 function App() {
