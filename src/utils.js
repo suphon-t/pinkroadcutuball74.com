@@ -16,3 +16,7 @@ export function validateIdNumber(value) {
   const checkDigit = (11 - sum % 11) % 10
   return checkDigit === parseInt(value[12])
 }
+
+export function optionContains(input, option) {
+  return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+}

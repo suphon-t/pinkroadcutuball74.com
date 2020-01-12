@@ -1,8 +1,9 @@
 import React, { useCallback, useState, } from "react"
+import * as yup from "yup"
 
-import { Form, Select, Checkbox, Input, Modal, Button } from "antd"
-import { validateIdNumber, emailPattern } from "../utils"
-import { useForm, FormContext, useFormContext, Controller } from "react-hook-form"
+import { Form, Select, Checkbox, Modal, Button } from "antd"
+import { emailPattern, telPattern, optionContains } from "../utils"
+import { useForm, FormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import ContentCard from "../components/ContentCard"
@@ -11,47 +12,30 @@ import '../styles/register.scss'
 import { usePost } from "../api"
 import { useHistory } from "react-router-dom"
 import UserInfo from "../components/UserInfo"
+import Field from "../components/Field"
 
 const { Option } = Select
 
-function InputRow(props) {
-  const { control, errors } = useFormContext()
-  const { t } = useTranslation()
-  const { name, title, component, ...rest } = props
-
-  const id = `input-${name}`
-  const error = errors[name]
-  const status = error && 'error'
-  const help = error && t(error.type === 'required' ? 'required' : error.message, { name: title })
-  return (
-    <div id={`input-container-${name}`} className="input-row">
-      <label htmlFor={id}>{title}</label>
-      <Form.Item hasFeedback validateStatus={status} help={help}>
-        <Controller
-          id={id}
-          name={name}
-          as={component || Input}
-          control={control}
-          placeholder={title}
-          defaultValue=''
-          {...rest} />
-      </Form.Item>
-    </div>
-  )
-}
+const validationSchema = yup.object().shape({
+  name: yup.string().required(),
+  ID: yup.string().nationalId('invalidValue').required(),
+  tel: yup.string()
+    .matches(telPattern, 'invalidValue')
+    .required(),
+  email: yup.string()
+    .matches(emailPattern, 'invalidValue')
+    .required(),
+  faculty: yup.string().required(),
+})
 
 function Register() {
-  const methods = useForm()
+  const methods = useForm({ validationSchema })
   const { getValues, handleSubmit } = methods
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
-  const idValidator = useCallback(v => {
-    return validateIdNumber(v) || 'invalidValue'
-  }, [])
 
   const [executePost, , , loading] = usePost('/register')
-  const onSubmit = useCallback(data => {
-    console.log(data)
+  const onSubmit = useCallback(() => {
     setModalVisible(true)
   }, [])
 
@@ -88,61 +72,24 @@ function Register() {
           <h1 className="title">{t('register.title')}</h1>
           <p className="subtitle">{t('register.subtitle')}</p>
           <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
-            <InputRow name="name" title={t('fullname')} rules={{required: true}} />
-            <InputRow 
-              name="ID" 
-              title={t('idNumber')} 
-              pattern="\d*"
-              rules={{
-                required: true,
-                validate: idValidator,
-              }} />
-            <InputRow 
-              name="tel" 
-              title={t('phoneNumber')} 
-              type="tel" 
-              rules={{
-                required: true,
-                pattern: {
-                  value: /^[+]*[-\s./0-9]*$/,
-                  message: 'invalidValue',
-                },
-              }} />
-            <InputRow
-              name="email"
-              title={t('email')}
-              type="email"
-              rules={{
-                required: true,
-                pattern: {
-                  value: emailPattern,
-                  message: 'invalidValue',
-                }
-              }} />
-            <InputRow
-              name="faculty"
-              title={t('faculty')}
-              component={
-                <Select
-                  showSearch
-                  filterOption={(input, option) =>
-                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }>
-                  {facultyCodes.map(code => <Option key={code} value={code}>
-                    {(code !== '99' ? `${code} ` : '') + t(`facultyNames.${code}`)}
-                  </Option>)}
-                </Select>
-              }
-              rules={{
-                required: true
-              }} />
+            <Field name="name" title={t('fullname')} rules={{required: true}} />
+            <Field name="ID" title={t('idNumber')} pattern="\d*" />
+            <Field name="tel" title={t('phoneNumber')} type="tel" />
+            <Field name="email" title={t('email')} type="email" />
+            <Field name="faculty" title={t('faculty')}>
+              <Select showSearch filterOption={optionContains}>
+                {facultyCodes.map(code => <Option key={code} value={code}>
+                  {(code !== '99' ? `${code} ` : '') + t(`facultyNames.${code}`)}
+                </Option>)}
+              </Select>
+            </Field>
             <div id="tos-checkbox-container">
               <Checkbox id="tos-checkbox" />
               <label htmlFor="tos-checkbox" id="tos-checkbox-label">
                 ฉันยอมรับ
-                <a> ข้อตกลงการให้บริการ </a>
+                <a href="#tos"> ข้อตกลงการให้บริการ </a>
                 และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
-                <a> นโยบายความเป็นส่วนตัว</a>
+                <a href="#privacy-policy"> นโยบายความเป็นส่วนตัว</a>
               </label>
             </div>
             <button type="submit">{t('register.submit')}</button>

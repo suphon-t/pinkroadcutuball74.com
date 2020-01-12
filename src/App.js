@@ -1,7 +1,9 @@
 import React, { Suspense, lazy } from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
-// component
+import "./yup-init"
+
+// components
 import Register from "./pages/Register"
 import RegisterSuccess from "./pages/RegisterSuccess"
 import Landing from "./pages/landing"
