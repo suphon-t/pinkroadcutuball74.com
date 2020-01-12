@@ -1,11 +1,12 @@
-export const idNumberPattern = "^[0-9]{0,13}$"
+export const idNumberPattern = /^(\d{1})(\d{4})(\d{5})(\d{2})(\d{1})$/
+export const telPattern = /^(\d{2,4})(\d{3})(\d{4})$/
 export const emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 export function validateIdNumber(value) {
   if (value.length !== 13) {
     return false
   }
-  if (!new RegExp(idNumberPattern).test(value)) {
+  if (!idNumberPattern.test(value)) {
     return false
   }
   const digits = Array.from(value.substring(0, 12)).map(ch => parseInt(ch))

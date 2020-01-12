@@ -2,8 +2,12 @@ $white: #ffffff;
 $pink: #ee7398;
 $orange: #f9c455;
 $dark-blue: #192134;
-$light-grey: rgba(25, 33, 52, 0.2);
-$mid-grey: rgba(25, 33, 52, 0.4);
+$grey2: rgba(25, 33, 52, 0.2);
+$grey4: rgba(25, 33, 52, 0.4);
+$grey5: rgba(25, 33, 52, 0.5);
+
+$light-grey: $grey2;
+$mid-grey: $grey4;
 
 $transition-length: .3s;
 

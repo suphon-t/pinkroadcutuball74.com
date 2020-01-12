@@ -1,7 +1,7 @@
 import React, { useCallback, useState, } from "react"
 
 import { Form, Select, Checkbox, Input, Modal, Button } from "antd"
-import { validateIdNumber, idNumberPattern, emailPattern } from "../utils"
+import { validateIdNumber, emailPattern } from "../utils"
 import { useForm, FormContext, useFormContext, Controller } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
@@ -10,6 +10,7 @@ import facultyCodes from '../i18n/faculty-codes'
 import '../styles/register.scss'
 import { usePost } from "../api"
 import { useHistory } from "react-router-dom"
+import UserInfo from "../components/UserInfo"
 
 const { Option } = Select
 
@@ -73,6 +74,7 @@ function Register() {
     footer={null}
     onCancel={() => setModalVisible(false)} >
     <p className="confirmation-text">{t('register.dialog.title')}</p>
+    <UserInfo user={getValues()} style={{ marginTop: 16, marginBottom: 34 }} />
     <div className="modal-footer">
       <Button shape="round" onClick={() => setModalVisible(false)}>{t('register.dialog.cancel')}</Button>
       <Button shape="round" onClick={confirmSubmit} type="primary" loading={loading}>{t('register.dialog.ok')}</Button>

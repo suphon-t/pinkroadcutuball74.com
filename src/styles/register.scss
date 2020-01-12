@@ -76,12 +76,16 @@
 
 .register-confirm-modal {
   .confirmation-text {
-    margin: 0 50px;
+    margin: 0 30px;
     
-    color: $dark-blue;
+    color: $pink;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 20px;
     text-align: center;
+
+    @include small-mobile {
+      margin: 0 8px;
+    }
   }
 
   .modal-footer {
@@ -89,6 +93,7 @@
     text-align: center;
 
     button {
+      width: 89px;
       margin: 0 10px;
     }
   }
