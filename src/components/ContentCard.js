@@ -1,14 +1,12 @@
-import React, { useCallback } from "react"
-import { useHistory } from "react-router-dom"
+import React from "react"
+import { Link } from "react-router-dom"
+
+import logo from "../images/logo.png"
 
 function ContentCard({ children, ...rest }) {
-  const history = useHistory()
-  const handleClick = useCallback(() => {
-    history.push('/')
-  }, [history])
   return (
     <div>
-      <div className="logo-small" onClick={handleClick} />
+      <Link to="/" className="logo-small"><img src={logo} /></Link>
       <div className="content-card" {...rest}>
         {children}
       </div>
