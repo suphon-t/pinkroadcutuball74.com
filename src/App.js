@@ -7,6 +7,7 @@ import "./yup-init"
 import Register from "./pages/Register"
 import RegisterSuccess from "./pages/RegisterSuccess"
 import Landing from "./pages/Landing"
+import Login from "./pages/Login"
 
 // style
 import "./styles/app.scss"
@@ -25,6 +26,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={Landing} />
               <Route path="/register" exact component={Register} />
+              <Route path="/login" exact component={Login} />
               <Route path="/register/success" exact component={RegisterSuccess} />
               <Route path="/admin" component={Admin} />
             </Switch>

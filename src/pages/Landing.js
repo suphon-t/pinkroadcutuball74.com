@@ -32,7 +32,7 @@ function Landing() {
             ลงทะเบียน
           </Button>
         </Link>
-        <Link to="/register" className="getstatus-button">
+        <Link to="/login" className="getstatus-button">
           ตรวจสอบข้อมูล
         </Link>
       </div>
