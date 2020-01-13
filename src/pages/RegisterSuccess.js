@@ -17,9 +17,11 @@ function RegisterSuccess() {
         <Link to="/" id="backtohome">
           {t('register.success.backtohome')}
         </Link>
-        <button id="checkinfo">
-          {t('register.success.checkinfo')}
-        </button>
+        <Link to="/login">
+          <button id="checkinfo">
+            {t('register.success.checkinfo')}
+          </button>
+        </Link>
       </ContentCard>
     </>
   )
