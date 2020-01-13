@@ -1,48 +1,48 @@
 @import "vars";
 @import "widgets";
 
-#login-form{
+#login-form {
+  font-family: Prompt;
 
-    font-family: Prompt;
-    
-    .title{
+  .title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    color: $dark-blue;
+    line-height: 30px;    
+  }
 
-        font-style: normal;
-        font-weight: bold;
-        font-size: 24px;
-        color: $dark-blue;
-        line-height: 30px;
-        
+  .subtitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgba(25, 33, 52, 0.4);    
+  }
+
+  form {
+    padding: 50px 0 0 0;
+
+    label {
+      color: black;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 17px;
     }
-    .subtitle{
-        font-style: normal;
+
+    #check-button {
+      text-align: center;
+      margin: 97px 0;
+      padding: 20px 0;
+
+      button {            
+        @extend .orange-button;
+        display: inline-block;
+        padding: 18px 0;
         font-weight: 500;
-        font-size: 13px;
-        line-height: 20px;
-        color: rgba(25, 33, 52, 0.4);    
+        font-size: 18px;
+        line-height: 0px;
+      }
     }
-    form{
-        padding: 50px 0 0 0;
-        label{
-            color: black;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 17px;
-            
-        }
-        #check-button{
-            text-align: center;
-            margin: 97px 0;
-            padding: 20px 0;
-            button{            
-                @extend .orange-button;
-                display: inline-block;
-                padding: 18px 0;
-                font-weight: 500;
-                font-size: 18px;
-                line-height: 0px;
-            }
-        }
-        
-    }
+  }
 }
