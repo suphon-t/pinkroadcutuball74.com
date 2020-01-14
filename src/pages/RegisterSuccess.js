@@ -41,7 +41,7 @@ function RegisterSuccess() {
   return (
     <>
       <ContentCard id="register-success" style={{ textAlign: 'center' }}>
-        <img style={{marginTop: 80}} src={success} />
+        <img style={{marginTop: 80}} src={success} alt="" />
         <Title>{t('register.success.title')}</Title>
         <Subtitle>{t('register.success.subtitle')}</Subtitle>
         <Link to="/">

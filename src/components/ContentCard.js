@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import styled from "styled-components"
 
 import logo from "../images/logo.png"
@@ -37,10 +38,11 @@ const Card = styled.div`
 `
 
 function ContentCard({ children, ...rest }) {
+  const { t } = useTranslation()
   return (
     <div>
       <Logo to="/">
-        <img src={logo} />
+        <img src={logo} alt={t('appname')} />
       </Logo>
       <Card {...rest}>{children}</Card>
     </div>
