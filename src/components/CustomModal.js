@@ -4,8 +4,8 @@ import { down } from "styled-breakpoints"
 
 const maskStyle = {
   backgroundColor: "rgba(51, 51, 51, 0.5)",
-  "-webkit-backdrop-filter": "saturate(180%) blur(15px)",
-  "backdrop-filter": "saturate(180%) blur(15px)"
+  WebkitBackdropFilter: "saturate(180%) blur(15px)",
+  backdropFilter: "saturate(180%) blur(15px)",
 }
 
 export default styled(Modal).attrs({ maskStyle })`
