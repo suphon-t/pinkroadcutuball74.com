@@ -3,20 +3,20 @@ import { Link } from "react-router-dom"
 import * as yup from "yup"
 import { useTranslation } from "react-i18next"
 import { useForm, FormContext } from "react-hook-form"
-
-//styles
-import "../styles/login.scss"
+import styled from "styled-components"
 
 //ant design
-import { Form,Button  } from "antd"
+import { Form } from "antd"
 
 //components
 import ContentCard from "../components/ContentCard"
 import Field from "../components/Field"
+import OrangeButton from "../components/OrangeButton"
+import Title from "../components/Title"
+import Subtitle from "../components/Subtitle"
 
 //utility
 import { telPattern } from "../utils"
-
 
 const validationSchema = yup.object().shape({
   ID: yup
@@ -29,24 +29,32 @@ const validationSchema = yup.object().shape({
       .required(),
 })
 
+const SubmitButton = styled(OrangeButton)`
+  margin: 117px auto;
+  padding: 18px 0;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 0px;
+`
+
+const LoginForm = styled(Form)`
+  padding: 50px 0 0 0;
+`
+
 function Login(){
   const { t } = useTranslation()
   const methods = useForm( { validationSchema })
 
   return (
     <FormContext {...methods}>
-      <ContentCard id="login-form">
-        <div id="title-container">
-          <p className="title">{t("login.title")}</p>
-          <p className="subtitle">{t("login.subtitle")}</p>
-        </div>
-        <Form layout="vertical"  >
+      <ContentCard>
+        <Title>{t("login.title")}</Title>
+        <Subtitle>{t("login.subtitle")}</Subtitle>
+        <LoginForm layout="vertical">
           <Field name="ID" title={t("idNumber")} pattern="\d*" />
           <Field name="tel" title={t("phoneNumber")} type="tel"/>
-          <p id="check-button">
-            <Button type="submit">{t("login.submit")}</Button>
-          </p>
-        </Form>
+          <SubmitButton type="submit">{t("login.submit")}</SubmitButton>
+        </LoginForm>
       </ContentCard>
     </FormContext>
   )

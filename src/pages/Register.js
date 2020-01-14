@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom"
 import { useForm, FormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as yup from "yup"
+import styled from "styled-components"
+import { down } from "styled-breakpoints"
 
 // ant design
 import { Form, Select, Modal, Button } from "antd"
@@ -13,12 +15,16 @@ import facultyCodes from "../i18n/faculty-codes"
 import { usePost } from "../api"
 
 // components
+import Title from "../components/Title"
+import Subtitle from "../components/Subtitle"
 import UserInfo from "../components/UserInfo"
 import Field from "../components/Field"
 import ContentCard from "../components/ContentCard"
+import OrangeButton from "../components/OrangeButton"
+import CustomModal from "../components/CustomModal"
 
 // styles
-import "../styles/register.scss"
+import vars from "../styles/vars"
 
 const { Option } = Select
 
@@ -38,6 +44,46 @@ const validationSchema = yup.object().shape({
     .required(),
   faculty: yup.string().required()
 })
+
+const FacultyContainer = styled(Form.Item)`
+  margin-bottom: -4px;
+`
+
+const TosLabel = styled.label`
+  display: inline-block;
+  margin-top: 23px;
+
+  font-weight: normal;
+  font-size: 12px !important;
+  line-height: 14px;
+`
+
+const SubmitButton = styled(OrangeButton)`
+  margin: 34px auto 0 auto;
+`
+
+const ConfirmationText = styled.p`
+  margin: 0 30px;
+
+  color: ${vars.pink};
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+
+  ${down('xs')} {
+    margin: 0 8px;
+  }
+`
+
+const ModalFooter = styled.div`
+  margin: 24px 0 8px 0;
+  text-align: center;
+
+  button {
+    width: 89px;
+    margin: 0 10px;
+  }
+`
 
 function Register() {
   const methods = useForm({ validationSchema })
@@ -66,16 +112,16 @@ function Register() {
 
   const confirmModal = (
     <Modal className="register-modal" visible={modalVisible} centered closable={false} footer={null} onCancel={() => setModalVisible(false)}>
-      <p className="confirmation-text">{t("register.dialog.title")}</p>
+      <ConfirmationText>{t("register.dialog.title")}</ConfirmationText>
       <UserInfo user={getValues()} style={{ marginTop: 16, marginBottom: 34 }} />
-      <div className="modal-footer">
+      <ModalFooter>
         <Button shape="round" onClick={() => setModalVisible(false)}>
           {t("register.dialog.cancel")}
         </Button>
         <Button shape="round" onClick={confirmSubmit} type="primary" loading={loading}>
           {t("register.dialog.ok")}
         </Button>
-      </div>
+      </ModalFooter>
     </Modal>
   )
 
@@ -83,14 +129,14 @@ function Register() {
     <FormContext {...methods}>
       <ContentCard id="register-form">
         <div className="form-container">
-          <h1 className="title">{t("register.title")}</h1>
-          <p className="subtitle">{t("register.subtitle")}</p>
+          <Title>{t("register.title")}</Title>
+          <Subtitle style={{marginBottom: 28}}>{t("register.subtitle")}</Subtitle>
           <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
             <Field name="name" title={t("fullname")} rules={{ required: true }} />
             <Field name="ID" title={t("idNumber")} pattern="\d*" />
             <Field name="tel" title={t("phoneNumber")} type="tel" />
             <Field name="email" title={t("email")} type="email" />
-            <Field name="faculty" title={t("faculty")}>
+            <Field name="faculty" title={t("faculty")} as={FacultyContainer}>
               <Select showSearch filterOption={optionContains}>
                 {facultyCodes.map(code => (
                   <Option key={code} value={code}>
@@ -99,13 +145,13 @@ function Register() {
                 ))}
               </Select>
             </Field>
-            <label id="tos-label">
+            <TosLabel>
               ในการกดลงทะเบียน ฉันยอมรับ
               <TosModal title="ข้อตกลงการให้บริการ" />
               และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
               <TosModal title="นโยบายความเป็นส่วนตัว" />
-            </label>
-            <button type="submit">{t("register.submit")}</button>
+            </TosLabel>
+            <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
             {confirmModal}
           </Form>
         </div>
@@ -113,6 +159,10 @@ function Register() {
     </FormContext>
   )
 }
+
+const TosTitle = styled(ConfirmationText)`
+  margin: 0 8px;
+`
 
 function TosModal({ title, children, ...rest }) {
   const { t } = useTranslation()
@@ -127,15 +177,15 @@ function TosModal({ title, children, ...rest }) {
       <a {...rest} onClick={handleClick}>
         {title}
       </a>
-      <Modal className="register-modal" visible={visible} centered closable={false} footer={null} onCancel={close}>
-        <p className="tos-title">{title}</p>
+      <CustomModal className="register-modal" visible={visible} centered closable={false} footer={null} onCancel={close}>
+        <TosTitle>{title}</TosTitle>
         {children}
-        <div className="modal-footer">
+        <ModalFooter>
           <Button shape="round" onClick={close} type="primary">
             {t("register.dialog.ok")}
           </Button>
-        </div>
-      </Modal>
+        </ModalFooter>
+      </CustomModal>
     </>
   )
 }

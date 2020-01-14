@@ -3,24 +3,52 @@ import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 
 import ContentCard from "../components/ContentCard"
+import OrangeButton from "../components/OrangeButton"
+
 import success from "../images/success.svg"
-import "../styles/register-success.scss"
+import styled from "styled-components"
+import vars from "../styles/vars"
+
+const BackToHome = styled(OrangeButton)`
+  margin: 100px auto 0 auto;
+`
+
+const CheckInfo = styled(OrangeButton)`
+  margin: 24px auto 54px auto;
+
+  background-color: transparent;
+  border: 1px solid $orange;
+  box-shadow: none;
+`
+
+const Title = styled.h1`
+  margin-top: 36px;
+
+  color: ${vars.darkBlue};
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 45px;
+`
+
+const Subtitle = styled.p`
+  margin-top: 0;
+  margin-bottom: 0;
+  color: ${vars.grey4};
+`
 
 function RegisterSuccess() {
   const { t } = useTranslation()
   return (
     <>
       <ContentCard id="register-success" style={{ textAlign: 'center' }}>
-        <img className="success-tick" src={success} />
-        <h1>{t('register.success.title')}</h1>
-        <p>{t('register.success.subtitle')}</p>
-        <Link to="/" id="backtohome">
-          {t('register.success.backtohome')}
+        <img style={{marginTop: 80}} src={success} />
+        <Title>{t('register.success.title')}</Title>
+        <Subtitle>{t('register.success.subtitle')}</Subtitle>
+        <Link to="/">
+          <BackToHome>{t('register.success.backtohome')}</BackToHome>
         </Link>
         <Link to="/login">
-          <button id="checkinfo">
-            {t('register.success.checkinfo')}
-          </button>
+          <CheckInfo>{t('register.success.checkinfo')}</CheckInfo>
         </Link>
       </ContentCard>
     </>
