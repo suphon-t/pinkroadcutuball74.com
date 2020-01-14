@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 import logo from "../images/logo.png"
-import { down, up, only } from "styled-breakpoints"
+import { down, up } from "styled-breakpoints"
 import vars from "../styles/vars"
 
 const Logo = styled(Link)`

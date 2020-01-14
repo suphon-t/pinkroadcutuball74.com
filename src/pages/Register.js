@@ -7,7 +7,7 @@ import styled from "styled-components"
 import { down } from "styled-breakpoints"
 
 // ant design
-import { Form, Select, Modal, Button } from "antd"
+import { Form, Select, Button } from "antd"
 
 // utility
 import { emailPattern, telPattern, optionContains } from "../utils"

@@ -1,4 +1,3 @@
-import React from "react"
 import styled from "styled-components"
 import { Modal } from "antd"
 import { down } from "styled-breakpoints"
