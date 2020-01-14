@@ -38,7 +38,7 @@ const Line1 = styled.p`
   font-size: 20px;
   font-weight: 200;
 
-  ${down('sm')} {
+  ${down("sm")} {
     font-size: 20px;
   }
 `
@@ -46,9 +46,9 @@ const Line1 = styled.p`
 const Line2 = styled.h1`
   margin-top: calc(${vars.space} * 2);
   font-size: 50px;
-  font-weight: 1000;
+  font-weight: 9000;
 
-  ${down('sm')} {
+  ${down("sm")} {
     font-size: 54px;
   }
 `
@@ -58,7 +58,7 @@ const Line3 = styled.h1`
   font-size: 42px;
   font-weight: 1000;
 
-  ${down('sm')} {
+  ${down("sm")} {
     font-size: 24px;
   }
 `
@@ -82,7 +82,7 @@ const RegisterButton = styled(OrangeButton)`
   padding: calc(${vars.space} * 2.5) calc(${vars.space} * 6);
   line-height: 0;
 
-  ${up('sm')} {
+  ${up("sm")} {
     font-size: 30px;
     padding: calc(${vars.space} * 3) calc(${vars.space} * 7);
   }
@@ -93,7 +93,7 @@ const GetStatusButton = styled(Link)`
   text-decoration: underline;
   color: ${vars.darkBlue};
 
-  ${up('sm')} {
+  ${up("sm")} {
     font-size: 20px;
   }
 `
@@ -119,13 +119,9 @@ function Landing() {
       </TitleContainer>
       <ButtonsContainer>
         <Link to="/register">
-          <RegisterButton type="primary">
-            ลงทะเบียน
-          </RegisterButton>
+          <RegisterButton type="primary">ลงทะเบียน</RegisterButton>
         </Link>
-        <GetStatusButton to="/login">
-          ตรวจสอบข้อมูล
-        </GetStatusButton>
+        <GetStatusButton to="/login">ตรวจสอบข้อมูล</GetStatusButton>
       </ButtonsContainer>
     </LandingContainer>
   )

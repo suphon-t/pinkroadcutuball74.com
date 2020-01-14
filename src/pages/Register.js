@@ -70,7 +70,7 @@ const ConfirmationText = styled.p`
   font-size: 20px;
   text-align: center;
 
-  ${down('xs')} {
+  ${down("xs")} {
     margin: 0 8px;
   }
 `
@@ -130,7 +130,7 @@ function Register() {
       <ContentCard id="register-form">
         <div className="form-container">
           <Title>{t("register.title")}</Title>
-          <Subtitle style={{marginBottom: 28}}>{t("register.subtitle")}</Subtitle>
+          <Subtitle style={{ marginBottom: 28 }}>{t("register.subtitle")}</Subtitle>
           <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
             <Field name="name" title={t("fullname")} rules={{ required: true }} />
             <Field name="ID" title={t("idNumber")} pattern="\d*" />
@@ -140,18 +140,19 @@ function Register() {
               <Select showSearch filterOption={optionContains}>
                 {facultyCodes.map(code => (
                   <Option key={code} value={code}>
-                    {(code !== "99" ? `${code} ` : "") + t(`facultyNames.${code}`)}
+                    {(code !== "00" ? `${code} ` : "") + t(`facultyNames.${code}`)}
                   </Option>
                 ))}
               </Select>
             </Field>
+
+            <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
             <TosLabel>
               ในการกดลงทะเบียน ฉันยอมรับ
               <TosModal title="ข้อตกลงการให้บริการ" />
               และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
               <TosModal title="นโยบายความเป็นส่วนตัว" />
             </TosLabel>
-            <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
             {confirmModal}
           </Form>
         </div>

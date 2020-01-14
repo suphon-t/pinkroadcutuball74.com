@@ -25,15 +25,11 @@ const Card = styled.div`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 
-  ${down('xs')} {
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-
-    border-radius: 0px;
+  ${down("xs")} {
+    margin: 0 15px 30px 15px;
   }
 
-  ${up('md')} {
+  ${up("md")} {
     width: 400px;
     margin-left: auto;
     margin-right: auto;
@@ -43,10 +39,10 @@ const Card = styled.div`
 function ContentCard({ children, ...rest }) {
   return (
     <div>
-      <Logo to="/"><img src={logo} /></Logo>
-      <Card {...rest}>
-        {children}
-      </Card>
+      <Logo to="/">
+        <img src={logo} />
+      </Logo>
+      <Card {...rest}>{children}</Card>
     </div>
   )
 }
