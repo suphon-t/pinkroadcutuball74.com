@@ -36,12 +36,12 @@ const validationSchema = yup.object().shape({
     .required(),
   tel: yup
     .string()
-    .matches(telPattern, "invalidValue")
-    .required(),
+    .required()
+    .matches(telPattern, "invalidValue"),
   email: yup
     .string()
-    .matches(emailPattern, "invalidValue")
-    .required(),
+    .required()
+    .matches(emailPattern, "invalidValue"),
   faculty: yup.string().required()
 })
 
