@@ -111,7 +111,7 @@ function Register() {
   )
 
   const confirmModal = (
-    <Modal className="register-modal" visible={modalVisible} centered closable={false} footer={null} onCancel={() => setModalVisible(false)}>
+    <CustomModal className="register-modal" visible={modalVisible} centered closable={false} footer={null} onCancel={() => setModalVisible(false)}>
       <ConfirmationText>{t("register.dialog.title")}</ConfirmationText>
       <UserInfo user={getValues()} style={{ marginTop: 16, marginBottom: 34 }} />
       <ModalFooter>
@@ -122,7 +122,7 @@ function Register() {
           {t("register.dialog.ok")}
         </Button>
       </ModalFooter>
-    </Modal>
+    </CustomModal>
   )
 
   return (
