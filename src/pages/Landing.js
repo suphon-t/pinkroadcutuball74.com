@@ -36,7 +36,7 @@ const TitleContainer = styled.div`
 
 const Line1 = styled.p`
   font-size: 20px;
-  font-weight: 200;
+  font-weight: 500;
 
   ${down("sm")} {
     font-size: 20px;
@@ -46,7 +46,7 @@ const Line1 = styled.p`
 const Line2 = styled.h1`
   margin-top: calc(${vars.space} * 2);
   font-size: 50px;
-  font-weight: 9000;
+  font-weight: bold;
 
   ${down("sm")} {
     font-size: 54px;
@@ -56,7 +56,7 @@ const Line2 = styled.h1`
 const Line3 = styled.h1`
   margin-top: ${vars.space};
   font-size: 42px;
-  font-weight: 1000;
+  font-weight: bold;
 
   ${down("sm")} {
     font-size: 24px;
