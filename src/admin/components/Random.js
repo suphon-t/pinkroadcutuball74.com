@@ -3,6 +3,8 @@ import styled from "styled-components"
 import vars from "../../styles/vars"
 import { useTranslation } from "react-i18next"
 
+const rightPaneColor = '#F18B84'
+
 const Container = styled.div`
   display: flex;
 
@@ -39,7 +41,7 @@ const PreviousTitle = styled.label`
   display: block;
   margin-top: 56px;
 
-  color: ${vars.pink};
+  color: ${rightPaneColor};
   text-align: center;
   font-weight: 300;
   font-size: 48px;
@@ -50,13 +52,13 @@ const TitleLine = styled.div`
   height: 1px;
   margin: 4px auto 0 auto;
 
-  background: ${vars.pink};
+  background: ${rightPaneColor};
 `
 
 const PreviousResults = styled.p`
   margin-top: 32px;
 
-  color: ${vars.pink};
+  color: ${rightPaneColor};
   text-align: center;
   font-weight: bold;
   font-size: 64px;
