@@ -13,7 +13,6 @@ export default styled.button`
   background: ${vars.orange};
   border: 1px solid ${vars.orange};
   border-radius: 9999px;
-  box-shadow: 0px 4px 30px ${vars.grey2};
   color: ${vars.darkBlue};
 
   font-weight: 500;
@@ -24,13 +23,22 @@ export default styled.button`
   outline: none;
   transition: all ${vars.transitionLength};
 
-  &:hover,
-  &:focus {
-    background: ${hoverColor};
-    box-shadow: 0px 4px 30px ${hoverColor};
+  &:disabled {
+    cursor: initial;
+    opacity: ${vars.disabledOpacity};
   }
 
-  &:active {
-    background: ${darken(.1, vars.orange)};
+  &:not(:disabled) {
+    box-shadow: 0px 4px 30px ${vars.grey2};
+
+    &:hover,
+    &:focus {
+      background: ${hoverColor};
+      box-shadow: 0px 4px 30px ${hoverColor};
+    }
+
+    &:active {
+      background: ${darken(.1, vars.orange)};
+    }
   }
 `
