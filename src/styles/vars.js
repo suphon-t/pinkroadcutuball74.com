@@ -14,4 +14,5 @@ export default {
   grey5: 'rgba(25, 33, 52, 0.5)',
 
   transitionLength: '.3s',
+  disabledOpacity: '.6',
 }

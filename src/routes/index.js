@@ -6,6 +6,8 @@ import Register from "../pages/Register"
 import Login from "../pages/Login"
 import RegisterSuccess from "../pages/RegisterSuccess"
 import GetTicket from "../pages/GetTicket"
+import PrivateRoute from "./PrivateRoute"
+import User from "../pages/User"
 
 const Admin = lazy(() => import("../admin"))
 
@@ -16,9 +18,14 @@ function Routes() {
         <Switch>
           <Route path="/" exact component={Landing} />
           <Route path="/register" exact component={Register} />
-          <Route path="/login" exact component={Login} />
           <Route path="/register/success" component={RegisterSuccess} />
-          <Route path="/ticket" component={GetTicket} />
+          <Route path="/login" component={Login} />
+          <PrivateRoute path="/user">
+            <User />
+          </PrivateRoute>
+          <PrivateRoute path="/ticket">
+            <GetTicket />
+          </PrivateRoute>
           <Route path="/admin" component={Admin} />
         </Switch>
       </Suspense>

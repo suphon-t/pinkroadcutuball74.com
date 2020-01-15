@@ -12,7 +12,7 @@ import { Form, Select, Button } from "antd"
 // utility
 import { emailPattern, telPattern, optionContains } from "../utils"
 import facultyCodes from "../i18n/faculty-codes"
-import { usePost } from "../api"
+import { useFakePost } from "../api"
 
 // components
 import Title from "../components/Title"
@@ -91,7 +91,7 @@ function Register() {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
 
-  const [executePost, , , loading] = usePost("/register")
+  const [loading, executePost] = useFakePost("/register")
   const onSubmit = useCallback(() => {
     setModalVisible(true)
   }, [])

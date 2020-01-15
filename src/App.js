@@ -3,7 +3,7 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
 
 import "./yup-init"
 
-// components
+import AuthProvider from "./auth"
 import Routes from "./routes"
 
 // style
@@ -48,7 +48,7 @@ const Content = styled.div`
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <GlobalStyle />
       <ThemeProvider theme={{ breakpoints }}>
         <Background />
@@ -57,7 +57,7 @@ function App() {
           <Routes />
         </Content>
       </ThemeProvider>
-    </>
+    </AuthProvider>
   )
 }
 

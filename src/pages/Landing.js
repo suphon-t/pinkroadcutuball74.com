@@ -121,7 +121,7 @@ function Landing() {
         <Link to="/register">
           <RegisterButton type="primary">ลงทะเบียน</RegisterButton>
         </Link>
-        <GetStatusButton to="/login">ตรวจสอบข้อมูล</GetStatusButton>
+        <GetStatusButton to="/user">ตรวจสอบข้อมูล</GetStatusButton>
       </ButtonsContainer>
     </LandingContainer>
   )

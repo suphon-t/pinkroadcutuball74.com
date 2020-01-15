@@ -1,11 +1,10 @@
-import React from "react"
-import * as yup from "yup"
+import React, { useCallback, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useForm, FormContext } from "react-hook-form"
 import styled from "styled-components"
 
 //ant design
-import { Form } from "antd"
+import { Form, Alert } from "antd"
 
 //components
 import ContentCard from "../components/ContentCard"
@@ -13,20 +12,11 @@ import Field from "../components/Field"
 import OrangeButton from "../components/OrangeButton"
 import Title from "../components/Title"
 import Subtitle from "../components/Subtitle"
+import { useAuthContext } from "../auth"
 
 //utility
-import { telPattern } from "../utils"
-
-const validationSchema = yup.object().shape({
-  ID: yup
-      .string()
-      .nationalId("invalidValue")
-      .required(),
-  tel: yup
-      .string()
-      .matches(telPattern, "invalidValue")
-      .required(),
-})
+import { usePostStatus } from "../api"
+import { useLocation, Redirect } from "react-router-dom"
 
 const SubmitButton = styled(OrangeButton)`
   margin: 117px auto;
@@ -42,17 +32,52 @@ const LoginForm = styled(Form)`
 
 function Login(){
   const { t } = useTranslation()
-  const methods = useForm( { validationSchema })
+  const methods = useForm()
+  const { getValues, handleSubmit } = methods
+  const { isAuthenticated, login } = useAuthContext()
+  const location = useLocation()
+  const [loading, postLogin] = usePostStatus('/token')
+  const [hasError, setHasError] = useState(false)
+  const clearError = useCallback(() => setHasError(false), [])
+
+  const onSubmit = useCallback(() => {
+    if (loading) {
+      return
+    }
+    const values = getValues()
+    postLogin({
+      username: values.ID,
+      password: values.tel,
+      grant_type: 'password',
+    })
+      .then(data => {
+        login(data.data.access_token)
+      })
+      .catch(() => {
+        setHasError(true)
+      })
+  }, [loading, getValues, postLogin, login])
+
+  if (isAuthenticated) {
+    return <Redirect to={location.state?.from || "/user"} />
+  }
 
   return (
     <FormContext {...methods}>
       <ContentCard>
         <Title>{t("login.title")}</Title>
         <Subtitle>{t("login.subtitle")}</Subtitle>
-        <LoginForm layout="vertical">
-          <Field name="ID" title={t("idNumber")} pattern="\d*" />
-          <Field name="tel" title={t("phoneNumber")} type="tel"/>
-          <SubmitButton type="submit">{t("login.submit")}</SubmitButton>
+        <LoginForm layout="vertical" onSubmit={handleSubmit(onSubmit)}>
+          { hasError && (
+            <Alert
+              type="error"
+              message={t('login.wrongCredentials')}
+              closable
+              onClose={clearError} />
+          )}
+          <Field name="ID" title={t("idNumber")} pattern="\d*" disabled={loading} />
+          <Field name="tel" title={t("phoneNumber")} type="tel" disabled={loading} />
+          <SubmitButton type="submit" disabled={loading}>{t("login.submit")}</SubmitButton>
         </LoginForm>
       </ContentCard>
     </FormContext>
