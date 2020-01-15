@@ -36,7 +36,7 @@ function Login(){
   const { getValues, handleSubmit } = methods
   const { isAuthenticated, login } = useAuthContext()
   const location = useLocation()
-  const [loading, postLogin] = usePostStatus('/token')
+  const { loading, execute: postLogin } = usePostStatus('/token')
   const [hasError, setHasError] = useState(false)
   const clearError = useCallback(() => setHasError(false), [])
 

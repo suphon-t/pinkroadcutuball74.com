@@ -3,7 +3,8 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
 
 import "./yup-init"
 
-import AuthProvider from "./auth"
+import { AuthProvider } from "./auth"
+import { HttpProvider } from "./api"
 import Routes from "./routes"
 
 // style
@@ -46,9 +47,19 @@ const Content = styled.div`
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 `
 
-function App() {
+function Providers({ children }) {
   return (
     <AuthProvider>
+      <HttpProvider>
+        {children}
+      </HttpProvider>
+    </AuthProvider>
+  )
+}
+
+function App() {
+  return (
+    <Providers>
       <GlobalStyle />
       <ThemeProvider theme={{ breakpoints }}>
         <Background />
@@ -57,7 +68,7 @@ function App() {
           <Routes />
         </Content>
       </ThemeProvider>
-    </AuthProvider>
+    </Providers>
   )
 }
 

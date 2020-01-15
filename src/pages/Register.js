@@ -91,7 +91,7 @@ function Register() {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
 
-  const [loading, executePost] = useFakePost("/register")
+  const { loading, execute: executePost } = useFakePost("/register")
   const onSubmit = useCallback(() => {
     setModalVisible(true)
   }, [])

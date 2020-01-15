@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react"
 import qs from "qs"
 
-import http from "./utils/http"
+import HttpProvider, { useHttpContext } from "./HttpProvider"
 
 const mockData = {
   '/register': () => {
@@ -9,8 +9,10 @@ const mockData = {
   }
 }
 
+export { HttpProvider, useHttpContext }
+
 export function useFakePost(url) {
-  const [loading, setPromise] = usePromiseStatus()
+  const { setPromise, ...rest } = usePromise()
   const execute = useCallback(body => {
     return setPromise(new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -23,29 +25,29 @@ export function useFakePost(url) {
       }, 300)
     }))
   }, [url, setPromise])
-  return [loading, execute]
+  return { ...rest, execute }
 }
 
-export function usePromiseStatus() {
-  const [state, setState] = useState(null)
+export function usePromise() {
+  const [state, setState] = useState({})
   useEffect(() => {
-    if (!state) {
+    if (!state.promise) {
       return
     }
 
     let canceled = false
     const { promise, resolve, reject } = state
     promise
-      .then(value => {
+      .then(data => {
         if (!canceled) {
-          resolve(value)
-          setState(null)
+          resolve(data)
+          setState({ data })
         }
       })
-      .catch(err => {
+      .catch(error => {
         if (!canceled) {
-          reject(err)
-          setState(null)
+          reject(error)
+          setState({ error })
         }
       })
     return () => canceled = true
@@ -56,13 +58,28 @@ export function usePromiseStatus() {
       setState({ promise, resolve, reject })
     })
   }, [])
-  return [!!state, setPromise]
+
+  const { data, error } = state
+  return { loading: !!state.promise, data, error, setPromise }
 }
 
 export function usePostStatus(url) {
-  const [loading, setPromise] = usePromiseStatus()
+  const { http } = useHttpContext()
+  const { setPromise, ...result } = usePromise()
   const execute = useCallback(body => {
     return setPromise(http.post(url, qs.stringify(body)))
-  }, [url, setPromise])
-  return [loading, execute]
+  }, [http, url, setPromise])
+  return { ...result, execute }
+}
+
+export function useGet(url) {
+  const { http } = useHttpContext()
+  const { setPromise, ...result } = usePromise()
+  const execute = useCallback(() => {
+    return setPromise(http.get(url))
+  }, [http, url, setPromise])
+  useEffect(() => {
+    execute()
+  }, [url, execute])
+  return { ...result, execute }
 }

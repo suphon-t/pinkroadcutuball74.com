@@ -1,9 +1,14 @@
 import React from "react"
 import ContentCard from "../components/ContentCard"
+import { useGet } from "../api"
 
 function User() {
+  const { loading, data } = useGet('/test/protected')
   return (
-    <ContentCard>Logged in</ContentCard>
+    <ContentCard>
+      { loading && 'Loading' }
+      { data?.data }
+    </ContentCard>
   )
 }
 
