@@ -1,0 +1,38 @@
+<svg width="1440" height="835" viewBox="0 0 1440 835" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1604" y="574.532" width="1149" height="107.627" rx="53.8135" transform="rotate(-180 1604 574.532)" fill="#F296B2"/>
+<rect x="1770" y="667" width="1781" height="92.4683" rx="46.2341" transform="rotate(-180 1770 667)" fill="#F296B2"/>
+<rect x="773" y="484.337" width="764" height="107.627" rx="53.8135" transform="rotate(-180 773 484.337)" fill="#F296B2"/>
+<rect x="614" y="392.627" width="528" height="107.627" rx="53.8135" transform="rotate(-180 614 392.627)" fill="#F296B2"/>
+<rect x="265" y="574.532" width="516" height="107.627" rx="53.8135" transform="rotate(-180 265 574.532)" fill="#F296B2"/>
+<circle cx="224.5" cy="282.5" r="40.5" fill="#F296B2"/>
+<circle cx="143.5" cy="203.5" r="23.5" fill="#F296B2"/>
+<circle cx="218.5" cy="116.5" r="13.5" fill="#F296B2"/>
+<ellipse cx="1298" cy="153.5" rx="18" ry="18.5" fill="#F296B2"/>
+<ellipse cx="1238.5" cy="247" rx="13.5" ry="14" fill="#F296B2"/>
+<circle opacity="0.2" cx="1010" cy="323" r="323" fill="#F9C455"/>
+<circle opacity="0.5" cx="1010" cy="323" r="220" fill="#F9C455"/>
+<circle cx="1010" cy="323" r="184" fill="#F9C455"/>
+<g style="mix-blend-mode:soft-light">
+<rect width="507.846" height="30.744" rx="15.372" transform="matrix(-1 0 0 1 1190.63 390)" fill="white"/>
+<rect width="267.018" height="30.744" rx="15.372" transform="matrix(-1 0 0 1 1190.63 451.488)" fill="white"/>
+<rect width="267.018" height="30.744" rx="15.372" transform="matrix(-1 0 0 1 890.018 451.488)" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1137.68 451.488H1041.46C1049.95 451.488 1056.83 444.606 1056.83 436.116C1056.83 427.626 1049.95 420.744 1041.46 420.744H1137.68C1129.19 420.744 1122.31 427.626 1122.31 436.116C1122.31 444.606 1129.19 451.488 1137.68 451.488ZM786.399 451.488H860.412C851.922 451.488 845.04 444.606 845.04 436.116C845.04 427.626 851.922 420.744 860.412 420.744H786.399C794.888 420.744 801.771 427.626 801.771 436.116C801.771 444.606 794.888 451.488 786.399 451.488Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M714.064 512.787H810.282C801.792 512.787 794.91 505.904 794.91 497.415C794.91 488.925 801.792 482.043 810.282 482.043H714.064C722.554 482.043 729.436 488.925 729.436 497.415C729.436 505.904 722.554 512.787 714.064 512.787ZM1065.34 512.787H991.33C999.82 512.787 1006.7 505.904 1006.7 497.415C1006.7 488.925 999.82 482.043 991.33 482.043H1065.34C1056.85 482.043 1049.97 488.925 1049.97 497.415C1049.97 505.904 1056.85 512.787 1065.34 512.787Z" fill="white"/>
+<rect width="507.846" height="30.744" rx="15.372" transform="matrix(-1 0 0 1 1190.63 512.976)" fill="white"/>
+</g>
+<rect x="1751" y="653.02" width="1149" height="114.043" rx="57.0214" transform="rotate(-180 1751 653.02)" fill="#FFD0DF"/>
+<rect x="1917" y="751" width="1781" height="97.9805" rx="48.9903" transform="rotate(-180 1917 751)" fill="#FFD0DF"/>
+<rect x="1530" y="557.448" width="673" height="114.043" rx="57.0214" transform="rotate(-180 1530 557.448)" fill="#FFD0DF"/>
+<rect x="516" y="557.448" width="673" height="114.043" rx="57.0214" transform="rotate(-180 516 557.448)" fill="#FFD0DF"/>
+<rect x="1524" y="453.043" width="460" height="114.043" rx="57.0214" transform="rotate(-180 1524 453.043)" fill="#FFD0DF"/>
+<rect x="412" y="653.02" width="516" height="114.043" rx="57.0214" transform="rotate(-180 412 653.02)" fill="#FFD0DF"/>
+<circle cx="287" cy="431" r="48" fill="#FFD0DF"/>
+<ellipse cx="206" cy="354.5" rx="22" ry="22.5" fill="#FFD0DF"/>
+<ellipse cx="245.5" cy="247" rx="13.5" ry="14" fill="#FFD0DF"/>
+<circle cx="1315.5" cy="332.5" r="63.5" fill="#FFD0DF"/>
+<ellipse cx="1379" cy="197.5" rx="24" ry="24.5" fill="#FFD0DF"/>
+<rect width="516" height="115" rx="57.5" transform="matrix(1 0 0 -1 1254 720)" fill="white"/>
+<rect width="1149" height="115" rx="57.5" transform="matrix(1 0 0 -1 -85 720)" fill="white"/>
+<rect width="673" height="108" rx="54" transform="matrix(1 0 0 -1 136 613)" fill="white"/>
+<rect width="1781" height="122" rx="61" transform="matrix(1 0 0 -1 -251 842)" fill="white"/>
+</svg>

@@ -10,6 +10,7 @@ import Routes from "./routes"
 // style
 import breakpoints from "./styles/breakpoints"
 import background from "./images/background.svg"
+import backgroundLand from "./images/background-land.svg"
 import "./styles/app.scss"
 
 const GlobalStyle = createGlobalStyle`
@@ -32,12 +33,14 @@ const Background = styled.div`
 `
 
 const BackgroundArt = styled(Background)`
-  background: none;
+  background: url(${background}) bottom no-repeat;
+  background-attachment: fixed;
+  background-size: contain;
 
-  @media screen and (orientation: portrait) {
-    background: url(${background}) bottom no-repeat;
+  @media screen and (orientation: landscape) {
+    background: url(${backgroundLand}) bottom no-repeat;
     background-attachment: fixed;
-    background-size: contain;
+    background-size: cover;
   }
 `
 
