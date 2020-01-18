@@ -6,6 +6,8 @@ import styled from "styled-components"
 import logo from "../images/logo.png"
 import { down, up } from "styled-breakpoints"
 import vars from "../styles/vars"
+import { between } from "polished"
+import breakpoints from "../styles/breakpoints"
 
 const Logo = styled(Link)`
   display: inline-block;
@@ -17,9 +19,11 @@ const Logo = styled(Link)`
   }
 `
 
+const sideMargin = between('30px', '88px', breakpoints.sm, breakpoints.md)
+
 const Card = styled.div`
   display: block;
-  margin: 0 30px 30px 30px;
+  margin: 0 ${sideMargin} 30px ${sideMargin};
   padding: 20px 36px 28px 36px;
 
   background: ${vars.white};

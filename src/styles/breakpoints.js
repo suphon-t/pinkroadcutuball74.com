@@ -3,12 +3,12 @@ import styled from "styled-components"
 import { down, up } from "styled-breakpoints"
 
 export default {
-  xs: 1,
-  sm: 360,
-  md: 576,
-  lg: 768,
-  xl: 992,
-  xxl: 1200,
+  xs: '1px',
+  sm: '360px',
+  md: '576px',
+  lg: '768px',
+  xl: '992px',
+  xxl: '1200px',
 }
 
 export const Down = styled.div`
