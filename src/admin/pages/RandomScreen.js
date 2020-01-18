@@ -1,9 +1,8 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 
 import Random from "../components/Random"
 import styled from "styled-components"
-
-const results = ['0042', '0150', '1218', '0003', '1743', '0521', '0026']
+import Channel from "../../utils/Channel"
 
 const FullScreenRandom = styled(Random)`
   width: 100vw;
@@ -11,8 +10,25 @@ const FullScreenRandom = styled(Random)`
 `
 
 function RandomScreen() {
+  const [loading, setLoading] = useState(true)
+  const [results, setResults] = useState([])
   const [current, ...previous] = results
-  return <FullScreenRandom current={current} previous={previous} />
+
+  useEffect(() => {
+    const channel = new Channel('randomScreen', (action, payload) => {
+      if (action === 'results') {
+        if (payload) {
+          setLoading(false)
+          setResults(payload)
+          channel.send('received')
+        }
+      }
+    })
+    channel.send('opened')
+    return () => channel.close()
+  }, [])
+
+  return <FullScreenRandom current={current} previous={previous} loading={loading} />
 }
 
 export default RandomScreen

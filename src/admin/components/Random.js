@@ -3,6 +3,8 @@ import styled from "styled-components"
 import vars from "../../styles/vars"
 import { useTranslation } from "react-i18next"
 
+import LoadingIcon from "../../components/LoadingIcon"
+
 const rightPaneColor = '#F18B84'
 
 const Container = styled.div`
@@ -35,6 +37,7 @@ const Right = styled.div`
   width: 320px;
 
   background: ${vars.white};
+  overflow-y: hidden;
 `
 
 const PreviousTitle = styled.label`
@@ -65,8 +68,15 @@ const PreviousResults = styled.p`
   line-height: 128px;
 `
 
-function Random({ className, current, previous }) {
+function Random({ className, current, previous, loading }) {
   const { t } = useTranslation()
+  if (loading) {
+    return (
+      <Container className={className}>
+        <LoadingIcon />
+      </Container>
+    )
+  }
   return (
     <Container className={className}>
       <Left>
