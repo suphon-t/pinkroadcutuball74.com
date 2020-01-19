@@ -61,8 +61,13 @@ export default {
     submit: "ตรวจสอบ",
     wrongCredentials: "เลขประจำตัวประชาชนหรือเบอร์โทรศัพท์ไม่ถูกต้อง",
   },
-  "random": {
-    "current": "เลขที่ออก",
-    "previous": "เลขก่อนหน้า",
+  random: {
+    current: "เลขที่ออก",
+    previous: "เลขก่อนหน้า",
+  },
+  noMatch: {
+    title: "ไม่พบเพจ",
+    subtitle: "เราไม่พบเพจที่คุณหาอยู่",
+    returnHome: "กลับหน้าหลัก",
   },
 }

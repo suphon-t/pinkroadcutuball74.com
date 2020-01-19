@@ -9,6 +9,7 @@ import RegisterSuccess from "../pages/RegisterSuccess"
 import GetTicket from "../pages/GetTicket"
 import PrivateRoute from "./PrivateRoute"
 import User from "../pages/User"
+import NoMatch from "../pages/NoMatch"
 
 const Admin = lazy(() => import("../admin"))
 const RandomScreen = lazy(() => import("../admin/pages/RandomScreen"))
@@ -34,6 +35,7 @@ function Routes() {
           </PrivateRoute>
           <Route path="/admin" component={Admin} />
           <Route path="/adminext/random" component={RandomScreen} />
+          <Route component={NoMatch} />
         </Switch>
       </Suspense>
     </BrowserRouter>
