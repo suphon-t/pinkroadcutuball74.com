@@ -43,13 +43,13 @@ const Line1 = styled.p`
 
 const Line2 = styled.h1`
   margin-top: calc(${vars.space} * 2);
-  font-size: ${between('60px', '110px', '375px', '1440px')};
+  font-size: ${between('70px', '110px', '375px', '1440px')};
   font-weight: bold;
 `
 
 const Line3 = styled.h1`
   margin-top: ${vars.space};
-  font-size: ${between('24px', '92px', '375px', '1440px')};
+  font-size: ${between('48px', '56px', '375px', '1440px')};
   font-weight: bold;
 `
 
@@ -90,18 +90,19 @@ function Landing() {
       <TitleContainer>
         <TabletUp>
           <Line1>งานฟุตบอลประเพณี จุฬาฯ-ธรรมศาสตร์ ครั้งที่ 74</Line1>
-          <Line2>MAKE A CHANGE</Line2>
+          <Line2>BAKA Pink Road</Line2>
         </TabletUp>
         <MobileDown>
           <Line1>
             งานฟุตบอลประเพณี <br /> จุฬาฯ-ธรรมศาสตร์ ครั้งที่ 74
           </Line1>
           <Line2>
-            MAKE A <br />
-            CHANGE
+            BAKA<br />
           </Line2>
+          <Line3>
+            Pink Road
+          </Line3>
         </MobileDown>
-        <Line3>เปลี่ยนปรับ ขยับสังคม</Line3>
       </TitleContainer>
       <ButtonsContainer>
         <Link to="/register">
