@@ -1,0 +1,18 @@
+# Copied from stackoverflow https://stackoverflow.com/a/55831186/11263767
+
+env: standard
+runtime: nodejs10
+service: default
+
+handlers:
+  - url: /static
+    static_dir: dist/static
+
+  - url: /(.*\.(json|ico|js))$
+    static_files: dist/\1
+    upload: dist/.*\.(json|ico|js)$
+
+  - url: .*
+    static_files: dist/index.html
+    upload: dist/index.html
+    expiration: '0s'
