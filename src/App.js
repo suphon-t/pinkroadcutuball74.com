@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const Background = styled.div`
+  display: flex;
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -30,17 +31,17 @@ const Background = styled.div`
 
   background: linear-gradient(180deg, #f9c455 0%, #ee7398 35.42%);
   background-attachment: fixed;
+  flex-direction: column-reverse;
 `
 
-const BackgroundArt = styled(Background)`
-  background: url(${background}) bottom no-repeat;
-  background-attachment: fixed;
-  background-size: contain;
+const BackgroundArt = styled.img`
+  width: 100%;
+
+  object-fit: cover;
+  content: url(${background});
 
   @media screen and (orientation: landscape) {
-    background: url(${backgroundLand}) bottom no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    content: url(${backgroundLand});
   }
 `
 
@@ -65,8 +66,9 @@ function App() {
     <Providers>
       <GlobalStyle />
       <ThemeProvider theme={{ breakpoints }}>
-        <Background />
-        <BackgroundArt />
+        <Background>
+          <BackgroundArt />
+        </Background>
         <Content>
           <Routes />
         </Content>
