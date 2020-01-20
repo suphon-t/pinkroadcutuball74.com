@@ -15,8 +15,6 @@ import facultyCodes from "../i18n/faculty-codes"
 import { useFakePost } from "../api"
 
 // components
-import Title from "../components/Title"
-import Subtitle from "../components/Subtitle"
 import UserInfo from "../components/UserInfo"
 import Field from "../components/Field"
 import ContentCard from "../components/ContentCard"
@@ -25,6 +23,7 @@ import CustomModal from "../components/CustomModal"
 
 // styles
 import vars from "../styles/vars"
+import PageHeader from "../components/PageHeader"
 
 const { Option } = Select
 
@@ -129,9 +128,8 @@ function Register() {
     <FormContext {...methods}>
       <ContentCard id="register-form">
         <div className="form-container">
-          <Title>{t("register.title")}</Title>
-          <Subtitle style={{ marginBottom: 28 }}>{t("register.subtitle")}</Subtitle>
-          <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
+          <PageHeader title={t('register.title')} subtitle={t('register.subtitle')} />
+          <Form style={{ marginTop: 28 }} layout="vertical" onSubmit={handleSubmit(onSubmit)}>
             <Field name="name" title={t("fullname")} rules={{ required: true }} />
             <Field name="ID" title={t("idNumber")} pattern="\d*" />
             <Field name="tel" title={t("phoneNumber")} type="tel" />

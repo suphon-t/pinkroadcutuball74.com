@@ -10,13 +10,12 @@ import { Form, Alert } from "antd"
 import ContentCard from "../components/ContentCard"
 import Field from "../components/Field"
 import OrangeButton from "../components/OrangeButton"
-import Title from "../components/Title"
-import Subtitle from "../components/Subtitle"
 import { useAuthContext } from "../auth"
 
 //utility
 import { usePostStatus } from "../api"
 import { useLocation, Redirect } from "react-router-dom"
+import PageHeader from "../components/PageHeader"
 
 const SubmitButton = styled(OrangeButton)`
   margin: 117px auto;
@@ -65,8 +64,7 @@ function Login(){
   return (
     <FormContext {...methods}>
       <ContentCard>
-        <Title>{t("login.title")}</Title>
-        <Subtitle>{t("login.subtitle")}</Subtitle>
+        <PageHeader title={t('login.title')} subtitle={t('login.subtitle')} />
         <LoginForm layout="vertical" onSubmit={handleSubmit(onSubmit)}>
           { hasError && (
             <Alert
