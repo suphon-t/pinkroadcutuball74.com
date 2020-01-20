@@ -9,6 +9,10 @@ handlers:
     static_dir: dist/static
     expiration: '31536000s'
 
+  - url: /(.*\.(json|ico|js|txt))$
+    static_files: dist/\1
+    upload: dist/.*\.(json|ico|js|txt)$
+
   - url: .*
     static_files: dist/index.html
     upload: dist/index.html
