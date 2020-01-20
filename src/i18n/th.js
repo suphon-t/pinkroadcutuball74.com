@@ -70,4 +70,5 @@ export default {
     subtitle: "เราไม่พบเพจที่คุณหาอยู่",
     returnHome: "กลับหน้าหลัก",
   },
+  back: "ย้อนกลับ",
 }

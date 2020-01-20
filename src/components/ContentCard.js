@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useCallback } from "react"
+import { Link, useHistory } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import styled from "styled-components"
 
@@ -8,9 +8,35 @@ import { down, up } from "styled-breakpoints"
 import vars from "../styles/vars"
 import { between } from "polished"
 import breakpoints from "../styles/breakpoints"
+import OrangeButton from "./OrangeButton"
+
+import back from "../images/arrow-back.svg"
+
+const Header = styled.div`
+  display: flex;
+`
+
+const BackButton = styled(OrangeButton)`
+  width: 30px;
+  height: 30px;
+  margin: 16px;
+  padding: 0;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: auto;
+    background: ${vars.darkBlue};
+    mask-image: url(${back});
+    mask-position: center;
+    mask-size: cover;
+  }
+`
 
 const Logo = styled(Link)`
-  display: inline-block;
+  margin-left: auto;
 
   img {
     width: 42.26px;
@@ -43,11 +69,16 @@ const Card = styled.div`
 
 function ContentCard({ children, ...rest }) {
   const { t } = useTranslation()
+  const history = useHistory()
+  const canGoBack = history.length > 1
   return (
     <div>
-      <Logo to="/">
-        <img src={logo} alt={t('appname')} />
-      </Logo>
+      <Header>
+        { canGoBack && <BackButton alt={t('back')} onClick={history.goBack} /> }
+        <Logo to="/">
+          <img src={logo} alt={t('appname')} />
+        </Logo>
+      </Header>
       <Card {...rest}>{children}</Card>
     </div>
   )
