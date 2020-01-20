@@ -7,10 +7,11 @@ import vars from "../styles/vars"
 // ant design
 import OrangeButton from "../components/OrangeButton"
 import styled from "styled-components"
-import { MobileDown, TabletUp } from "../styles/breakpoints"
+import breakpoints, { Up, Down } from "../styles/breakpoints"
 
 import logo from "../images/logo.png"
 import { between } from "polished"
+import { up } from "styled-breakpoints"
 
 const Center = styled.div`
   width: 100%;
@@ -43,13 +44,17 @@ const Line1 = styled.p`
 
 const Line2 = styled.h1`
   margin-top: calc(${vars.space} * 2);
-  font-size: ${between('70px', '110px', '375px', '1440px')};
+  font-size: 85px;
   font-weight: bold;
+
+  ${up('lg')} {
+    font-size: ${between('85px', '130px', breakpoints.lg, '1440px')};
+  }
 `
 
 const Line3 = styled.h1`
   margin-top: ${vars.space};
-  font-size: ${between('48px', '56px', '375px', '1440px')};
+  font-size: 48px;
   font-weight: bold;
 `
 
@@ -88,11 +93,11 @@ function Landing() {
         <Logo src={logo} />
       </Center>
       <TitleContainer>
-        <TabletUp>
+        <Up breakpoint="lg">
           <Line1>งานฟุตบอลประเพณี จุฬาฯ-ธรรมศาสตร์ ครั้งที่ 74</Line1>
           <Line2>BAKA Pink Road</Line2>
-        </TabletUp>
-        <MobileDown>
+        </Up>
+        <Down breakpoint="md">
           <Line1>
             งานฟุตบอลประเพณี <br /> จุฬาฯ-ธรรมศาสตร์ ครั้งที่ 74
           </Line1>
@@ -102,7 +107,7 @@ function Landing() {
           <Line3>
             Pink Road
           </Line3>
-        </MobileDown>
+        </Down>
       </TitleContainer>
       <ButtonsContainer>
         <Link to="/register">
