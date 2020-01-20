@@ -7,10 +7,7 @@ service: default
 handlers:
   - url: /static
     static_dir: dist/static
-
-  - url: /(.*\.(json|ico|js))$
-    static_files: dist/\1
-    upload: dist/.*\.(json|ico|js)$
+    expiration: '31536000s'
 
   - url: .*
     static_files: dist/index.html
