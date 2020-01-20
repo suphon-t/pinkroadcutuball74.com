@@ -67,7 +67,7 @@ function App() {
       <GlobalStyle />
       <ThemeProvider theme={{ breakpoints }}>
         <Background>
-          <BackgroundArt />
+          <BackgroundArt alt="" />
         </Background>
         <Content>
           <Routes />

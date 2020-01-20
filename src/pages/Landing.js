@@ -90,7 +90,7 @@ function Landing() {
   return (
     <div>
       <Center>
-        <Logo src={logo} />
+        <Logo src={logo} alt="" />
       </Center>
       <TitleContainer>
         <Up breakpoint="lg">
