@@ -3,7 +3,7 @@ import AdminBar from "../components/AdminBar"
 
 function Home() {
   return (
-    <AdminBar/>
+    <AdminBar fixed="top" />
     
   )
 
