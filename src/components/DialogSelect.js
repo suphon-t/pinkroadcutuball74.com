@@ -111,6 +111,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
   const closeModal = useCallback(() => {
     setModalVisible(false)
     setQuery('')
+    searchRef.current && searchRef.current.input.blur()
   }, [])
 
   // Focus search on open
@@ -143,6 +144,15 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
     closeModal()
   }, [onChange, closeModal])
 
+  const handleKeyPress = useCallback(e => {
+    if (e.key !== "Enter") return
+
+    e.preventDefault()
+    if (filtered.length === 1) {
+      handleSelect(filtered[0].value)
+    }
+  }, [filtered, handleSelect])
+
   return (
     <>
       <Box onClick={openModal} {...props}>
@@ -150,7 +160,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
       </Box>
       <CustomModal visible={modalVisible} onCancel={closeModal}>
         <Container>
-          <SearchInput ref={searchRef} value={query} onChange={handleQueryChange} placeholder={t('facultySearch')} />
+          <SearchInput ref={searchRef} value={query} onChange={handleQueryChange} onKeyPress={handleKeyPress} placeholder={t('facultySearch')} />
           <Scroller style={{ paddingBottom: offsetBottom }}>
             {filtered.map(item => {
               return (
