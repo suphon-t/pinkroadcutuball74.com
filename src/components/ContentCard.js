@@ -36,12 +36,33 @@ const BackButton = styled(OrangeButton)`
 `
 
 const Logo = styled(Link)`
-  margin-left: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 16px 10px;
 
   img {
     width: 42.26px;
     height: 33.5px;
     margin: 16px 10px 10px 10px;
+  }
+
+  ${up('lg')} {
+    padding: ${between('16px', '36px', breakpoints.lg, breakpoints.xxxl)} ${between('10px', '56px', breakpoints.lg, breakpoints.xxxl)};
+    
+    img {
+      width: ${between('42.26px', '128.68px', breakpoints.lg, breakpoints.xxxl)};
+      height: ${between('33.5px', '102px', breakpoints.lg, breakpoints.xxxl)};
+    }
+  }
+  
+  ${up('xxxl')} {
+    padding: 36px 56px;
+
+    img {
+      width: 128.68px;
+      height: 102px;
+    }
   }
 `
 
@@ -64,6 +85,12 @@ const Card = styled.div`
     width: 400px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  ${up("xl")} {
+    width: 670px;
+    margin-top: 18px;
+    padding: 43px 67px 67px 67px;
   }
 `
 

@@ -9,6 +9,7 @@ export default {
   lg: '768px',
   xl: '992px',
   xxl: '1200px',
+  xxxl: '1440px',
 }
 
 export const Down = styled.div`
