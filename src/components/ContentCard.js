@@ -44,7 +44,6 @@ const Logo = styled(Link)`
   img {
     width: 42.26px;
     height: 33.5px;
-    margin: 16px 10px 10px 10px;
   }
 
   ${up('lg')} {
