@@ -31,8 +31,9 @@ const Title = styled.h1`
   display: inline-block;
 `
 function AdminBar() {
-  return <Bar>
+  return (<Bar>
     <Title>CUTUBALL Admin Dashboard</Title>
   </Bar>
+  )
 }
 export default AdminBar
