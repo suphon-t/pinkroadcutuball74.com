@@ -76,5 +76,10 @@ export default {
     title:"แสกน QR code",
     title2:"ณ จุดลงทะเบียน",
     subtitle:"แผนที่จุดลงทะเบียน"
+  },
+  admin: {
+    register:"ลงทะเบียน", 
+    enter:"เข้างาน",
+    person:"คน"
   }
 }
