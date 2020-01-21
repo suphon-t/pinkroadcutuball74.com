@@ -107,10 +107,12 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
 
   const openModal = useCallback(() => {
     setModalVisible(true)
+    window.scrollTo(window.scrollX, 0)
   }, [])
   const closeModal = useCallback(() => {
     setModalVisible(false)
     setQuery('')
+    searchRef.current && searchRef.current.input.blur()
   }, [])
 
   // Focus search on open
@@ -123,25 +125,35 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
   // Adjust for iOS virtual keyboard
   const viewport = window.visualViewport
   useEffect(() => {
-    if (!viewport) {
+    if (!viewport || !modalVisible) {
       return
     }
 
-    const listener = () => {
+    const updateOffsetBottom = () => {
       const offsetBottom = window.innerHeight - viewport.height - viewport.offsetTop
       setOffsetBottom(Math.max(0, offsetBottom - 54))
     }
-    viewport.addEventListener('resize', listener)
+    updateOffsetBottom()
+    viewport.addEventListener('resize', updateOffsetBottom)
     return () => {
       setOffsetBottom(0)
-      viewport.removeEventListener('resize', listener)
+      viewport.removeEventListener('resize', updateOffsetBottom)
     }
-  }, [viewport])
+  }, [viewport, modalVisible])
   
   const handleSelect = useCallback(newValue => {
     onChange(newValue)
     closeModal()
   }, [onChange, closeModal])
+
+  const handleKeyPress = useCallback(e => {
+    if (e.key !== "Enter") return
+
+    e.preventDefault()
+    if (filtered.length === 1) {
+      handleSelect(filtered[0].value)
+    }
+  }, [filtered, handleSelect])
 
   return (
     <>
@@ -150,7 +162,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
       </Box>
       <CustomModal visible={modalVisible} onCancel={closeModal}>
         <Container>
-          <SearchInput ref={searchRef} value={query} onChange={handleQueryChange} placeholder={t('facultySearch')} />
+          <SearchInput ref={searchRef} value={query} onChange={handleQueryChange} onKeyPress={handleKeyPress} placeholder={t('facultySearch')} />
           <Scroller style={{ paddingBottom: offsetBottom }}>
             {filtered.map(item => {
               return (

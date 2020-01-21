@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { Link, useHistory } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import styled from "styled-components"

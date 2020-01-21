@@ -4,7 +4,7 @@ import { useForm, FormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as yup from "yup"
 import styled from "styled-components"
-import { down } from "styled-breakpoints"
+import { down, up } from "styled-breakpoints"
 
 // ant design
 import { Form, Button } from "antd"
@@ -71,6 +71,10 @@ const ConfirmationText = styled.p`
   ${down("xs")} {
     margin: 0 8px;
   }
+
+  ${up('xl')} {
+    font-size: 30px;
+  }
 `
 
 const ModalFooter = styled.div`
@@ -94,7 +98,7 @@ function Register() {
       value: code,
       label: t(`facultyNames.${code}`),
     }))
-  }, [])
+  }, [t])
 
   const { loading, execute: executePost } = useFakePost("/register")
   const onSubmit = useCallback(() => {
