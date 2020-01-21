@@ -1,7 +1,12 @@
 import React from "react"
+import AdminBar from "../components/AdminBar"
 
 function Home() {
-  return <h1>Hello World!</h1>
+  return (
+    <AdminBar/>
+    
+  )
+
 }
 
 export default Home
