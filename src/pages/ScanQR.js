@@ -1,11 +1,8 @@
 import React from "react"
 import { useTranslation } from "react-i18next"
-import { Link } from "react-router-dom"
 
 import ContentCard from "../components/ContentCard"
-import OrangeButton from "../components/OrangeButton"
 
-import success from "../images/success.svg"
 import styled from "styled-components"
 import vars from "../styles/vars"
 
