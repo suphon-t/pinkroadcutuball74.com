@@ -107,6 +107,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
 
   const openModal = useCallback(() => {
     setModalVisible(true)
+    window.scrollTo(window.scrollX, 0)
   }, [])
   const closeModal = useCallback(() => {
     setModalVisible(false)
@@ -124,20 +125,21 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
   // Adjust for iOS virtual keyboard
   const viewport = window.visualViewport
   useEffect(() => {
-    if (!viewport) {
+    if (!viewport || !modalVisible) {
       return
     }
 
-    const listener = () => {
+    const updateOffsetBottom = () => {
       const offsetBottom = window.innerHeight - viewport.height - viewport.offsetTop
       setOffsetBottom(Math.max(0, offsetBottom - 54))
     }
-    viewport.addEventListener('resize', listener)
+    updateOffsetBottom()
+    viewport.addEventListener('resize', updateOffsetBottom)
     return () => {
       setOffsetBottom(0)
-      viewport.removeEventListener('resize', listener)
+      viewport.removeEventListener('resize', updateOffsetBottom)
     }
-  }, [viewport])
+  }, [viewport, modalVisible])
   
   const handleSelect = useCallback(newValue => {
     onChange(newValue)
