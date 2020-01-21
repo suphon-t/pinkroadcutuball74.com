@@ -10,6 +10,7 @@ import GetTicket from "../pages/GetTicket"
 import PrivateRoute from "./PrivateRoute"
 import User from "../pages/User"
 import NoMatch from "../pages/NoMatch"
+import ScanQR from "../pages/ScanQR"
 
 const Admin = lazy(() => import("../admin"))
 const RandomScreen = lazy(() => import("../admin/pages/RandomScreen"))
@@ -27,6 +28,7 @@ function Routes() {
           <Route path="/register" exact component={Register} />
           <Route path="/register/success" component={RegisterSuccess} />
           <Route path="/login" component={Login} />
+          <Route path="/scanqr" exact component = {ScanQR} />
           <PrivateRoute path="/user">
             <User />
           </PrivateRoute>

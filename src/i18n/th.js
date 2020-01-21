@@ -71,4 +71,9 @@ export default {
     returnHome: "กลับหน้าหลัก",
   },
   back: "ย้อนกลับ",
+  scanqr: {
+    title:"แสกน QR code",
+    title2:"ณ จุดลงทะเบียน",
+    subtitle:"แผนที่จุดลงทะเบียน"
+  }
 }
