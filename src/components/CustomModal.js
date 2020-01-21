@@ -8,7 +8,7 @@ const maskStyle = {
   backdropFilter: "saturate(180%) blur(15px)",
 }
 
-export default styled(Modal).attrs({ maskStyle })`
+export default styled(Modal).attrs({ maskStyle, centered: true, closable: false, footer: null })`
   .ant-modal-content {
     margin: 0 20px;
     border-radius: 10px;

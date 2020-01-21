@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState, useMemo } from "react"
 import { useHistory } from "react-router-dom"
 import { useForm, FormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -7,10 +7,10 @@ import styled from "styled-components"
 import { down } from "styled-breakpoints"
 
 // ant design
-import { Form, Select, Button } from "antd"
+import { Form, Button } from "antd"
 
 // utility
-import { emailPattern, telPattern, optionContains } from "../utils"
+import { emailPattern, telPattern } from "../utils"
 import facultyCodes from "../i18n/faculty-codes"
 import { useFakePost } from "../api"
 
@@ -24,8 +24,7 @@ import CustomModal from "../components/CustomModal"
 // styles
 import vars from "../styles/vars"
 import PageHeader from "../components/PageHeader"
-
-const { Option } = Select
+import DialogSelect from "../components/DialogSelect"
 
 const validationSchema = yup.object().shape({
   name: yup.string().required(),
@@ -90,6 +89,13 @@ function Register() {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
 
+  const facultyOptions = useMemo(() => {
+    return facultyCodes.map(code => ({
+      value: code,
+      label: t(`facultyNames.${code}`),
+    }))
+  }, [])
+
   const { loading, execute: executePost } = useFakePost("/register")
   const onSubmit = useCallback(() => {
     setModalVisible(true)
@@ -110,7 +116,7 @@ function Register() {
   )
 
   const confirmModal = (
-    <CustomModal className="register-modal" visible={modalVisible} centered closable={false} footer={null} onCancel={() => setModalVisible(false)}>
+    <CustomModal className="register-modal" visible={modalVisible} onCancel={() => setModalVisible(false)}>
       <ConfirmationText>{t("register.dialog.title")}</ConfirmationText>
       <UserInfo user={getValues()} style={{ marginTop: 16, marginBottom: 34 }} />
       <ModalFooter>
@@ -135,13 +141,7 @@ function Register() {
             <Field name="tel" title={t("phoneNumber")} type="tel" />
             <Field name="email" title={t("email")} type="email" />
             <Field name="faculty" title={t("faculty")} as={FacultyContainer}>
-              <Select showSearch filterOption={optionContains}>
-                {facultyCodes.map(code => (
-                  <Option key={code} value={code}>
-                    {(code !== "00" ? `${code} ` : "") + t(`facultyNames.${code}`)}
-                  </Option>
-                ))}
-              </Select>
+              <DialogSelect options={facultyOptions} />
             </Field>
 
             <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
@@ -176,7 +176,7 @@ function TosModal({ title, children, ...rest }) {
       <a {...rest} onClick={handleClick}>
         {title}
       </a>
-      <CustomModal className="register-modal" visible={visible} centered closable={false} footer={null} onCancel={close}>
+      <CustomModal className="register-modal" visible={visible} onCancel={close}>
         <TosTitle>{title}</TosTitle>
         {children}
         <ModalFooter>
