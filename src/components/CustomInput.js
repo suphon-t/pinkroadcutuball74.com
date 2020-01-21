@@ -22,7 +22,7 @@ export default styled(Input)`
     font-size: 11px;
     line-height: 24px;
 
-    color: $grey4;
+    color: $grey2;
   }
 
   .has-error &:focus {
