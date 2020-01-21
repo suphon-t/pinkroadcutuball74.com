@@ -54,6 +54,7 @@ const Scroller = styled.div`
   margin-top: 20px;
 
   overflow-y: scroll;
+  transition: padding-bottom .15s ease-out;
 `
 
 const SearchInput = styled(Input).attrs({
@@ -81,6 +82,7 @@ const Option = styled.p`
 function DialogSelect({ options, value, onChange, placeholder, ...props }) {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
+  const [offsetBottom, setOffsetBottom] = useState(0)
   const [query, setQuery] = useState('')
   const searchRef = useRef(null)
 
@@ -111,11 +113,30 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
     setQuery('')
   }, [])
 
+  // Focus search on open
   useEffect(() => {
     if (modalVisible) {
       searchRef.current && searchRef.current.input.focus()
     }
   }, [modalVisible])
+
+  // Adjust for iOS virtual keyboard
+  const viewport = window.visualViewport
+  useEffect(() => {
+    if (!viewport) {
+      return
+    }
+
+    const listener = () => {
+      const offsetBottom = window.innerHeight - viewport.height - viewport.offsetTop
+      setOffsetBottom(Math.max(0, offsetBottom - 54))
+    }
+    viewport.addEventListener('resize', listener)
+    return () => {
+      setOffsetBottom(0)
+      viewport.removeEventListener('resize', listener)
+    }
+  }, [viewport])
   
   const handleSelect = useCallback(newValue => {
     onChange(newValue)
@@ -130,7 +151,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
       <CustomModal visible={modalVisible} onCancel={closeModal}>
         <Container>
           <SearchInput ref={searchRef} value={query} onChange={handleQueryChange} placeholder={t('facultySearch')} />
-          <Scroller>
+          <Scroller style={{ paddingBottom: offsetBottom }}>
             {filtered.map(item => {
               return (
                 <Option key={item.value} onClick={() => handleSelect(item.value)}>{item.label}</Option>
