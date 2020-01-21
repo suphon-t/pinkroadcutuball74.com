@@ -6,6 +6,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Set env to staging
+      if: endsWith(github.ref, '/master')
+      run: |
+        base64 --decode <<< $ENVSETUP | sh
+      env:
+        ENVSETUP: ${{ secrets.ENVSETUP_STAGING }}
+    - name: Set env to production
+      if: endsWith(github.ref, '/production')
+      run: |
+        base64 --decode <<< $ENVSETUP | sh
+      env:
+        ENVSETUP: ${{ secrets.ENVSETUP_PRODUCTION }}
     - name: Checkout
       uses: actions/checkout@v2.0.0
     - name: Setup Node.js
@@ -25,13 +37,14 @@ jobs:
     - name: Build
       run: |
         yarn build
-      env:
-        REACT_APP_API_URL: ${{ secrets.API_URL }}
     - name: Archive artifacts
       uses: actions/upload-artifact@v1
       with:
         name: dist
         path: build
+    - name: Copy gcloud config
+      run: |
+        cp gcloud/$GCLOUD_CONFIG gcloud/app.yaml
     - name: Archive gcloud config
       uses: actions/upload-artifact@v1
       with:
