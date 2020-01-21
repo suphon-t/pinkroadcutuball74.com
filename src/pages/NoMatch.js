@@ -1,12 +1,11 @@
 import React from "react"
 import ContentCard from "../components/ContentCard"
-import styled from "styled-components"
 import { useTranslation } from "react-i18next"
-import vars from "../styles/vars"
+import { Link } from "react-router-dom"
+
 import Title from "../components/Title"
 import Subtitle from "../components/Subtitle"
 import OrangeButton from "../components/OrangeButton"
-import { Link } from "react-router-dom"
 
 function NoMatch() {
   const { t } = useTranslation()

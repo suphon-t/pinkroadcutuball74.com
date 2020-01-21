@@ -98,7 +98,7 @@ function Register() {
       value: code,
       label: t(`facultyNames.${code}`),
     }))
-  }, [])
+  }, [t])
 
   const { loading, execute: executePost } = useFakePost("/register")
   const onSubmit = useCallback(() => {
