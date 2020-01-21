@@ -94,12 +94,12 @@ function Landing() {
       </Center>
       <TitleContainer>
         <Up breakpoint="lg">
-          <Line1>งานฟุตบอลประเพณี จุฬาฯ-ธรรมศาสตร์ ครั้งที่ 74</Line1>
+          <Line1>งานฟุตบอลประเพณี จุฬาฯ - ธรรมศาสตร์ ครั้งที่ 74</Line1>
           <Line2>BAKA Pink Road</Line2>
         </Up>
         <Down breakpoint="md">
           <Line1>
-            งานฟุตบอลประเพณี <br /> จุฬาฯ-ธรรมศาสตร์ ครั้งที่ 74
+            งานฟุตบอลประเพณี <br /> จุฬาฯ - ธรรมศาสตร์ ครั้งที่ 74
           </Line1>
           <Line2>
             BAKA<br />
