@@ -8,10 +8,10 @@ import { useTranslation } from "react-i18next"
 import { useGet } from "../api"
 
 import styled from "styled-components"
-import vars from "../styles/vars";
+import vars from "../styles/vars"
 
 const DataTitle = styled(Title)`
-  margin: 1rem 0 2.5rem
+  margin: 1rem 0 2.5rem;
 `
 const TosLabel = styled.label`
   display: inline-block;
@@ -34,7 +34,7 @@ function User() {
     <ContentCard>
       <DataTitle>{t("userdata.title")}</DataTitle>
 
-      { !data ? 'Loading': <Info user={data.data}/> }
+      <Info user={data && data.data} />
       
       <TosLabel>{t("userdata.contact1")}</TosLabel>
       <PinkLabel>{t("userdata.contact2")}</PinkLabel>

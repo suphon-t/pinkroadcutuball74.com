@@ -2,6 +2,8 @@ import React, { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import styled from "styled-components"
 
+import { Skeleton } from "antd"
+
 import { idNumberPattern, telPattern } from "../utils"
 import vars from "../styles/vars"
 
@@ -19,22 +21,44 @@ const Value = styled.p`
   line-height: 20px;
 `
 
+const RowSkeleton = styled(Skeleton).attrs({
+  active: true,
+  paragraph: false,
+  title: { width: 200 },
+})`
+  display: block;
+
+  .ant-skeleton-title {
+    height: 16px;
+    margin-top: 4px;
+    margin-bottom: 13px;
+  }
+`
+
+function Row({ name, value }) {
+  return (
+    <>
+      <Name>{name}</Name>
+      { value ? <Value>{value}</Value> : <RowSkeleton /> }
+    </>
+  )
+}
+
 function UserInfo({ user, ...rest }) {
   const { t } = useTranslation()
-  const ID = useMemo(() => user.ID?.replace(idNumberPattern, '$1 $2 $3 $4 $5'), [user.ID])
-  const tel = useMemo(() => user.tel?.replace(telPattern, '$1 $2 $3'), [user.tel])
+  const ID = useMemo(() => user?.ID?.replace(idNumberPattern, '$1 $2 $3 $4 $5'), [user])
+  const tel = useMemo(() => user?.tel?.replace(telPattern, '$1 $2 $3'), [user])
+  const facultyName = useMemo(() => {
+    if (!user) return undefined
+    return t(`facultyNames.${user?.faculty}`)
+  }, [user, t])
   return (
     <div {...rest}>
-      <Name>{t('fullname')}</Name>
-      <Value>{user.name}</Value>
-      <Name>{t('idNumber')}</Name>
-      <Value>{ID}</Value>
-      <Name>{t('phoneNumber')}</Name>
-      <Value>{tel}</Value>
-      <Name>{t('email')}</Name>
-      <Value>{user.email}</Value>
-      <Name>{t('faculty')}</Name>
-      <Value>{t(`facultyNames.${user.faculty}`)}</Value>
+      <Row name={t('fullname')} value={user?.name} />
+      <Row name={t('idNumber')} value={ID} />
+      <Row name={t('phoneNumber')} value={tel} />
+      <Row name={t('email')} value={user?.email} />
+      <Row name={t('faculty')} value={facultyName} />
     </div>
   )
 }
