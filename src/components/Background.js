@@ -4,7 +4,7 @@ import styled from "styled-components"
 import background from "../images/background.svg"
 import backgroundLand from "../images/background-land.svg"
 
-const Gradient = styled.div`
+const Container = styled.div`
   display: flex;
   position: fixed;
   width: 100vw;
@@ -13,8 +13,6 @@ const Gradient = styled.div`
   left: 0;
   z-index: -1;
 
-  background: linear-gradient(180deg, #f9c455 0%, #ee7398 35.42%);
-  background-attachment: fixed;
   flex-direction: column-reverse;
 `
 
@@ -31,9 +29,9 @@ const Art = styled.img`
 
 function Background() {
   return (
-    <Gradient>
+    <Container id="background">
       <Art alt="" />
-    </Gradient>
+    </Container>
   )
 }
 

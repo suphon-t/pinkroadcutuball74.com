@@ -4,10 +4,13 @@ import { createGlobalStyle } from "styled-components"
 
 import Home from "./pages/home"
 import RandomControl from "./pages/RandomControl"
-import Background from "../components/Background"
 
 const AdminGlobalStyle = createGlobalStyle`
-  ${Background} {
+  body {
+    background: white;
+  }
+
+  #background {
     display: none;
   }
 `

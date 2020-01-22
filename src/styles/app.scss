@@ -9,3 +9,8 @@
   font-family: "Gotham Ultra";
   src: url("../fonts/Gotham\ Ultra.otf");
 }
+
+body {
+  background: linear-gradient(180deg, #f9c455 0%, #ee7398 35.42%);
+  background-attachment: fixed;
+}
