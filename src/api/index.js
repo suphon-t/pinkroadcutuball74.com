@@ -64,12 +64,16 @@ export function usePromise() {
   return { loading: !!state.promise, data, error, setPromise }
 }
 
-export function usePostStatus(url) {
+export function usePostStatus(url, isJson = true) {
   const { http } = useHttpContext()
   const { setPromise, ...result } = usePromise()
   const execute = useCallback(body => {
-    return setPromise(http.post(url, qs.stringify(body)))
-  }, [http, url, setPromise])
+    if (isJson) {
+      return setPromise(http.post(url, body))
+    } else {
+      return setPromise(http.post(url, qs.stringify(body)))
+    }
+  }, [http, isJson, url, setPromise])
   return { ...result, execute }
 }
 

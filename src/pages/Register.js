@@ -1,7 +1,7 @@
-import React, { useCallback, useState, useMemo } from "react"
-import { useHistory } from "react-router-dom"
+import React, { useCallback, useState, useMemo, useEffect } from "react"
+import { useHistory, Link } from "react-router-dom"
 import { useForm, FormContext } from "react-hook-form"
-import { useTranslation } from "react-i18next"
+import { useTranslation, Trans } from "react-i18next"
 import * as yup from "yup"
 import styled from "styled-components"
 import { down, up } from "styled-breakpoints"
@@ -12,7 +12,7 @@ import { Form, Button } from "antd"
 // utility
 import { emailPattern, telPattern } from "../utils"
 import facultyCodes from "../i18n/faculty-codes"
-import { useFakePost } from "../api"
+import { usePostStatus } from "../api"
 
 // components
 import UserInfo from "../components/UserInfo"
@@ -25,6 +25,7 @@ import CustomModal from "../components/CustomModal"
 import vars from "../styles/vars"
 import PageHeader from "../components/PageHeader"
 import DialogSelect from "../components/DialogSelect"
+import { useAuthContext } from "../auth"
 
 const validationSchema = yup.object().shape({
   name: yup.string().required(),
@@ -82,16 +83,33 @@ const ModalFooter = styled.div`
   text-align: center;
 
   button {
-    width: 89px;
+    min-width: 89px;
     margin: 0 10px;
   }
 `
 
 function Register() {
+  const { isAuthenticated } = useAuthContext()
   const methods = useForm({ validationSchema })
   const { getValues, handleSubmit } = methods
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
+  const [isDuplicate, setIsDuplicate] = useState(false)
+  const [errorDescription, setErrorDescription] = useState(undefined)
+
+  const closeDuplicate = useCallback(() => {
+    setIsDuplicate(false)
+  }, [])
+
+  const closeError = useCallback(() => {
+    setErrorDescription(undefined)
+  }, [])
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setIsDuplicate(true)
+    }
+  }, [isAuthenticated])
 
   const facultyOptions = useMemo(() => {
     return facultyCodes.map(code => ({
@@ -100,19 +118,24 @@ function Register() {
     }))
   }, [t])
 
-  const { loading, execute: executePost } = useFakePost("/register")
+  const { loading, execute: executePost } = usePostStatus("/register")
   const onSubmit = useCallback(() => {
     setModalVisible(true)
   }, [])
 
   const history = useHistory()
   const confirmSubmit = useCallback(
-    async data => {
+    async () => {
       try {
         await executePost(getValues())
-        history.push("/register/success")
+        history.replace("/register/success")
       } catch (err) {
-        alert("error: " + JSON.stringify(err))
+        const data = err.response.data
+        if (data.error === "DUPID") {
+          setIsDuplicate(true)
+        } else {
+          setErrorDescription(data.error_description)
+        }
         setModalVisible(false)
       }
     },
@@ -120,7 +143,7 @@ function Register() {
   )
 
   const confirmModal = (
-    <CustomModal className="register-modal" visible={modalVisible} onCancel={() => setModalVisible(false)}>
+    <CustomModal visible={modalVisible} onCancel={() => setModalVisible(false)}>
       <ConfirmationText>{t("register.dialog.title")}</ConfirmationText>
       <UserInfo user={getValues()} style={{ marginTop: 16, marginBottom: 34 }} />
       <ModalFooter>
@@ -156,6 +179,8 @@ function Register() {
               <TosModal title="นโยบายความเป็นส่วนตัว" />
             </TosLabel>
             {confirmModal}
+            <DuplicateIdModal visible={isDuplicate} onCancel={closeDuplicate} />
+            <ErrorModal description={errorDescription} onCancel={closeError} />
           </Form>
         </div>
       </ContentCard>
@@ -180,7 +205,7 @@ function TosModal({ title, children, ...rest }) {
       <a {...rest} onClick={handleClick}>
         {title}
       </a>
-      <CustomModal className="register-modal" visible={visible} onCancel={close}>
+      <CustomModal visible={visible} onCancel={close}>
         <TosTitle>{title}</TosTitle>
         {children}
         <ModalFooter>
@@ -190,6 +215,41 @@ function TosModal({ title, children, ...rest }) {
         </ModalFooter>
       </CustomModal>
     </>
+  )
+}
+
+function DuplicateIdModal(props) {
+  const { t } = useTranslation()
+  return (
+    <CustomModal {...props}>
+      <ConfirmationText>{t("register.duplicate.title")}</ConfirmationText>
+      <p style={{ marginTop: 8 }}>
+        <Trans i18nKey="register.duplicate.desc">
+          1 <Link to="/user">2</Link>
+        </Trans>
+      </p>
+      <ModalFooter>
+        <Link to="/">
+          <Button shape="round">{t("register.backtohome")}</Button>
+        </Link>
+        <Button shape="round" type="primary" onClick={props.onCancel}>{t("register.duplicate.again")}</Button>
+      </ModalFooter>
+    </CustomModal>
+  )
+}
+
+function ErrorModal({ description, ...props }) {
+  const { t } = useTranslation()
+  return (
+    <CustomModal visible={!!description} {...props}>
+      <ConfirmationText>{t("error")}</ConfirmationText>
+      <p style={{ marginTop: 8, textAlign: 'center' }}>
+        {description}
+      </p>
+      <ModalFooter>
+        <Button shape="round" type="primary" onClick={props.onCancel}>{t("ok")}</Button>
+      </ModalFooter>
+    </CustomModal>
   )
 }
 

@@ -15,7 +15,6 @@ function HttpProvider(props) {
         'Accept': 'application/json',
         'Authorization': token ? `Bearer ${token}` : '',
         'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
     instance.interceptors.response.use(

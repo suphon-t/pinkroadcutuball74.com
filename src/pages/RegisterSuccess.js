@@ -45,10 +45,10 @@ function RegisterSuccess() {
         <Title>{t('register.success.title')}</Title>
         <Subtitle>{t('register.success.subtitle')}</Subtitle>
         <Link to="/">
-          <BackToHome>{t('register.success.backtohome')}</BackToHome>
+          <BackToHome>{t('register.backtohome')}</BackToHome>
         </Link>
         <Link to="/login">
-          <CheckInfo>{t('register.success.checkinfo')}</CheckInfo>
+          <CheckInfo>{t('register.checkinfo')}</CheckInfo>
         </Link>
       </ContentCard>
     </>
