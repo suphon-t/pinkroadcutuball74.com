@@ -30,6 +30,8 @@ export function useFakePost(url) {
 
 export function usePromise() {
   const [state, setState] = useState({})
+  const { data, error } = state
+
   useEffect(() => {
     if (!state.promise) {
       return
@@ -55,11 +57,10 @@ export function usePromise() {
 
   const setPromise = useCallback(promise => {
     return new Promise((resolve, reject) => {
-      setState({ promise, resolve, reject })
+      setState({ data, promise, resolve, reject })
     })
-  }, [])
+  }, [data])
 
-  const { data, error } = state
   return { loading: !!state.promise, data, error, setPromise }
 }
 
