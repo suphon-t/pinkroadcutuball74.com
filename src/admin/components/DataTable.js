@@ -1,7 +1,25 @@
 import React from "react"
-
+import styled from "styled-components"
 import { Table } from "antd"
+
 import { useFakeGet } from "../../api"
+import vars from "../../styles/vars"
+import { darken, lighten } from "polished"
+
+const StyledTable = styled(Table)`
+  .ant-table-thead > tr > th {
+    background: ${vars.pink};
+    color: ${vars.white};
+
+    &.ant-table-column-sort {
+      background: ${darken(.05, vars.pink)};
+    }
+
+    &.ant-table-column-has-actions.ant-table-column-has-sorters:hover {
+      background: ${lighten(.05, vars.pink)}
+    }
+  }
+`
 
 const columns = [
   {
@@ -40,7 +58,7 @@ const columns = [
 function DataTable() {
   const { data, loading } = useFakeGet('/users')
   return (
-    <Table loading={loading} dataSource={data} columns={columns} />
+    <StyledTable loading={loading} dataSource={data} columns={columns} />
   )
 }
 
