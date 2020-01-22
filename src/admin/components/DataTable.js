@@ -267,8 +267,8 @@ class DataTable extends React.Component {
     const pagination = pager || this.state.pagination;
     console.log("Pagination =" + pagination, " Cur=" + pagination.current + " PS="+pagination.pageSize)
     this.fetch({
-      start: pagination.pageSize * (pagination.current-1) + 1,
-      end: pagination.pageSize * pagination.current,
+      start: pagination.pageSize * (pagination.current-1) + 1 || 1,
+      end: pagination.pageSize * pagination.current || 10,
     });
   }
   save(form, rid) {
@@ -292,9 +292,8 @@ class DataTable extends React.Component {
   }
   delete(rid) {
     reqwest({
-      url: 'https://api-staging-dot-cutuball.appspot.com/admin/delete',
+      url: 'https://api-staging-dot-cutuball.appspot.com/admin/delete?id='+rid,
       method: 'delete',
-      data: { id:rid},
       headers: {Authorization: "Bearer " + localStorage.getItem('access_token')}
     }).then(data => {
       this.setState({
