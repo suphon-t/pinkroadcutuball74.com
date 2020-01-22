@@ -1,10 +1,20 @@
-import React, { createContext, useEffect, useState, useCallback } from "react"
+import React, { createContext, useEffect, useState, useCallback, useMemo } from "react"
+
+import jwt from "jsonwebtoken"
 
 export const AuthContext = createContext()
 
 function AuthProvider(props) {
   const [token, setToken] = useState(() => localStorage.getItem('access_token'))
+  const tokenData = useMemo(() => {
+    if (!token) {
+      return undefined
+    }
+
+    return jwt.decode(token)
+  }, [token])
   const isAuthenticated = !!token
+  const isAdmin = tokenData?.sub === 'admin'
 
   // Persist the token
   useEffect(() => {
@@ -19,7 +29,7 @@ function AuthProvider(props) {
   const login = useCallback(token => setToken(token), [])
   const logout = useCallback(() => setToken(null), [])
 
-  const value = { isAuthenticated, token, login, logout }
+  const value = { isAuthenticated, isAdmin, token, login, logout }
 
   return <AuthContext.Provider value={value} {...props} />
 }

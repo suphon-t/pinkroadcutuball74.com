@@ -13,6 +13,7 @@
     "formik": "^2.1.1",
     "history": "^4.10.1",
     "i18next": "^19.0.3",
+    "jsonwebtoken": "^8.5.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "node-sass": "^4.13.0",

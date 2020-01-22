@@ -2,13 +2,14 @@ import React, { Suspense, lazy } from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import styled, { keyframes } from "styled-components"
 
+import { UserRoute, AdminRoute } from "./RouteTypes"
+
 import LoadingIcon from "../components/LoadingIcon"
 import Landing from "../pages/Landing"
 import Register from "../pages/Register"
 import Login from "../pages/Login"
 import RegisterSuccess from "../pages/RegisterSuccess"
 import GetTicket from "../pages/GetTicket"
-import PrivateRoute from "./PrivateRoute"
 import User from "../pages/User"
 import NoMatch from "../pages/NoMatch"
 import ScanQR from "../pages/ScanQR"
@@ -41,14 +42,18 @@ function Routes() {
           <Route path="/register/success" component={RegisterSuccess} />
           <Route path="/login" component={Login} />
           <Route path="/scanqr" exact component = {ScanQR} />
-          <PrivateRoute path="/user">
+          <UserRoute path="/user">
             <User />
-          </PrivateRoute>
-          <PrivateRoute path="/ticket">
+          </UserRoute>
+          <UserRoute path="/ticket">
             <GetTicket />
-          </PrivateRoute>
-          <Route path="/admin" component={Admin} />
-          <Route path="/adminext/random" component={RandomScreen} />
+          </UserRoute>
+          <AdminRoute path="/admin">
+            <Admin />
+          </AdminRoute>
+          <AdminRoute path="/adminext/random">
+            <RandomScreen />
+          </AdminRoute>
           <Route component={NoMatch} />
         </Switch>
       </Suspense>
