@@ -257,13 +257,20 @@ class DataTable extends React.Component {
 
   state = {
     data: [],
-    pagination: {},
+    pagination: { pageSize:10},
     loading: true,
     targetId: null
   };
 
   isEditting = (id) => (this.state.targetId == id);
-
+  refresh(pager) {
+    const pagination = pager || this.state.pagination;
+    console.log("Pagination =" + pagination, " Cur=" + pagination.current + " PS="+pagination.pageSize)
+    this.fetch({
+      start: pagination.pageSize * (pagination.current-1) + 1,
+      end: pagination.pageSize * pagination.current,
+    });
+  }
   save(form, rid) {
     let data = form.getFieldsValue();
     console.log("Saving" + data);
@@ -276,9 +283,9 @@ class DataTable extends React.Component {
     }).then(data => {
       this.setState({
         targetId:null
-      })
+      });
+      this.refresh()
 
-      console.log("Cur data " + data);
     }).fail( (error, msg) => {
       alert("Error while saving data " + error.response + " msg " + msg);
     });;
@@ -293,8 +300,8 @@ class DataTable extends React.Component {
       this.setState({
         targetId:null
       })
+      this.refresh()
 
-      console.log("Cur data " + data);
     }).fail( (error, msg) => {
       alert("Error while deleting data " + error.response + " msg " + msg);
     });
@@ -366,13 +373,7 @@ class DataTable extends React.Component {
     this.setState({
       pagination: pager,
     });
-    this.fetch({
-      start: pagination.pageSize * (pagination.current-1) + 1,
-      end: pagination.pageSize * pagination.current,
-      sortField: sorter.field,
-      sortOrder: sorter.order,
-      ...filters,
-    });
+    this.refresh(pager);
   };
 
   fetch = (params = {start: 1, end:10}) => {
