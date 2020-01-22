@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
+import styled, { keyframes } from "styled-components"
 
 import LoadingIcon from "../components/LoadingIcon"
 import Landing from "../pages/Landing"
@@ -15,9 +16,20 @@ import ScanQR from "../pages/ScanQR"
 const Admin = lazy(() => import("../admin"))
 const RandomScreen = lazy(() => import("../admin/pages/RandomScreen"))
 
-function Loading() {
-  return <div style={{ display: 'flex', height: '100vh' }}><LoadingIcon /></div>
-}
+const delayedFadeIn = keyframes`
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+`;
+
+const Loading = styled.div.attrs({
+  children: <LoadingIcon />,
+})`
+  display: flex;
+  height: 100vh;
+
+  animation: ${delayedFadeIn} .5s;
+`
 
 function Routes() {
   return (
