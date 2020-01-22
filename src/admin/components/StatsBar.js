@@ -2,12 +2,12 @@ import React, { useEffect } from "react"
 import styled from "styled-components"
 import { useTranslation } from "react-i18next"
 
-import StatsNumber from "./StatsNumber"
 import { usePromise } from "../../api"
+import StatsNumber from "./StatsNumber"
 
 const Container = styled.div`
   display: flex;
-  margin-top: 56px;
+  margin: 56px 0;
 
   justify-content: center;
 `

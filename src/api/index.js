@@ -2,12 +2,7 @@ import { useState, useCallback, useEffect } from "react"
 import qs from "qs"
 
 import HttpProvider, { useHttpContext } from "./HttpProvider"
-
-const mockData = {
-  '/register': () => {
-    return { success: true }
-  }
-}
+import mockData from "./mockData"
 
 export { HttpProvider, useHttpContext }
 
@@ -26,6 +21,25 @@ export function useFakePost(url) {
     }))
   }, [url, setPromise])
   return { ...rest, execute }
+}
+
+export function useFakeGet(url) {
+  const { setPromise, ...result } = usePromise()
+  const execute = useCallback(() => {
+    return setPromise(new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (mockData[url]) {
+          resolve(mockData[url])
+        } else {
+          reject('404 not found')
+        }
+      }, 300)
+    }))
+  }, [url, setPromise])
+  useEffect(() => {
+    execute()
+  }, [url, execute])
+  return { ...result, execute }
 }
 
 export function usePromise() {
