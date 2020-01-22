@@ -73,7 +73,7 @@ function Login(){
               closable
               onClose={clearError} />
           )}
-          <Field name="ID" title={t("idNumber")} pattern="\d*" disabled={loading} />
+          <Field name="ID" title={t("idNumber")} pattern="\d+|admin" disabled={loading} />
           <Field name="tel" title={t("phoneNumber")} type="tel" disabled={loading} />
           <SubmitButton type="submit" disabled={loading}>{t("login.submit")}</SubmitButton>
         </LoginForm>
