@@ -94,6 +94,10 @@ export default {
     enter:"เข้างาน",
     person:"คน"
   },
+<<<<<<< Updated upstream
   error: "เกิดข้อผิดพลาด",
   ok: "ตกลง",
+=======
+  logout: "ออกจากระบบ"
+>>>>>>> Stashed changes
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-
+import { useTranslation } from "react-i18next"
 import ContentCard from "../components/ContentCard"
 import Ticket from "../components/Ticket"
 import OrangeButton from "../components/OrangeButton"
@@ -9,6 +9,8 @@ import {lighten, darken} from "polished"
 import { Input } from "antd"
 import { useGet } from "../api"
 import LoadingIcon from "../components/LoadingIcon"
+import { useAuthContext } from "../auth"
+import { Redirect } from "react-router-dom"
 
 const LogoutButton = styled(OrangeButton)`
   background: ${vars.darkBlue};
@@ -25,12 +27,14 @@ const LogoutButton = styled(OrangeButton)`
       background: ${lighten(0.08, vars.darkBlue)};
     }
     &:active {
-      background: ${darken(0.1, vars.darkBlue)}
+      background: ${darken(0.1, vars.darkBlue)};
     }
   }
 `
 
 function GetTicket() {
+  const { logout } = useAuthContext()
+  const { t } = useTranslation()
   const { data: user } = useGet('/getuser')
   const [number, setNumber] = useState('0074')
   if (!user) {
@@ -44,7 +48,11 @@ function GetTicket() {
       <ContentCard style={{ padding: 16 }}>
         <Ticket data={data} style={{ borderRadius: 10 }} />
       </ContentCard>
-      <LogoutButton>ออกจากระบบ</LogoutButton>
+      <LogoutButton type="button" onClick={ () => {
+        logout()
+        return <Redirect to="/" />
+      }
+      }>{t("logout")}</LogoutButton>
     </>
   )
 }
