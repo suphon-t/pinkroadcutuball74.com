@@ -77,6 +77,13 @@ export default {
     title2:"ณ จุดลงทะเบียน",
     subtitle:"แผนที่จุดลงทะเบียน"
   },
+  userdata: {
+    title:"ข้อมูลของคุณ",
+    contact1:"หากมีข้อมูลผิดพลาด กรุณาแจ้งที่",
+    contact2:"<Email or Some Link>",
+    contact3:"เพื่อแก้ไข",
+    back:"กลับหน้าหลัก"
+  },
   admin: {
     register:"ลงทะเบียน", 
     enter:"เข้างาน",
