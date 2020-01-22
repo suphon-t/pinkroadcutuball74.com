@@ -71,9 +71,9 @@ export function usePromise() {
 
   const setPromise = useCallback(promise => {
     return new Promise((resolve, reject) => {
-      setState({ data, promise, resolve, reject })
+      setState(({ data }) => ({ data, promise, resolve, reject }))
     })
-  }, [data])
+  }, [])
 
   return { loading: !!state.promise, data, error, setPromise }
 }
