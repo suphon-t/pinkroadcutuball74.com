@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { useTranslation } from "react-i18next"
 
 import StatsNumber from "./StatsNumber"
+import { usePromise } from "../../api"
 
 const Container = styled.div`
   display: flex;
@@ -21,10 +22,21 @@ const EnterNumber = styled(StatsNumber)`
 
 function StatsBar() {
   const { t } = useTranslation()
+  const { data, setPromise } = usePromise()
+
+  useEffect(() => {
+    setPromise(new Promise(resolve => {
+      setTimeout(() => resolve({ 
+        registerCount: 1024,
+        enterCount: (data?.enterCount || 0) + 1,
+      }), 1000)
+    }))
+  }, [data])
+
   return (
     <Container>
-      <RegisterNumber title={t('admin.register')} count={0} />
-      <EnterNumber title={t('admin.enter')} count={0} />
+      <RegisterNumber title={t('admin.register')} count={data?.registerCount} />
+      <EnterNumber title={t('admin.enter')} count={data?.enterCount} />
     </Container>
   )
 }

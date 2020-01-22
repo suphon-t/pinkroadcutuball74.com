@@ -4,6 +4,7 @@ import vars from "../../styles/vars"
 import { useTranslation } from "react-i18next"
 
 import { up } from "styled-breakpoints"
+import { Icon } from "antd"
 
 const Card = styled.div`
   display: block;
@@ -39,7 +40,11 @@ function EnterNumber({ className, title, count }) {
   return (
     <Card className={className}>
       <Title>{title}</Title>
-      <Number>{`${count} ${t('admin.person')}`}</Number>
+      <Number>
+        { count ? `${count} ${t('admin.person')}` : (
+          <Icon type="loading" spin />
+        )}
+      </Number>
     </Card>
   )
 }
