@@ -8,6 +8,7 @@ import LoadingIcon from "../components/LoadingIcon"
 import Landing from "../pages/Landing"
 import Register from "../pages/Register"
 import Login from "../pages/Login"
+import Logout from "../pages/Logout"
 import RegisterSuccess from "../pages/RegisterSuccess"
 import GetTicket from "../pages/GetTicket"
 import User from "../pages/User"
@@ -41,6 +42,7 @@ function Routes() {
           <Route path="/register" exact component={Register} />
           <Route path="/register/success" component={RegisterSuccess} />
           <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
           <Route path="/scanqr" exact component = {ScanQR} />
           <UserRoute path="/user">
             <User />

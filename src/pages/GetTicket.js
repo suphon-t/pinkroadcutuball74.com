@@ -9,8 +9,7 @@ import {lighten, darken} from "polished"
 import { Input } from "antd"
 import { useGet } from "../api"
 import LoadingIcon from "../components/LoadingIcon"
-import { useAuthContext } from "../auth"
-import { Redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const LogoutButton = styled(OrangeButton)`
   background: ${vars.darkBlue};
@@ -33,7 +32,6 @@ const LogoutButton = styled(OrangeButton)`
 `
 
 function GetTicket() {
-  const { logout } = useAuthContext()
   const { t } = useTranslation()
   const { data: user } = useGet('/getuser')
   const [number, setNumber] = useState('0074')
@@ -48,11 +46,9 @@ function GetTicket() {
       <ContentCard style={{ padding: 16 }}>
         <Ticket data={data} style={{ borderRadius: 10 }} />
       </ContentCard>
-      <LogoutButton type="button" onClick={ () => {
-        logout()
-        return <Redirect to="/" />
-      }
-      }>{t("logout")}</LogoutButton>
+      <Link to="/logout">
+        <LogoutButton>{t("logout")}</LogoutButton>
+      </Link>
     </>
   )
 }
