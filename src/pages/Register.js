@@ -157,7 +157,7 @@ function Register() {
             </TosLabel>
 
             <ButtonBar>
-              <BackButton type="submit">{t("register.back")}</BackButton>
+              <BackButton />
               <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
             </ButtonBar>
 
