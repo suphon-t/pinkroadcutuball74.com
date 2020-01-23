@@ -1,32 +1,25 @@
 import React from "react"
 import styled from "styled-components"
-import vars from "../../styles/vars"
+import { PageHeader, Button } from "antd"
+import { useHistory, Link } from "react-router-dom"
 
 const Bar = styled.div`
-  display: block;
-  margin: 0;
-  display: flex;
-
-  background: ${vars.white};
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
-  border-radius: 0px;
+  box-shadow: 0 12px 45px -22px rgba(0, 0, 0, .35);
 `
 
-const Title = styled.h1`
-  margin: 10px 0 10px 0;
-  color: ${vars.darkBlue};
-  font-weight: medium;
-  font-size: 40px;
-  line-height: 60px;
-  text-align:center;
-  margin-left: auto;
-  margin-right: auto;
-  display: inline-block;
-`
 function AdminBar() {
-  return (<Bar>
-    <Title>CUTUBALL Admin Dashboard</Title>
-  </Bar>
+  const history = useHistory()
+  return (
+    <Bar>
+      <PageHeader
+        onBack={history.goBack}
+        title="CUTUBALL Admin Dashboard"
+        extra={[
+          <Link key="1" to="/logout">
+            <Button type="primary">Logout</Button>
+          </Link>,
+        ]} />
+    </Bar>
   )
 }
 export default AdminBar

@@ -1,9 +1,9 @@
 import React from "react"
+import styled from "styled-components"
 
 import AdminBar from "../components/AdminBar"
 import StatsBar from "../components/StatsBar"
 import UsersTable from "../components/UsersTable"
-import styled from "styled-components"
 
 const Container = styled.div`
   margin: 0 64px;

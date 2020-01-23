@@ -29,3 +29,7 @@ export {
 export {
   default as CloseCircleOutline
 } from "@ant-design/icons/lib/outline/CloseCircleOutline"
+
+export {
+  default as ArrowLeftOutline
+} from "@ant-design/icons/lib/outline/ArrowLeftOutline"
