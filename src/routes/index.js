@@ -13,8 +13,8 @@ import RegisterSuccess from "../pages/RegisterSuccess"
 import GetTicket from "../pages/GetTicket"
 import User from "../pages/User"
 import NoMatch from "../pages/NoMatch"
-import ScanQR from "../pages/ScanQR"
 
+const CheckIn = lazy(() => import("../pages/CheckIn"))
 const Admin = lazy(() => import("../admin"))
 const RandomScreen = lazy(() => import("../admin/pages/RandomScreen"))
 
@@ -43,9 +43,11 @@ function Routes() {
           <Route path="/register/success" component={RegisterSuccess} />
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
-          <Route path="/scanqr" exact component = {ScanQR} />
           <UserRoute path="/user">
             <User />
+          </UserRoute>
+          <UserRoute path="/checkin">
+            <CheckIn />
           </UserRoute>
           <UserRoute path="/ticket">
             <GetTicket />

@@ -14,7 +14,8 @@ function AuthProvider(props) {
     return jwt.decode(token)
   }, [token])
   const isAuthenticated = !!token
-  const isAdmin = tokenData?.sub === 'admin'
+  const userId = tokenData?.sub
+  const isAdmin = userId === 'admin'
 
   // Persist the token
   useEffect(() => {
@@ -29,7 +30,7 @@ function AuthProvider(props) {
   const login = useCallback(token => setToken(token), [])
   const logout = useCallback(() => setToken(null), [])
 
-  const value = { isAuthenticated, isAdmin, token, login, logout }
+  const value = { isAuthenticated, isAdmin, token, userId, login, logout }
 
   return <AuthContext.Provider value={value} {...props} />
 }
