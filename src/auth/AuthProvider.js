@@ -1,17 +1,13 @@
 import React, { createContext, useEffect, useState, useCallback, useMemo } from "react"
 
-import jwt from "jsonwebtoken"
+import { parseToken } from "../utils"
 
 export const AuthContext = createContext()
 
 function AuthProvider(props) {
   const [token, setToken] = useState(() => localStorage.getItem('access_token'))
   const tokenData = useMemo(() => {
-    if (!token) {
-      return undefined
-    }
-
-    return jwt.decode(token)
+    return parseToken(token)
   }, [token])
   const isAuthenticated = !!token
   const userId = tokenData?.sub
