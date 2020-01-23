@@ -9,6 +9,7 @@ import { useGet } from "../api"
 
 import styled from "styled-components"
 import vars from "../styles/vars"
+import { Link } from "react-router-dom"
 
 const DataTitle = styled(Title)`
   margin: 1rem 0 2.5rem;
@@ -40,7 +41,9 @@ function User() {
       <PinkLabel>{t("userdata.contact2")}</PinkLabel>
       <TosLabel>{t("userdata.contact3")}</TosLabel>
 
-      <BackToHome>{t("userdata.back")}</BackToHome>
+      <Link to="/">
+        <BackToHome>{t("userdata.back")}</BackToHome>
+      </Link>
     </ContentCard>
   )
 }
