@@ -2,7 +2,7 @@ import React from "react"
 
 import AdminBar from "../components/AdminBar"
 import StatsBar from "../components/StatsBar"
-import DataTable from "../components/DataTable"
+// import DataTable from "../components/DataTable"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -15,7 +15,7 @@ function Home() {
       <AdminBar fixed="top" expand="lg"/>
       <Container>
         <StatsBar />
-        <DataTable />
+        {/* <DataTable /> */}
       </Container>
     </>
   )

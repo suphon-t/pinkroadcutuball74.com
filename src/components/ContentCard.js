@@ -33,6 +33,10 @@ const BackButton = styled(OrangeButton)`
     mask-position: center;
     mask-size: cover;
   }
+
+  ${up("xl")} {
+    opacity: 0;
+  }
 `
 
 const Logo = styled(Link)`

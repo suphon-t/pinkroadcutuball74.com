@@ -4,6 +4,7 @@ export default {
     title: "ลงทะเบียนล่วงหน้า",
     subtitle: "กรุณากรอกข้อมูลให้ครบถ้วน",
     submit: "ลงทะเบียน",
+    back: "กลับหน้าหลัก",
     invalidIdNumber: "เลขประจำตัวประชาชนไม่ถูกต้อง",
     backtohome: "กลับหน้าแรก",
     checkinfo: "ตรวจสอบข้อมูล",

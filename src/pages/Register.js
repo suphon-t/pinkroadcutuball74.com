@@ -18,6 +18,8 @@ import { usePostStatus } from "../api"
 import UserInfo from "../components/UserInfo"
 import Field from "../components/Field"
 import ContentCard from "../components/ContentCard"
+import BackButton from "../components/BackButton"
+import ButtonBar from "../components/ButtonBar"
 import OrangeButton from "../components/OrangeButton"
 import CustomModal from "../components/CustomModal"
 
@@ -171,13 +173,18 @@ function Register() {
               <DialogSelect options={facultyOptions} />
             </Field>
 
-            <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
             <TosLabel>
               ในการกดลงทะเบียน ฉันยอมรับ
               <TosModal title="ข้อตกลงการให้บริการ" />
               และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
               <TosModal title="นโยบายความเป็นส่วนตัว" />
             </TosLabel>
+
+            <ButtonBar>
+              <BackButton type="submit">{t("register.back")}</BackButton>
+              <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
+            </ButtonBar>
+
             {confirmModal}
             <DuplicateIdModal visible={isDuplicate} onCancel={closeDuplicate} />
             <ErrorModal description={errorDescription} onCancel={closeError} />
