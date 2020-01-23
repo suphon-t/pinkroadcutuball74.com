@@ -21,3 +21,11 @@ export {
 export {
   default as CaretDownFill
 } from "@ant-design/icons/lib/fill/CaretDownFill"
+
+export {
+  default as CheckCircleOutline
+} from "@ant-design/icons/lib/outline/CheckCircleOutline"
+
+export {
+  default as CloseCircleOutline
+} from "@ant-design/icons/lib/outline/CloseCircleOutline"

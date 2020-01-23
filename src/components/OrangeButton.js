@@ -3,17 +3,15 @@ import { lighten, darken } from "polished";
 
 import vars from "../styles/vars";
 
-const hoverColor = lighten(.05, vars.orange)
-
 export default styled.button`
   display: block;
   width: 152px;
   padding: 8px 0;
 
-  background: ${vars.orange};
-  border: 1px solid ${vars.orange};
+  background: ${({ background }) => background || vars.orange};
+  border: 1px solid ${({ background }) => background || vars.orange};
   border-radius: 9999px;
-  color: ${vars.darkBlue};
+  color: ${({ color }) => color || vars.darkBlue};
 
   font-weight: 500;
   font-size: 18px;
@@ -33,12 +31,12 @@ export default styled.button`
 
     &:hover,
     &:focus {
-      background: ${hoverColor};
-      box-shadow: 0px 4px 30px ${hoverColor};
+      background: ${({ background }) => lighten(.05, background || vars.orange)};
+      box-shadow: 0px 4px 30px ${({ background }) => lighten(.05, background || vars.orange)};
     }
 
     &:active {
-      background: ${darken(.1, vars.orange)};
+      background: ${({ background }) => darken(.1, background || vars.orange)};
     }
   }
 `

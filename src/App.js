@@ -1,8 +1,6 @@
 import React from "react"
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
 
-import "./yup-init"
-
 import { AuthProvider } from "./auth"
 import { HttpProvider } from "./api"
 import Routes from "./routes"

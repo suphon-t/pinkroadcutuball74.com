@@ -1,8 +1,7 @@
-import React, { useCallback, useState, useMemo, useEffect } from "react"
+import React, { useCallback, useState, useEffect } from "react"
 import { useHistory, Link } from "react-router-dom"
 import { useForm, FormContext } from "react-hook-form"
 import { useTranslation, Trans } from "react-i18next"
-import * as yup from "yup"
 import styled from "styled-components"
 import { down, up } from "styled-breakpoints"
 
@@ -10,8 +9,6 @@ import { down, up } from "styled-breakpoints"
 import { Form, Button } from "antd"
 
 // utility
-import { emailPattern, telPattern } from "../utils"
-import facultyCodes from "../i18n/faculty-codes"
 import { usePostStatus } from "../api"
 
 // components
@@ -28,23 +25,7 @@ import vars from "../styles/vars"
 import PageHeader from "../components/PageHeader"
 import DialogSelect from "../components/DialogSelect"
 import { useAuthContext } from "../auth"
-
-const validationSchema = yup.object().shape({
-  name: yup.string().required(),
-  ID: yup
-    .string()
-    .nationalId("invalidValue")
-    .required(),
-  tel: yup
-    .string()
-    .required()
-    .matches(telPattern, "invalidValue"),
-  email: yup
-    .string()
-    .required()
-    .matches(emailPattern, "invalidValue"),
-  faculty: yup.string().required()
-})
+import { userSchema, useFacultyOptions } from "../utils"
 
 const FacultyContainer = styled(Form.Item)`
   margin-bottom: -4px;
@@ -92,7 +73,7 @@ const ModalFooter = styled.div`
 
 function Register() {
   const { isAuthenticated } = useAuthContext()
-  const methods = useForm({ validationSchema })
+  const methods = useForm({ validationSchema: userSchema })
   const { getValues, handleSubmit } = methods
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
@@ -113,12 +94,7 @@ function Register() {
     }
   }, [isAuthenticated])
 
-  const facultyOptions = useMemo(() => {
-    return facultyCodes.map(code => ({
-      value: code,
-      label: t(`facultyNames.${code}`),
-    }))
-  }, [t])
+  const facultyOptions = useFacultyOptions()
 
   const { loading, execute: executePost } = usePostStatus("/register")
   const onSubmit = useCallback(() => {
