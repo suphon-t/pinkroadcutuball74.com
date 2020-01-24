@@ -41,6 +41,16 @@ export function UserRoute({ dest, ...rest }) {
   )
 }
 
+export function StaffRoute({ dest, ...rest }) {
+  const { isStaff } = useAuthContext()
+  return (
+    <PrivateRoute
+      {...rest}
+      dest={() => (!isStaff && '/user') || dest?.()}
+    />
+  )
+}
+
 export function AdminLogin({ dest, ...rest }) {
   const { isAuthenticated } = useAuthContext()
   return (

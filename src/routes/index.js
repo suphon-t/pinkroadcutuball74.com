@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import styled, { keyframes } from "styled-components"
 
-import { UserRoute, AdminRoute } from "./RouteTypes"
+import { UserRoute, AdminRoute, StaffRoute } from "./RouteTypes"
 
 import LoadingIcon from "../components/LoadingIcon"
 import Landing from "../pages/Landing"
@@ -16,6 +16,7 @@ import NoMatch from "../pages/NoMatch"
 import AdminLogin from "../pages/AdminLogin"
 
 const CheckIn = lazy(() => import("../pages/CheckIn"))
+const StaffScan = lazy(() => import("../pages/StaffScan"))
 const Admin = lazy(() => import("../admin"))
 const RandomScreen = lazy(() => import("../admin/pages/RandomScreen"))
 
@@ -53,6 +54,9 @@ function Routes() {
           <UserRoute path="/ticket">
             <GetTicket />
           </UserRoute>
+          <StaffRoute path="/staff/scan">
+            <StaffScan />
+          </StaffRoute>
           <Route path="/admin/login" component={AdminLogin} />
           <AdminRoute path="/admin">
             <Admin />

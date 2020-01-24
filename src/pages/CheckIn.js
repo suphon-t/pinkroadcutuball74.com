@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { withContentRect } from "react-measure"
 import QRCode from "qrcode.react"
 import { Icon } from "antd"
+import qs from "qs"
 
 import { useAuthContext } from "../auth"
 import { useCurrentTime } from "../utils"
@@ -34,10 +35,11 @@ const QRBox = styled(QRCode)`
 `
 
 const BottomBar = styled(ButtonBar)`
-  height: 36px;
+  height: 40px;
 
   align-items: center;
   color: ${vars.darkBlue};
+  font-size: 20px;
 `
 
 const RefreshIcon = styled(Icon)`
@@ -54,7 +56,7 @@ const CheckIn = withContentRect('bounds')(({ measureRef, measure, contentRect })
   const { userId } = useAuthContext()
   const time = useCurrentTime()
 
-  const qrValue = JSON.stringify({ id: userId })
+  const qrValue = `${window.location.origin}/staff/scan?${qs.stringify({ userId })}`
 
   const { width } = contentRect.bounds
   const size = Math.max((width || 0) - 112, 200)

@@ -14,5 +14,8 @@ export default {
       email: 'jane.doe@example.com',
       faculty: '99',
     },
-  ]
+  ],
+  '/admin/checkin': {
+    success: true
+  },
 }
