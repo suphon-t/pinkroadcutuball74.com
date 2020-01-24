@@ -13,12 +13,10 @@ const BackToHome = styled(OrangeButton)`
   margin: 100px auto 0 auto;
 `
 
-const CheckInfo = styled(OrangeButton)`
+const CheckInfo = styled(OrangeButton).attrs({
+  background: '#e0e0e0'
+})`
   margin: 24px auto 54px auto;
-
-  background-color: transparent;
-  border: 1px solid $orange;
-  box-shadow: none;
 `
 
 const Title = styled.h1`
