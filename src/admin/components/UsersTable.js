@@ -182,7 +182,7 @@ function EditModal({ data, onDone, ...props }) {
           <Field name="tel" title={t("phoneNumber")} type="tel" defaultValue={data?.tel} />
           <Field name="email" title={t("email")} type="email" defaultValue={data?.email} />
           <Field name="faculty" title={t("faculty")} defaultValue={data?.faculty}>
-            <DialogSelect options={facultyOptions} />
+            <DialogSelect options={facultyOptions} keepScroll />
           </Field>
           <ButtonBar style={{ direction: 'rtl', marginTop: 16 }}>
             <OrangeButton background="#40edc2" color="white" type="submit" disabled={loading}>Save</OrangeButton>

@@ -80,7 +80,7 @@ const Option = styled.p`
   }
 `
 
-function DialogSelect({ options, value, onChange, placeholder, ...props }) {
+function DialogSelect({ options, value, onChange, placeholder, keepScroll, ...props }) {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
   const [offsetBottom, setOffsetBottom] = useState(0)
@@ -110,8 +110,10 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
   const openModal = useCallback(() => {
     if (new Date().getTime() - dialogCloseTime.current < 300) return
     setModalVisible(true)
-    window.scrollTo(window.scrollX, 0)
-  }, [])
+    if (!keepScroll) {
+      window.scrollTo(window.scrollX, 0)
+    }
+  }, [keepScroll])
   const closeModal = useCallback(() => {
     setModalVisible(false)
     setQuery('')
