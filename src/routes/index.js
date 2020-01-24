@@ -13,6 +13,7 @@ import RegisterSuccess from "../pages/RegisterSuccess"
 import GetTicket from "../pages/GetTicket"
 import User from "../pages/User"
 import NoMatch from "../pages/NoMatch"
+import AdminLogin from "../pages/AdminLogin"
 
 const CheckIn = lazy(() => import("../pages/CheckIn"))
 const Admin = lazy(() => import("../admin"))
@@ -52,6 +53,7 @@ function Routes() {
           <UserRoute path="/ticket">
             <GetTicket />
           </UserRoute>
+          <Route path="/admin/login" component={AdminLogin} />
           <AdminRoute path="/admin">
             <Admin />
           </AdminRoute>

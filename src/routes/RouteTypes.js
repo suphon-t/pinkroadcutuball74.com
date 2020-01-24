@@ -41,10 +41,20 @@ export function UserRoute({ dest, ...rest }) {
   )
 }
 
+export function AdminLogin({ dest, ...rest }) {
+  const { isAuthenticated } = useAuthContext()
+  return (
+    <RedirectRoute
+      {...rest}
+      dest={() => (!isAuthenticated && '/admin/login') || dest?.()}
+    />
+  )
+}
+
 export function AdminRoute({ dest, ...rest }) {
   const { isAdmin } = useAuthContext()
   return (
-    <PrivateRoute
+    <AdminLogin
       {...rest}
       dest={() => (!isAdmin && '/user') || dest?.()}
     />
