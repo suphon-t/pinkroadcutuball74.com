@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import { Table, Pagination, Form, Popconfirm, notification, Input, Icon } from "antd"
 import debounce from "lodash.debounce"
 
-import { useHttpContext, usePromise } from "../../api"
+import { useHttpContext, usePromise, useGet } from "../../api"
 import CustomModal from "../../components/CustomModal"
 import vars from "../../styles/vars"
 import { useForm, FormContext } from "react-hook-form"
@@ -48,28 +48,18 @@ const StyledTable = styled(Table)`
 `
 
 function UsersTable() {
-  const { http } = useHttpContext()
   const { t } = useTranslation()
   const [page, setPage] = useState(1)
   const [query, setQuery] = useState('')
-  const debounceSetQuery = useMemo(() => debounce(setQuery, 300), [])
-  const { data, loading, setPromise } = usePromise()
-  const fetchUsers = useCallback(() => {
-    const users = http.get("/admin/getusers", {
-      params: {
-        start: pageSize * (page - 1),
-        end: pageSize * page,
-        value: query,
-      }
-    })
-    const stat = http.get("/admin/getstat")
-    setPromise(Promise.all([users, stat]))
-  }, [http, page, query, setPromise])
-
-  // Fetch the data
-  useEffect(() => {
-    fetchUsers()
-  }, [fetchUsers])
+  const debounceSetQuery = useMemo(() => debounce(newQuery => {
+    setQuery(newQuery)
+    setPage(1)
+  }, 300), [])
+  const { data, loading, execute: fetchUsers } = useGet('/admin/getusers', {
+    start: pageSize * (page - 1),
+    end: pageSize * page,
+    value: query,
+  })
 
   const [searchValue, setSearchValue] = useState('')
   const onSearch = useCallback(({ target: { value } }) => {
@@ -77,8 +67,8 @@ function UsersTable() {
     debounceSetQuery(value)
   }, [debounceSetQuery])
 
-  const users = data && data[0].data
-  const stat = data && data[1].data
+  const users = (data && data.data.users) || []
+  const count = (data && data.data.users_count) || 1
 
   const [editVisible, setEditVisible] = useState(false)
   const [editingRow, setEditingRow] = useState({})
@@ -107,7 +97,7 @@ function UsersTable() {
         onChange={onSearch}
         placeholder="Search users"
         prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />} />
-      <Pagination current={page} total={stat?.regist} onChange={setPage} />
+      <Pagination current={page} total={count} onChange={setPage} />
     </ControlBox>
   )
 

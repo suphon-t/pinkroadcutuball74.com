@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, useMemo } from "react"
 import qs from "qs"
 
 import HttpProvider, { useHttpContext } from "./HttpProvider"
@@ -91,12 +91,14 @@ export function usePostStatus(url, isJson = true) {
   return { ...result, execute }
 }
 
-export function useGet(url) {
+export function useGet(url, params = {}) {
+  const paramsJson = JSON.stringify(params)
+  const paramsMemo = useMemo(() => JSON.parse(paramsJson), [paramsJson])
   const { http } = useHttpContext()
   const { setPromise, ...result } = usePromise()
   const execute = useCallback(() => {
-    return setPromise(http.get(url))
-  }, [http, url, setPromise])
+    return setPromise(http.get(url, { params: paramsMemo }))
+  }, [http, url, paramsMemo, setPromise])
   useEffect(() => {
     execute()
   }, [url, execute])
