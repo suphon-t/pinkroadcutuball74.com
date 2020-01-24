@@ -141,10 +141,10 @@ function Register() {
         <div className="form-container">
           <PageHeader title={t('register.title')} subtitle={t('register.subtitle')} />
           <Form style={{ marginTop: 28 }} layout="vertical" onSubmit={handleSubmit(onSubmit)}>
-            <Field name="name" title={t("fullname")} rules={{ required: true }} />
+            <Field name="name" title={t("fullname")} autoComplete="name" rules={{ required: true }} />
             <Field name="ID" title={t("idNumber")} pattern="\d*" />
-            <Field name="tel" title={t("phoneNumber")} type="tel" />
-            <Field name="email" title={t("email")} type="email" />
+            <Field name="tel" title={t("phoneNumber")} autoComplete="tel" type="tel" />
+            <Field name="email" title={t("email")} autoComplete="email" type="email" />
             <Field name="faculty" title={t("faculty")} as={FacultyContainer}>
               <DialogSelect options={facultyOptions} />
             </Field>
