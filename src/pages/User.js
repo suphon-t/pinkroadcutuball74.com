@@ -26,7 +26,8 @@ const BackToHome = styled(OrangeButton)`
   margin: 2.5rem auto 0;
 `
 const Info = styled(UserInfo)`
-  margin: 2rem 0;
+  margin-top: 32px;
+  padding-bottom: 19px;
 `
 function User() {
   const { data } = useGet("/getuser")
