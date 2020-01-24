@@ -15,6 +15,7 @@ import { useFacultyOptions, userSchema } from "../../utils"
 import Title from "../../components/Title"
 import OrangeButton from "../../components/OrangeButton"
 import ButtonBar from "../../components/ButtonBar"
+import moment from "moment"
 
 const { Column } = Table
 
@@ -46,6 +47,10 @@ const StyledTable = styled(Table)`
     cursor: pointer;
   }
 `
+
+function formateDt(dt) {
+  return moment(dt).format('HH:mm:ss DD/MM/YYYY')
+}
 
 function UsersTable() {
   const { t } = useTranslation()
@@ -116,12 +121,17 @@ function UsersTable() {
         <Column title="Telephone" dataIndex="tel" key="tel" />
         <Column title="E-mail" dataIndex="email" key="email" />
         <Column title="Faculty" dataIndex="faculty" key="faculty" render={tags => t(`facultyNames.${tags}`)} />
+        <Column title="Created" dataIndex="created" key="created" render={tags => formateDt(tags)} />
       </StyledTable>
       { controls }
       <EditModal data={editingRow} visible={editVisible} onDone={closeEditAndReload} onCancel={closeEdit} />
     </div>
   )
 }
+
+const Timestamp = styled.div`
+  margin: 8px 0;
+`
 
 function EditModal({ data, onDone, ...props }) {
   const { t } = useTranslation()
@@ -176,6 +186,9 @@ function EditModal({ data, onDone, ...props }) {
     }
   }, [data, setValue, triggerValidation])
 
+  const created = useMemo(() => formateDt(data?.created), [data])
+  const modified = useMemo(() => formateDt(data?.modified), [data])
+
   return (
     <CustomModal {...props}>
       <Title>Edit user {data?.id}</Title>
@@ -188,6 +201,10 @@ function EditModal({ data, onDone, ...props }) {
           <Field name="faculty" title={t("faculty")} defaultValue={data?.faculty}>
             <DialogSelect options={facultyOptions} keepScroll />
           </Field>
+          <Timestamp>
+            <p>Created at {created}</p>
+            <p>Last modified at {modified}</p>
+          </Timestamp>
           <ButtonBar style={{ direction: 'rtl', marginTop: 16 }}>
             <OrangeButton background="#40edc2" color="white" type="submit" disabled={loading}>Save</OrangeButton>
             <Popconfirm
