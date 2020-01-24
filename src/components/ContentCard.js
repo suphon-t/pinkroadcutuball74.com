@@ -97,7 +97,7 @@ const Card = styled.div`
   }
 `
 
-function ContentCard({ children, ...rest }) {
+const ContentCard = React.forwardRef(({ children, ...rest }, ref) => {
   const { t } = useTranslation()
   const history = useHistory()
   const canGoBack = history.length > 1
@@ -109,9 +109,9 @@ function ContentCard({ children, ...rest }) {
           <img src={logo} alt={t('appname')} />
         </Logo>
       </Header>
-      <Card {...rest}>{children}</Card>
+      <Card ref={ref} {...rest}>{children}</Card>
     </div>
   )
-}
+})
 
 export default ContentCard

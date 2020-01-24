@@ -1,27 +1,20 @@
 import React, { useCallback, useState } from "react"
+import styled from "styled-components"
 import { useTranslation } from "react-i18next"
 import { useForm, FormContext } from "react-hook-form"
-import styled from "styled-components"
-
-//ant design
 import { Form, Alert } from "antd"
+import { useLocation, Redirect } from "react-router-dom"
 
-//components
+import { usePostStatus } from "../api"
+import { useAuthContext } from "../auth"
 import ContentCard from "../components/ContentCard"
 import OrangeButton from "../components/OrangeButton"
-import { useAuthContext } from "../auth"
-
-//utility
-import { usePostStatus } from "../api"
-import { useLocation, Redirect } from "react-router-dom"
 import PageHeader from "../components/PageHeader"
+import BackButton from "../components/BackButton"
+import ButtonBar from "../components/ButtonBar"
 
 const SubmitButton = styled(OrangeButton)`
-  margin: 117px auto;
-  padding: 18px 0;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 0px;
+  margin: 34px auto 0 auto;
 `
 
 const LoginForm = styled(Form)`
@@ -72,7 +65,10 @@ function Login({ title, subtitle, children }) {
               onClose={clearError} />
           )}
           { children(loading) }
-          <SubmitButton type="submit" disabled={loading}>{t("login.submit")}</SubmitButton>
+          <ButtonBar style={{ direction: 'rtl' }}>
+            <SubmitButton type="submit" disabled={loading}>{t("login.submit")}</SubmitButton>
+            <BackButton />
+          </ButtonBar>
         </LoginForm>
       </ContentCard>
     </FormContext>

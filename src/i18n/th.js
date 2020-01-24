@@ -79,9 +79,9 @@ export default {
   },
   back: "ย้อนกลับ",
   scanqr: {
-    title:"แสกน QR code",
-    title2:"ณ จุดลงทะเบียน",
-    subtitle:"แผนที่จุดลงทะเบียน"
+    title: "แสกน QR code",
+    title2: "ที่จุดลงทะเบียน",
+    subtitle: "เพื่อเข้างานได้เลย!",
   },
   userdata: {
     title:"ข้อมูลของคุณ",

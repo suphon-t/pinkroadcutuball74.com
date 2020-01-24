@@ -33,3 +33,7 @@ export {
 export {
   default as ArrowLeftOutline
 } from "@ant-design/icons/lib/outline/ArrowLeftOutline"
+
+export {
+  default as ReloadOutline
+} from "@ant-design/icons/lib/outline/ReloadOutline"

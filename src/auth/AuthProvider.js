@@ -11,7 +11,8 @@ function AuthProvider(props) {
   }, [token])
   const isAuthenticated = !!token
   const userId = tokenData?.sub
-  const isAdmin = userId === 'admin'
+  const role = tokenData?.role
+  const isAdmin = role === 'admin'
 
   // Persist the token
   useEffect(() => {
@@ -26,7 +27,7 @@ function AuthProvider(props) {
   const login = useCallback(token => setToken(token), [])
   const logout = useCallback(() => setToken(null), [])
 
-  const value = { isAuthenticated, isAdmin, token, userId, login, logout }
+  const value = { isAuthenticated, isAdmin, role, token, userId, login, logout }
 
   return <AuthContext.Provider value={value} {...props} />
 }
