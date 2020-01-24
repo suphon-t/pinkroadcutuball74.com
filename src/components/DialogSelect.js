@@ -16,12 +16,13 @@ const Box = styled.div`
   cursor: pointer;
   transition: all ${vars.transitionLength};
 
-  &:hover {
+  &:hover, &:focus {
     border-color: ${vars.highlighted}
   }
 
   &:focus {
     box-shadow: 0 0 0 2px rgba(238, 115, 152, 0.2);
+    outline: none;
   }
 
   .has-feedback & {
@@ -85,6 +86,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
   const [offsetBottom, setOffsetBottom] = useState(0)
   const [query, setQuery] = useState('')
   const searchRef = useRef(null)
+  const dialogCloseTime = useRef(new Date().getTime())
 
   const labelMap = useMemo(() => {
     const result = {}
@@ -106,6 +108,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
   }, [])
 
   const openModal = useCallback(() => {
+    if (new Date().getTime() - dialogCloseTime.current < 300) return
     setModalVisible(true)
     window.scrollTo(window.scrollX, 0)
   }, [])
@@ -113,6 +116,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
     setModalVisible(false)
     setQuery('')
     searchRef.current && searchRef.current.input.blur()
+    dialogCloseTime.current = new Date().getTime()
   }, [])
 
   // Focus search on open
@@ -157,7 +161,7 @@ function DialogSelect({ options, value, onChange, placeholder, ...props }) {
 
   return (
     <>
-      <Box onClick={openModal} {...props}>
+      <Box onClick={openModal} onFocus={openModal} {...props} tabIndex={0}>
         { value ? <Value>{ labelMap[value] || value }</Value> : <Placeholder>{placeholder}</Placeholder> }
       </Box>
       <CustomModal visible={modalVisible} onCancel={closeModal}>
