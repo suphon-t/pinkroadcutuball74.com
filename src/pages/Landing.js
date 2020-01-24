@@ -9,7 +9,10 @@ import OrangeButton from "../components/OrangeButton"
 import styled from "styled-components"
 import breakpoints, { Up, Down } from "../styles/breakpoints"
 
-import logo from "../images/logo.png"
+import logo from "../images/logo-landing.png"
+import logo2x from "../images/logo-landing@2x.png"
+import logoWebp from "../images/logo-landing.webp"
+import logoWebp2x from "../images/logo-landing@2x.webp"
 import { between } from "polished"
 import { up } from "styled-breakpoints"
 
@@ -90,7 +93,11 @@ function Landing() {
   return (
     <div>
       <Center>
-        <Logo src={logo} alt="" />
+        <picture>
+          <source type="image/webp" srcSet={`${logoWebp2x} 2x, ${logoWebp} 1x`} />
+          <source type="image/png" srcSet={`${logo2x} 2x, ${logo} 1x`} />
+          <Logo src={logo} alt="" />
+        </picture>
       </Center>
       <TitleContainer>
         <Up breakpoint="lg">
