@@ -15,6 +15,10 @@ export {
 } from "@ant-design/icons/lib/outline/RightOutline"
 
 export {
+  default as DownOutline
+} from "@ant-design/icons/lib/outline/DownOutline"
+
+export {
   default as CaretUpFill
 } from "@ant-design/icons/lib/fill/CaretUpFill"
 

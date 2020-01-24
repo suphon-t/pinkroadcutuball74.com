@@ -19,8 +19,6 @@ import moment from "moment"
 
 const { Column } = Table
 
-const pageSize = 10
-
 const ControlBox = styled.div`
   display: flex;
   padding: 16px 0;
@@ -54,6 +52,7 @@ function formateDt(dt) {
 
 function UsersTable() {
   const { t } = useTranslation()
+  const [pageSize, setPageSize] = useState(() => JSON.parse(localStorage.getItem('adminPageSize') || '10'))
   const [page, setPage] = useState(1)
   const [query, setQuery] = useState('')
   const debounceSetQuery = useMemo(() => debounce(newQuery => {
@@ -71,6 +70,14 @@ function UsersTable() {
     setSearchValue(value)
     debounceSetQuery(value)
   }, [debounceSetQuery])
+
+  const onShowSizeChange = useCallback((_, newSize) => {
+    const first = pageSize * (page - 1)
+    const newPage = first / newSize + 1
+    setPage(Math.floor(newPage))
+    setPageSize(newSize)
+    localStorage.setItem('adminPageSize', JSON.stringify(newSize))
+  }, [page, pageSize])
 
   const users = (data && data.data.users) || []
   const count = (data && data.data.users_count) || 1
@@ -102,7 +109,15 @@ function UsersTable() {
         onChange={onSearch}
         placeholder="Search users"
         prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />} />
-      <Pagination current={page} total={count} onChange={setPage} />
+      <Pagination 
+        current={page} 
+        total={count} 
+        showTotal={total => `Total ${total} items`}
+        showSizeChanger
+        onShowSizeChange={onShowSizeChange}
+        pageSize={pageSize}
+        pageSizeOptions={['10', '20', '50', '100']}
+        onChange={setPage} />
     </ControlBox>
   )
 
