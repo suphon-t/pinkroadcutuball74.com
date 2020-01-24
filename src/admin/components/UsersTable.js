@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect, useMemo } from "react"
 import styled from "styled-components"
 import { darken, lighten } from "polished"
 import { useTranslation } from "react-i18next"
-import { Table, Pagination, Form, Popconfirm, notification } from "antd"
+import { Table, Pagination, Form, Popconfirm, notification, Input, Icon } from "antd"
+import debounce from "lodash.debounce"
 
 import { useHttpContext, usePromise } from "../../api"
 import CustomModal from "../../components/CustomModal"
@@ -19,12 +20,12 @@ const { Column } = Table
 
 const pageSize = 10
 
-const PaginationContainer = styled.div`
+const ControlBox = styled.div`
   display: flex;
   padding: 16px 0;
 
-  justify-content: end;
-  flex-direction: row-reverse;
+  flex-flow: wrap;
+  justify-content: space-between;
 `
 
 const StyledTable = styled(Table)`
@@ -46,34 +47,35 @@ const StyledTable = styled(Table)`
   }
 `
 
-function TablePagination(props) {
-  return (
-    <PaginationContainer>
-      <Pagination {...props} />
-    </PaginationContainer>
-  )
-}
-
 function UsersTable() {
   const { http } = useHttpContext()
   const { t } = useTranslation()
   const [page, setPage] = useState(1)
+  const [query, setQuery] = useState('')
+  const debounceSetQuery = useMemo(() => debounce(setQuery, 300), [])
   const { data, loading, setPromise } = usePromise()
   const fetchUsers = useCallback(() => {
     const users = http.get("/admin/getusers", {
       params: {
         start: pageSize * (page - 1),
         end: pageSize * page,
+        value: query,
       }
     })
     const stat = http.get("/admin/getstat")
     setPromise(Promise.all([users, stat]))
-  }, [http, page, setPromise])
+  }, [http, page, query, setPromise])
 
   // Fetch the data
   useEffect(() => {
     fetchUsers()
   }, [fetchUsers])
+
+  const [searchValue, setSearchValue] = useState('')
+  const onSearch = useCallback(({ target: { value } }) => {
+    setSearchValue(value)
+    debounceSetQuery(value)
+  }, [debounceSetQuery])
 
   const users = data && data[0].data
   const stat = data && data[1].data
@@ -97,9 +99,21 @@ function UsersTable() {
     }
   }), [users])
 
+  const controls = (
+    <ControlBox>
+      <Input
+        style={{ width: 250, marginRight: 16 }} 
+        value={searchValue}
+        onChange={onSearch}
+        placeholder="Search users"
+        prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />} />
+      <Pagination current={page} total={stat?.regist} onChange={setPage} />
+    </ControlBox>
+  )
+
   return (
     <div>
-      <TablePagination current={page} total={stat?.regist} onChange={setPage} />
+      { controls }
       <StyledTable 
         loading={loading}
         dataSource={users} 
@@ -113,7 +127,7 @@ function UsersTable() {
         <Column title="E-mail" dataIndex="email" key="email" />
         <Column title="Faculty" dataIndex="faculty" key="faculty" render={tags => t(`facultyNames.${tags}`)} />
       </StyledTable>
-      <TablePagination current={page} total={stat?.regist} onChange={setPage} />
+      { controls }
       <EditModal data={editingRow} visible={editVisible} onDone={closeEditAndReload} onCancel={closeEdit} />
     </div>
   )
