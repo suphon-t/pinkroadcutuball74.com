@@ -12,7 +12,7 @@ const FullScreenRandom = styled(Random)`
 
 function RandomScreen() {
   const { http } = useHttpContext()
-  const { data, loading, execute: refresh } = useGet('/admin/randomhistory')
+  const { data, execute: refresh } = useGet('/admin/randomhistory')
   const [current, ...previous] = data?.data || []
 
   useEffect(() => {
@@ -54,7 +54,7 @@ function RandomScreen() {
     return () => channel.close()
   }, [data, http, refresh])
 
-  return <FullScreenRandom current={current} previous={previous} loading={loading} />
+  return <FullScreenRandom current={current} previous={previous} loading={!data} />
 }
 
 export default RandomScreen
