@@ -30,6 +30,8 @@ const ControlBox = styled.div`
   justify-content: space-between;
 `
 
+const checkInRowBg = 'rgba(64, 237, 194, 0.18)'
+
 const StyledTable = styled(Table)`
   .ant-table-thead > tr > th {
     background: ${vars.pink};
@@ -46,6 +48,14 @@ const StyledTable = styled(Table)`
 
   .ant-table-row {
     cursor: pointer;
+  }
+
+  .checked-in {
+    background: ${checkInRowBg};
+
+    &:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+      background: ${darken(.005, checkInRowBg)};
+    }
   }
 `
 
@@ -136,6 +146,7 @@ function UsersTable({ showCheckedIn }) {
       <StyledTable 
         loading={loading}
         dataSource={users} 
+        rowClassName={record => record.checkedinAt && 'checked-in'}
         rowKey={record => record.id} 
         onRow={handleRow}
         pagination={false}
