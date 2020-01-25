@@ -2,8 +2,9 @@ import React, { useState, useCallback, useEffect, useMemo } from "react"
 import styled from "styled-components"
 import { darken, lighten } from "polished"
 import { useTranslation } from "react-i18next"
-import { Table, Pagination, Form, Popconfirm, notification, Input, Icon } from "antd"
+import { Table, Pagination, Form, Popconfirm, notification, Input, Icon, Button } from "antd"
 import debounce from "lodash.debounce"
+import qs from "qs"
 
 import { useHttpContext, usePromise, useGet } from "../../api"
 import CustomModal from "../../components/CustomModal"
@@ -172,33 +173,28 @@ function EditModal({ data, onDone, ...props }) {
     })
   }, [data])
 
+  const handlePromise = useCallback((promise, msg1, msg2) => {
+    return setPromise(promise)
+      .then(() => {
+        onDone()
+        notify('success', msg1)
+      }, error => {
+        console.log(error?.response?.data || error)
+        notify('error', `Failed to ${msg2}`)
+      })
+  }, [notify, onDone, setPromise])
+
   const onSubmit = useCallback(formData => {
-    setPromise(
-      http.put('/admin/edit', formData)
-        .then(() => {
-          onDone()
-          notify('success', 'Edited')
-        })
-        .catch(error => {
-          console.log(error)
-          notify('error', 'Failed to edit')
-        })
-    )
-  }, [http, notify, onDone, setPromise])
+    handlePromise(http.put('/admin/edit', formData), 'Edited', 'edit')
+  }, [http, handlePromise])
 
   const onDelete = useCallback(() => {
-    setPromise(
-      http.delete('/admin/delete', { params: { id: data.id } })
-        .then(() => {
-          onDone()
-          notify('success', 'Deleted')
-        })
-        .catch(error => {
-          console.log(error)
-          notify('error', 'Failed to delete')
-        })
-    )
-  }, [http, notify, data, onDone, setPromise])
+    handlePromise(http.delete('/admin/delete', { params: { id: data.id } }), 'Deleted', 'delete')
+  }, [http, handlePromise, data])
+
+  const onCheckIn = useCallback(() => {
+    handlePromise(http.post('/staff/checkin', qs.stringify({ id: data.id })), 'Checked in', 'check in')
+  }, [http, handlePromise, data])
 
   useEffect(() => {
     if (data) {
@@ -229,7 +225,12 @@ function EditModal({ data, onDone, ...props }) {
           <Timestamp>
             <p>Created at {createdAt}</p>
             <p>Last modified at {modifiedAt}</p>
-            <p>{ checkedInAt ? `Checked in at ${checkedInAt}` : `Hasn't checked in yet` }</p>
+            <p>{ checkedInAt ? `Checked in at ${checkedInAt}` : (
+              <>
+                {`Hasn't checked in yet `}
+                <Button type="primary" size="small" onClick={onCheckIn} loading={loading}>Check in</Button>
+              </>
+            ) }</p>
           </Timestamp>
           <ButtonBar style={{ direction: 'rtl', marginTop: 16 }}>
             <OrangeButton background="#40edc2" color="white" type="submit" disabled={loading}>Save</OrangeButton>
