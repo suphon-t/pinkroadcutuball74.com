@@ -88,3 +88,18 @@ export function useCurrentTime(format = 'HH:mm:ss') {
 
   return time
 }
+
+// https://www.kirupa.com/html5/detecting_retina_high_dpi.htm
+export const isHiDpi = matchMedia("(-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2), (min-resolution: 192dpi)")?.matches
+
+// https://stackoverflow.com/a/27232658
+export const supportsWebP = (() => {
+  const elem = document.createElement('canvas')
+  if (!!(elem.getContext && elem.getContext('2d'))) {
+      // was able or not to get WebP representation
+      return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
+  }
+
+  // very old browser like IE 8, canvas not supported
+  return false;
+})()

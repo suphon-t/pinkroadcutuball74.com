@@ -30,12 +30,15 @@ export default styled.button`
     box-shadow: 0px 4px 30px ${vars.grey2};
 
     &:hover,
-    &:focus {
+    &:focus,
+    a:hover > &,
+    a:focus > & {
       background: ${({ background }) => lighten(.05, background || vars.orange)};
       box-shadow: 0px 4px 30px ${({ background }) => lighten(.05, background || vars.orange)};
     }
 
-    &:active {
+    &:active,
+    a:active > & {
       background: ${({ background }) => darken(.1, background || vars.orange)};
     }
   }

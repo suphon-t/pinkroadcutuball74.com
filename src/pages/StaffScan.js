@@ -6,9 +6,10 @@ import ContentCard from "../components/ContentCard"
 import ButtonBar from "../components/ButtonBar"
 import { notification, Icon } from "antd"
 import { useCurrentTime } from "../utils"
-import { useFakePost } from "../api"
+import { usePostStatus } from "../api"
 import styled from "styled-components"
 import vars from "../styles/vars"
+import LogoutButton from "../components/LogoutButton"
 
 const LoadingIcon = styled(Icon)`
   display: block;
@@ -35,18 +36,26 @@ function StaffScan() {
     return qs.parse(parts[1]).userId
   }, [url])
 
-  const { loading, execute: sendCheckin } = useFakePost('/admin/checkin')
+  const { loading, execute: sendCheckin } = usePostStatus('/staff/checkin', false)
 
   const checkin = useCallback(async () => {
     if (!userId) return
     try {
-      await sendCheckin({ userId })
-      notification['success']({
-        message: `Checked in ${userId}`,
-      })
+      const { data } = await sendCheckin({ id: userId })
+      if (data.error) {
+        notification['error']({
+          message: `Failed to check in ${userId}`,
+          description: data.error_description,
+        })
+      } else {
+        notification['success']({
+          message: `Checked in ${userId}`,
+        })
+      }
     } catch (err) {
       notification['error']({
-        message: JSON.stringify(err),
+        message: `Failed to check in ${userId}`,
+        description: JSON.stringify(err),
       })
     }
   }, [userId, sendCheckin])
@@ -64,18 +73,21 @@ function StaffScan() {
   }, [])
 
   return (
-    <ContentCard>
-      <QrReader
-        delay={300}
-        onScan={handleScan}
-        onError={handleError}
-        style={{ width: '100%' }}
-      />
-      <BottomBar>
-        { time }
-        { loading && <LoadingIcon type="loading" /> }
-      </BottomBar>
-    </ContentCard>
+    <>
+      <ContentCard>
+        <QrReader
+          delay={300}
+          onScan={handleScan}
+          onError={handleError}
+          style={{ width: '100%' }}
+        />
+        <BottomBar>
+          { time }
+          { loading && <LoadingIcon type="loading" /> }
+        </BottomBar>
+      </ContentCard>
+      <LogoutButton />
+    </>
   )
 }
 

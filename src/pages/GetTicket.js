@@ -1,54 +1,40 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { useTranslation } from "react-i18next"
+import React, { useEffect, useState } from "react"
 import ContentCard from "../components/ContentCard"
 import Ticket from "../components/Ticket"
-import OrangeButton from "../components/OrangeButton"
-import vars from "../styles/vars"
-import {lighten, darken} from "polished"
-import { Input } from "antd"
-import { useGet } from "../api"
-import LoadingIcon from "../components/LoadingIcon"
-import { Link } from "react-router-dom"
 
-const LogoutButton = styled(OrangeButton)`
-  background: ${vars.darkBlue};
-  border: 1px solid ${vars.darkBlue};
-  color: ${vars.orange};
-  margin: 40px auto;
-  padding: 18px 0;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 0px;
-  &:not(:disabled) {
-    &:hover,
-    &:focus {
-      background: ${lighten(0.08, vars.darkBlue)};
-    }
-    &:active {
-      background: ${darken(0.1, vars.darkBlue)};
-    }
-  }
-`
+import ticketImg from "../images/ticket.png"
+import ticket2x from "../images/ticket@2x.png"
+import ticketWebp from "../images/ticket.webp"
+import ticketWebp2x from "../images/ticket@2x.webp"
+import { isHiDpi, supportsWebP } from "../utils"
+import FullScreenLoading from "../components/FullScreenLoading"
+import LogoutButton from "../components/LogoutButton"
 
-function GetTicket() {
-  const { t } = useTranslation()
-  const { data: user } = useGet('/getuser')
-  const [number, setNumber] = useState('0074')
-  if (!user) {
-    return <LoadingIcon />
+function GetTicket({ ticket }) {
+  let background = null
+  if (supportsWebP) {
+    background = isHiDpi ? ticketWebp2x : ticketWebp
+  } else {
+    background = isHiDpi ? ticket2x : ticketImg
   }
-  const { name } = user.data
-  const data = { number, name }
+
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const img = new Image()
+    img.onload = () => setLoading(false)
+    img.src = background
+  }, [background])
+
   return (
     <>
-      <Input value={number} onChange={e => setNumber(e.target.value)} />
-      <ContentCard style={{ padding: 16 }}>
-        <Ticket data={data} style={{ borderRadius: 10 }} />
+      { loading && <FullScreenLoading /> }
+      <ContentCard style={{ padding: 16 }} loading={loading}>
+        <Ticket data={ticket} background={background} style={{ borderRadius: 10 }} />
       </ContentCard>
-      <Link to="/logout">
-        <LogoutButton>{t("logout")}</LogoutButton>
-      </Link>
+      <div style={{ opacity: loading ? 0 : 1 }}>
+        <LogoutButton />
+      </div>
     </>
   )
 }

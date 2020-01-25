@@ -1,13 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 
-import ticket from "../images/ticket.png"
-
 const Container = styled.div`
   display: flex;
   position: relative;
 
-  background: url(${ticket});
+  background: url(${({ background }) => background});
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -36,10 +34,10 @@ const Overlay = styled.svg`
   }
 `
 
-function Ticket({ data, ...rest }) {
+function Ticket({ data, background, ...rest }) {
   const { number, name } = data
   return (
-    <Container {...rest}>
+    <Container background={background} {...rest}>
       <Overlay viewBox='0 0 910 1214'>
         <text x="50%" y="430.7996" textAnchor="middle" className="title">Queue Number</text>
         <text x="50%" y="605" textAnchor="middle" className="queue-number">{number}</text>

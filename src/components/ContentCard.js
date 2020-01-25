@@ -108,12 +108,12 @@ const Card = styled.div`
   }
 `
 
-const ContentCard = React.forwardRef(({ children, ...rest }, ref) => {
+const ContentCard = React.forwardRef(({ loading, children, ...rest }, ref) => {
   const { t } = useTranslation()
   const history = useHistory()
   const canGoBack = history.length > 1
   return (
-    <div>
+    <div style={{ opacity: loading ? 0 : 1 }}>
       <Header>
         { canGoBack ? <BackButton alt={t('back')} onClick={history.goBack} /> : <Space /> }
         <Logo to="/">

@@ -19,6 +19,7 @@ function AuthProvider(props) {
   useEffect(() => {
     if (token === null) {
       localStorage.removeItem('access_token')
+      localStorage.removeItem('ticket')
     } else {
       localStorage.setItem('access_token', token)
     }

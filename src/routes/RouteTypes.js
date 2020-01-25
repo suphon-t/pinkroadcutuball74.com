@@ -32,11 +32,11 @@ export function PrivateRoute({ dest, ...rest }) {
 }
 
 export function UserRoute({ dest, ...rest }) {
-  const { isAdmin } = useAuthContext()
+  const { isAdmin, isStaff } = useAuthContext()
   return (
     <PrivateRoute
       {...rest}
-      dest={() => (isAdmin && '/admin') || dest?.()}
+      dest={() => (isAdmin && '/admin') || (isStaff && '/staff/scan') || dest?.()}
     />
   )
 }
@@ -44,7 +44,7 @@ export function UserRoute({ dest, ...rest }) {
 export function StaffRoute({ dest, ...rest }) {
   const { isStaff } = useAuthContext()
   return (
-    <PrivateRoute
+    <AdminLogin
       {...rest}
       dest={() => (!isStaff && '/user') || dest?.()}
     />
