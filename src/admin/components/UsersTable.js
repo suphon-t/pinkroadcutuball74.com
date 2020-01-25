@@ -102,7 +102,7 @@ function UsersTable({ showCheckedIn }) {
   const count = (data && data.data.users_count) || 1
 
   const [editVisible, setEditVisible] = useState(false)
-  const [editingRow, setEditingRow] = useState({})
+  const [editingRow, setEditingRow] = useState(undefined)
 
   const closeEdit = useCallback(() => {
     setEditVisible(false)
@@ -115,10 +115,10 @@ function UsersTable({ showCheckedIn }) {
 
   const handleRow = useCallback((_, rowIndex) => ({
     onClick: () => {
-      setEditingRow(users[rowIndex])
+      setEditingRow(rowIndex)
       setEditVisible(true)
     }
-  }), [users])
+  }), [])
 
   const controls = (
     <ControlBox>
@@ -160,7 +160,13 @@ function UsersTable({ showCheckedIn }) {
         <Column title="Created" dataIndex="createdAt" key="createdAt" render={tags => formateDt(tags)} />
       </StyledTable>
       { controls }
-      <EditModal data={editingRow} visible={editVisible} onDone={closeEditAndReload} onCancel={closeEdit} />
+      <EditModal 
+        data={(editingRow !== undefined && users[editingRow]) || {}}
+        visible={editVisible}
+        loading={loading}
+        reload={fetchUsers}
+        onDone={closeEditAndReload}
+        onCancel={closeEdit} />
     </div>
   )
 }
@@ -169,14 +175,15 @@ const Timestamp = styled.div`
   margin: 8px 0;
 `
 
-function EditModal({ data, onDone, ...props }) {
+function EditModal({ data, onDone, reload, loading: tableLoading, ...props }) {
   const { t } = useTranslation()
   const { http } = useHttpContext()
   const facultyOptions = useFacultyOptions()
   const methods = useForm({ validationSchema: userSchema, mode: 'onChange' })
   const { setValue, triggerValidation, handleSubmit } = methods
 
-  const { loading, setPromise } = usePromise()
+  const { loading: saving, setPromise } = usePromise()
+  const loading = tableLoading || saving
 
   const notify = useCallback((type, text) => {
     notification[type]({
@@ -184,10 +191,10 @@ function EditModal({ data, onDone, ...props }) {
     })
   }, [data])
 
-  const handlePromise = useCallback((promise, msg1, msg2) => {
+  const handlePromise = useCallback((promise, msg1, msg2, onSuccess) => {
     return setPromise(promise)
       .then(() => {
-        onDone()
+        (onSuccess || onDone)()
         notify('success', msg1)
       }, error => {
         console.log(error?.response?.data || error)
@@ -203,9 +210,9 @@ function EditModal({ data, onDone, ...props }) {
     handlePromise(http.delete('/admin/delete', { params: { id: data.id } }), 'Deleted', 'delete')
   }, [http, handlePromise, data])
 
-  const onCheckIn = useCallback(() => {
-    handlePromise(http.post('/staff/checkin', qs.stringify({ id: data.id })), 'Checked in', 'check in')
-  }, [http, handlePromise, data])
+  const onCheckIn = useCallback(async () => {
+    handlePromise(http.post('/staff/checkin', qs.stringify({ id: data.id })), 'Checked in', 'check in', reload)
+  }, [http, handlePromise, data, reload])
 
   useEffect(() => {
     if (data) {
@@ -226,11 +233,11 @@ function EditModal({ data, onDone, ...props }) {
       <Title>Edit user {data?.id}</Title>
       <FormContext {...methods}>
         <Form style={{ marginTop: 28 }} layout="vertical" onSubmit={handleSubmit(onSubmit)}>
-          <Field name="name" title={t("fullname")} rules={{ required: true }} defaultValue={data?.name} />
+          <Field name="name" title={t("fullname")} rules={{ required: true }} defaultValue={data?.name} disabled={loading} />
           <Field name="ID" title={t("idNumber")} pattern="\d*" defaultValue={data?.id} disabled />
-          <Field name="tel" title={t("phoneNumber")} type="tel" defaultValue={data?.tel} />
-          <Field name="email" title={t("email")} type="email" defaultValue={data?.email} />
-          <Field name="faculty" title={t("faculty")} defaultValue={data?.faculty}>
+          <Field name="tel" title={t("phoneNumber")} type="tel" defaultValue={data?.tel} disabled={loading} />
+          <Field name="email" title={t("email")} type="email" defaultValue={data?.email} disabled={loading} />
+          <Field name="faculty" title={t("faculty")} defaultValue={data?.faculty} disabled={loading}>
             <DialogSelect options={facultyOptions} keepScroll />
           </Field>
           <Timestamp>
