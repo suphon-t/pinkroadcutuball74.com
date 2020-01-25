@@ -64,6 +64,7 @@ const SearchInput = styled(Input).attrs({
 })`
   input {
     border-radius: 0;
+    font-size: 16px;
   }
 `
 

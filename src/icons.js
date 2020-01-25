@@ -41,3 +41,7 @@ export {
 export {
   default as ReloadOutline
 } from "@ant-design/icons/lib/outline/ReloadOutline"
+
+export {
+  default as CloseCircleFill
+} from "@ant-design/icons/lib/fill/CloseCircleFill"

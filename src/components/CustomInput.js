@@ -8,6 +8,7 @@ export default styled(Input)`
   border: none;
   border-bottom: 1px solid ${vars.darkBlue};
   border-radius: 0;
+  font-size: 16px;
 
   &:disabled {
     background-color: transparent;
@@ -19,7 +20,7 @@ export default styled(Input)`
   }
 
   &::placeholder {
-    font-size: 11px;
+    font-size: 13px;
     line-height: 24px;
 
     color: $grey2;
