@@ -22,6 +22,11 @@ const Header = styled.div`
   display: flex;
 `
 
+const Space = styled.div`
+  height: 30px;
+  margin: 16px;
+`
+
 const BackButton = styled(OrangeButton)`
   width: 30px;
   height: 30px;
@@ -110,7 +115,7 @@ const ContentCard = React.forwardRef(({ children, ...rest }, ref) => {
   return (
     <div>
       <Header>
-        { canGoBack && <BackButton alt={t('back')} onClick={history.goBack} /> }
+        { canGoBack ? <BackButton alt={t('back')} onClick={history.goBack} /> : <Space /> }
         <Logo to="/">
           <picture>
             <source type="image/webp" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktopWebp2x} 2x, ${logoDesktopWebp} 1x`} />
