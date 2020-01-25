@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState, useCallback, useMemo } from "react"
 
 import { parseToken } from "../utils"
-import moment from "moment"
 
 export const AuthContext = createContext()
 
@@ -23,7 +22,7 @@ function AuthProvider(props) {
   // Validate and persist the token
   useEffect(() => {
     if (tokenData) {
-      if (moment().isAfter(moment(tokenData.exp * 1000))) {
+      if (new Date().getTime() > tokenData.exp * 1000) {
         logout()
       } else {
         localStorage.setItem('access_token', token)

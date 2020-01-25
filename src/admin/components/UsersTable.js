@@ -16,7 +16,8 @@ import { userSchema } from "../../utils/validation"
 import Title from "../../components/Title"
 import OrangeButton from "../../components/OrangeButton"
 import ButtonBar from "../../components/ButtonBar"
-import moment from "moment"
+
+import { parseISO, format } from "date-fns"
 
 const { Column } = Table
 
@@ -48,7 +49,8 @@ const StyledTable = styled(Table)`
 `
 
 function formateDt(dt) {
-  return moment(dt).format('HH:mm:ss DD/MM/YYYY')
+  if (!dt) return dt
+  return format(parseISO(dt), 'HH:mm:ss dd/MM/yyyy')
 }
 
 function UsersTable() {

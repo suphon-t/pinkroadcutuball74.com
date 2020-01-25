@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import facultyCodes from "../i18n/faculty-codes"
 import { useMemo, useState, useCallback, useEffect } from "react"
-import moment from "moment"
+import { format } from "date-fns"
 
 export const idNumberPattern = /^(\d{1})(\d{4})(\d{5})(\d{2})(\d{1})$/
 export const telPattern = /^(\d{2,4})(\d{3})(\d{4})$/
@@ -52,12 +52,12 @@ export function parseToken(token) {
   }
 }
 
-export function useCurrentTime(format = 'HH:mm:ss') {
+export function useCurrentTime(disp = 'HH:mm:ss') {
   const [time, setTime] = useState('')
 
   const updateTime = useCallback(() => {
-    setTime(moment().format(format))
-  }, [format])
+    setTime(format(new Date(), disp))
+  }, [disp])
 
   useEffect(() => {
     const clear = setInterval(() => {
