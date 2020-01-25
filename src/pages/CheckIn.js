@@ -13,6 +13,7 @@ import ContentCard from "../components/ContentCard"
 import Flex from "../components/Flex"
 import ButtonBar from "../components/ButtonBar"
 import vars from "../styles/vars"
+import LogoutButton from "../components/LogoutButton"
 
 const Container = styled.div`
   margin: 36px 0;
@@ -62,23 +63,26 @@ const CheckIn = withContentRect('bounds')(({ measureRef, measure, contentRect })
   const size = Math.max((width || 0) - 112, 200)
 
   return (
-    <ContentCard ref={measureRef}>
-      <Container>
-        <CenterAlign>
-          <Title>{t('scanqr.title')}<br />{t('scanqr.title2')}</Title>
-          <Subtitle>{t('scanqr.subtitle')}</Subtitle>
-        </CenterAlign>
-        <Flex style={{ justifyContent: 'center' }}>
-          <Flex direction="column">
-            <QRBox size={size} value={qrValue} />
-            <BottomBar>
-              { time }
-              <RefreshIcon type="reload" />
-            </BottomBar>
+    <>
+      <ContentCard ref={measureRef}>
+        <Container>
+          <CenterAlign>
+            <Title>{t('scanqr.title')}<br />{t('scanqr.title2')}</Title>
+            <Subtitle>{t('scanqr.subtitle')}</Subtitle>
+          </CenterAlign>
+          <Flex style={{ justifyContent: 'center' }}>
+            <Flex direction="column">
+              <QRBox size={size} value={qrValue} />
+              <BottomBar>
+                { time }
+                <RefreshIcon type="reload" />
+              </BottomBar>
+            </Flex>
           </Flex>
-        </Flex>
-      </Container>
-    </ContentCard>
+        </Container>
+      </ContentCard>
+      <LogoutButton />
+    </>
   )
 })
 
