@@ -23,6 +23,7 @@ const Center = styled.div`
 
 const Logo = styled.img`
   width: ${between('77px', '158px', '375px', '1440px')};
+  height: ${between('61px', '125.5px', '375px', '1440px')};
   margin-top: ${between('41px', '87px', '375px', '1440px')};
   margin-bottom: ${between('35px', '26px', '375px', '1440px')};
 `
