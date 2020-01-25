@@ -5,6 +5,7 @@ import { UserRoute, AdminRoute, StaffRoute } from "./RouteTypes"
 
 import Landing from "../pages/Landing"
 import Login from "../pages/Login"
+import TicketLogin from "../pages/TicketLogin"
 import Logout from "../pages/Logout"
 import RegisterSuccess from "../pages/RegisterSuccess"
 import User from "../pages/User"
@@ -12,6 +13,7 @@ import NoMatch from "../pages/NoMatch"
 import AdminLogin from "../pages/AdminLogin"
 import CheckInTicket from "../pages/CheckInTicket"
 import FullScreenLoading from "../components/FullScreenLoading"
+import { isEventDay } from "../utils"
 
 const Register = lazy(() => import(/* webpackPrefetch: true */ "../pages/Register"))
 const StaffScan = lazy(() => import("../pages/StaffScan"))
@@ -26,7 +28,7 @@ function Routes() {
           <Route path="/" exact component={Landing} />
           <Route path="/register" exact component={Register} />
           <Route path="/register/success" component={RegisterSuccess} />
-          <Route path="/login" component={Login} />
+          { isEventDay ? <Route path="/login" component={TicketLogin} /> : <Route path="/login" component={Login} /> }
           <Route path="/logout" component={Logout} />
           <UserRoute path="/user">
             <User />

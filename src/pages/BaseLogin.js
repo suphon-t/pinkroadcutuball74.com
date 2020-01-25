@@ -21,7 +21,7 @@ const LoginForm = styled(Form)`
   padding: 50px 0 0 0;
 `
 
-function Login({ title, subtitle, children }) {
+function Login({ title, subtitle, buttonTitle = 'login.submit', target = '/user', children }) {
   const { t } = useTranslation()
   const methods = useForm()
   const { getValues, handleSubmit } = methods
@@ -49,7 +49,7 @@ function Login({ title, subtitle, children }) {
   }, [loading, getValues, postLogin, login])
 
   if (isAuthenticated) {
-    return <Redirect to={location.state?.from || "/user"} />
+    return <Redirect to={location.state?.from || target} />
   }
 
   return (
@@ -66,7 +66,7 @@ function Login({ title, subtitle, children }) {
           )}
           { children(loading) }
           <ButtonBar style={{ direction: 'rtl' }}>
-            <SubmitButton type="submit" disabled={loading}>{t("login.submit")}</SubmitButton>
+            <SubmitButton type="submit" disabled={loading}>{t(buttonTitle)}</SubmitButton>
             <BackButton />
           </ButtonBar>
         </LoginForm>

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import facultyCodes from "../i18n/faculty-codes"
 import { useMemo, useState, useCallback, useEffect } from "react"
-import { format } from "date-fns"
+import { parseISO, format } from "date-fns"
 
 export const idNumberPattern = /^(\d{1})(\d{4})(\d{5})(\d{2})(\d{1})$/
 export const telPattern = /^(\d{2,4})(\d{3})(\d{4})$/
@@ -84,3 +84,5 @@ export const supportsWebP = (() => {
   // very old browser like IE 8, canvas not supported
   return false;
 })()
+
+export const isEventDay = new Date() > parseISO('2020-02-08T04:00:00+07:00')

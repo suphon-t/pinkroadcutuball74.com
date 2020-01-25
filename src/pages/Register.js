@@ -26,7 +26,7 @@ import PageHeader from "../components/PageHeader"
 import DialogSelect from "../components/DialogSelect"
 import { useAuthContext } from "../auth"
 import { userSchema } from "../utils/validation"
-import { useFacultyOptions } from "../utils"
+import { useFacultyOptions, isEventDay } from "../utils"
 
 const FacultyContainer = styled(Form.Item)`
   margin-bottom: -4px;
@@ -150,7 +150,7 @@ function Register() {
     <FormContext {...methods}>
       <ContentCard id="register-form">
         <div className="form-container">
-          <PageHeader title={t('register.title')} subtitle={t('register.subtitle')} />
+          <PageHeader title={t(isEventDay ? 'register.edtitle' : 'register.title')} subtitle={t('register.subtitle')} />
           <Form style={{ marginTop: 28 }} layout="vertical" onSubmit={handleSubmit(onSubmit)}>
             <Field name="name" title={t("fullname")} autoComplete="name" autoFocus />
             <Field name="ID" title={t("idNumber")} pattern="\d*" />

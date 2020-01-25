@@ -15,6 +15,7 @@ import logoWebp from "../images/logo-landing.webp"
 import logoWebp2x from "../images/logo-landing@2x.webp"
 import { between } from "polished"
 import { up } from "styled-breakpoints"
+import { isEventDay } from "../utils"
 
 const Center = styled.div`
   width: 100%;
@@ -73,13 +74,25 @@ const ButtonsContainer = styled.div`
   align-items: center;
 `
 
-const RegisterButton = styled(OrangeButton)`
+const LandingButton = styled(OrangeButton)`
   width: ${between('226px', '375px', '375px', '1440px')};
   height: ${between('50px', '83px', '375px', '1440px')};
 
   font-weight: 400;
   font-size: ${between('24px', '40px', '375px', '1440px')};
-  color: $dark-blue;
+
+  ${up('md')} {
+    border-width: 2px;
+  }
+`
+
+const RegisterLink = styled(Link)`
+  margin-top: ${between('16px', '28px', '375px', '1440px')};
+  
+  ${LandingButton} {
+    background: transparent;
+    box-shadow: none;
+  }
 `
 
 const GetStatusButton = styled(Link)`
@@ -118,10 +131,23 @@ function Landing() {
         </Down>
       </TitleContainer>
       <ButtonsContainer>
-        <Link to="/register">
-          <RegisterButton type="primary">ลงทะเบียน</RegisterButton>
-        </Link>
-        <GetStatusButton to="/user">ตรวจสอบข้อมูล</GetStatusButton>
+        { isEventDay ? (
+          <>
+            <Link to="/ticket">
+              <LandingButton type="primary">รับบัตรเข้างาน</LandingButton>
+            </Link>
+            <RegisterLink to="/register">
+              <LandingButton type="primary">ลงทะเบียน</LandingButton>
+            </RegisterLink>
+          </>
+        ) : (
+          <>
+            <Link to="/register">
+              <LandingButton type="primary">ลงทะเบียน</LandingButton>
+            </Link>
+            <GetStatusButton to="/user">ตรวจสอบข้อมูล</GetStatusButton>
+          </>
+        ) }
       </ButtonsContainer>
     </div>
   )
