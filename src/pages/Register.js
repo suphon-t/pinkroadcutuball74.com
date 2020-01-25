@@ -9,7 +9,7 @@ import { down, up } from "styled-breakpoints"
 import { Form, Button } from "antd"
 
 // utility
-import { usePostStatus } from "../api"
+import { usePromise, useHttpContext } from "../api"
 
 // components
 import UserInfo from "../components/UserInfo"
@@ -97,29 +97,39 @@ function Register() {
 
   const facultyOptions = useFacultyOptions()
 
-  const { loading, execute: executePost } = usePostStatus("/register")
+  const { login } = useAuthContext()
+  const { http } = useHttpContext()
+  const { loading, callAsync } = usePromise()
   const onSubmit = useCallback(() => {
     setModalVisible(true)
   }, [])
 
   const history = useHistory()
-  const confirmSubmit = useCallback(
-    async () => {
+  const confirmSubmit = useCallback(() => {
+    callAsync(async () => {
       try {
-        await executePost(getValues())
-        history.replace("/register/success")
+        const values = getValues()
+        await http.post('/register', values)
+        const loginData = await http.post('/token', {
+          username: values.ID,
+          password: values.tel,
+          grant_type: 'password',
+        })
+        login(loginData.data.access_token)
+        history.replace('/register/success')
       } catch (err) {
-        const data = err.response.data
-        if (data.error === "DUPID") {
+        const data = err?.response?.data
+        if (data?.error === "DUPID") {
           setIsDuplicate(true)
-        } else {
+        } else if (data) {
           setErrorDescription(data.error_description)
+        } else {
+          setErrorDescription(JSON.stringify(err))
         }
         setModalVisible(false)
       }
-    },
-    [executePost, getValues, history]
-  )
+    })
+  }, [callAsync, getValues, history, http, login])
 
   const confirmModal = (
     <CustomModal visible={modalVisible} onCancel={() => setModalVisible(false)}>
@@ -157,9 +167,9 @@ function Register() {
               <TosModal title="นโยบายความเป็นส่วนตัว" />
             </TosLabel>
 
-            <ButtonBar>
-              <BackButton />
+            <ButtonBar style={{ direction: 'rtl' }}>
               <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
+              <BackButton />
             </ButtonBar>
 
             {confirmModal}

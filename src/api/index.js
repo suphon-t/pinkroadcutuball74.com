@@ -75,7 +75,11 @@ export function usePromise() {
     })
   }, [])
 
-  return { loading: !!state.promise, data, error, setPromise }
+  const callAsync = useCallback(func => {
+    setPromise(func())
+  }, [setPromise])
+
+  return { loading: !!state.promise, data, error, setPromise, callAsync }
 }
 
 export function usePostStatus(url, isJson = true) {
