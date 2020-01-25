@@ -45,3 +45,11 @@ export {
 export {
   default as CloseCircleFill
 } from "@ant-design/icons/lib/fill/CloseCircleFill"
+
+export {
+  default as DoubleLeftOutline
+} from "@ant-design/icons/lib/outline/DoubleLeftOutline"
+
+export {
+  default as DoubleRightOutline
+} from "@ant-design/icons/lib/outline/DoubleRightOutline"

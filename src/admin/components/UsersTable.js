@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useMemo } from "react"
 import styled from "styled-components"
 import { darken, lighten } from "polished"
 import { useTranslation } from "react-i18next"
-import { Table, Pagination, Form, Popconfirm, notification, Input, Icon, Button } from "antd"
+import { Table, Pagination, Form, Popconfirm, notification, Input, Icon, Button, Affix } from "antd"
 import debounce from "lodash.debounce"
 import qs from "qs"
 
@@ -56,6 +56,12 @@ const StyledTable = styled(Table)`
     &:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
       background: ${darken(.005, checkInRowBg)};
     }
+  }
+`
+
+const AffixedContainer = styled.div`
+  .ant-affix > & {
+    backdrop-filter: saturate(180%) blur(15px);
   }
 `
 
@@ -121,7 +127,7 @@ function UsersTable({ showCheckedIn }) {
   }), [])
 
   const controls = (
-    <ControlBox>
+    <ControlBox style={{ margin: '0 64px' }}>
       <Input
         style={{ width: 250, marginRight: 16 }} 
         value={searchValue}
@@ -142,8 +148,13 @@ function UsersTable({ showCheckedIn }) {
 
   return (
     <div>
-      { controls }
+      <Affix offsetTop={65}>
+        <AffixedContainer>
+          { controls }
+        </AffixedContainer>
+      </Affix>
       <StyledTable 
+        style={{ margin: '0 64px' }}
         loading={loading}
         dataSource={users} 
         rowClassName={record => record.checkedinAt && 'checked-in'}

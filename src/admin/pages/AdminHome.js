@@ -8,8 +8,8 @@ function AdminHome() {
   const [showCheckedIn, setShowCheckedIn] = useState(false)
 
   return (
-    <Layout>
-      <StatsBar showCheckedIn={showCheckedIn} setShowCheckedIn={setShowCheckedIn} />
+    <Layout style={{ margin: 0 }}>
+      <StatsBar style={{ margin: '0 64px' }} showCheckedIn={showCheckedIn} setShowCheckedIn={setShowCheckedIn} />
       <UsersTable showCheckedIn={showCheckedIn} />
     </Layout>
   )

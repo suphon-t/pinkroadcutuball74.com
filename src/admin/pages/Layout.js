@@ -7,11 +7,11 @@ const Container = styled.div`
   margin: 0 64px;
 `
 
-function Layout({ children }) {
+function Layout({ children, ...props }) {
   return (
     <>
       <AdminBar />
-      <Container>
+      <Container {...props}>
         { children }
       </Container>
     </>
