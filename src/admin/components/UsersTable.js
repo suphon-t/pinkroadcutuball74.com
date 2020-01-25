@@ -53,7 +53,7 @@ function formateDt(dt) {
   return format(parseISO(dt), 'HH:mm:ss dd/MM/yyyy')
 }
 
-function UsersTable() {
+function UsersTable({ showCheckedIn }) {
   const { t } = useTranslation()
   const [pageSize, setPageSize] = useState(() => JSON.parse(localStorage.getItem('adminPageSize') || '10'))
   const [page, setPage] = useState(1)
@@ -63,10 +63,15 @@ function UsersTable() {
     setPage(1)
   }, 300), [])
   const { data, loading, execute: fetchUsers } = useGet('/admin/getusers', {
+    checkedin: showCheckedIn || undefined,
     start: pageSize * (page - 1),
     end: pageSize * page,
     value: query,
   })
+
+  useEffect(() => {
+    setPage(1)
+  }, [showCheckedIn])
 
   const [searchValue, setSearchValue] = useState('')
   const onSearch = useCallback(({ target: { value } }) => {
@@ -134,12 +139,13 @@ function UsersTable() {
         onRow={handleRow}
         pagination={false}
       >
+        <Column title="Number" dataIndex="number" key="number" />
         <Column title="ID" dataIndex="id" key="id" />
         <Column title="Name" dataIndex="name" key="name" />
         <Column title="Telephone" dataIndex="tel" key="tel" />
         <Column title="E-mail" dataIndex="email" key="email" />
         <Column title="Faculty" dataIndex="faculty" key="faculty" render={tags => t(`facultyNames.${tags}`)} />
-        <Column title="Created" dataIndex="created" key="created" render={tags => formateDt(tags)} />
+        <Column title="Created" dataIndex="createdAt" key="createdAt" render={tags => formateDt(tags)} />
       </StyledTable>
       { controls }
       <EditModal data={editingRow} visible={editVisible} onDone={closeEditAndReload} onCancel={closeEdit} />
@@ -204,8 +210,9 @@ function EditModal({ data, onDone, ...props }) {
     }
   }, [data, setValue, triggerValidation])
 
-  const created = useMemo(() => formateDt(data?.created), [data])
-  const modified = useMemo(() => formateDt(data?.modified), [data])
+  const createdAt = useMemo(() => formateDt(data?.createdAt), [data])
+  const modifiedAt = useMemo(() => formateDt(data?.modifiedAt), [data])
+  const checkedInAt = useMemo(() => formateDt(data?.checkedinAt), [data])
 
   return (
     <CustomModal {...props}>
@@ -220,8 +227,9 @@ function EditModal({ data, onDone, ...props }) {
             <DialogSelect options={facultyOptions} keepScroll />
           </Field>
           <Timestamp>
-            <p>Created at {created}</p>
-            <p>Last modified at {modified}</p>
+            <p>Created at {createdAt}</p>
+            <p>Last modified at {modifiedAt}</p>
+            <p>{ checkedInAt ? `Checked in at ${checkedInAt}` : `Hasn't checked in yet` }</p>
           </Timestamp>
           <ButtonBar style={{ direction: 'rtl', marginTop: 16 }}>
             <OrangeButton background="#40edc2" color="white" type="submit" disabled={loading}>Save</OrangeButton>

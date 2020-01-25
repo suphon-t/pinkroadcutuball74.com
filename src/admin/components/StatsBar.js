@@ -13,14 +13,18 @@ const Container = styled.div`
 `
 
 const RegisterNumber = styled(StatsNumber)`
-  background: linear-gradient(242.87deg, #F9C455 2.93%, #EE7398 103.13%);
+  &::before {
+    background: linear-gradient(242.87deg, #F9C455 2.93%, #EE7398 103.13%);
+  }
 `
 
 const EnterNumber = styled(StatsNumber)`
-  background: linear-gradient(285.47deg, #40EDC2 -13.25%, #F9C455 97.77%);
+  &::before {
+    background: linear-gradient(285.47deg, #40EDC2 -13.25%, #F9C455 97.77%);
+  }
 `
 
-function StatsBar() {
+function StatsBar({ showCheckedIn, setShowCheckedIn }) {
   const { t } = useTranslation()
   const { data, execute } = useGet('/admin/getstat')
 
@@ -31,8 +35,16 @@ function StatsBar() {
 
   return (
     <Container>
-      <RegisterNumber title={t('admin.register')} count={data?.data?.regist} />
-      <EnterNumber title={t('admin.enter')} count={data?.data?.checkin} />
+      <RegisterNumber 
+        active={!showCheckedIn}
+        onClick={() => setShowCheckedIn(false)}
+        title={t('admin.register')} 
+        count={data?.data?.regist} />
+      <EnterNumber
+        active={showCheckedIn}
+        onClick={() => setShowCheckedIn(true)}
+        title={t('admin.enter')}
+        count={data?.data?.checkin} />
     </Container>
   )
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 
 import AdminBar from "../components/AdminBar"
@@ -10,12 +10,13 @@ const Container = styled.div`
 `
 
 function Home() {
+  const [showCheckedIn, setShowCheckedIn] = useState(false)
   return (
     <>
       <AdminBar fixed="top" expand="lg"/>
       <Container>
-        <StatsBar />
-        <UsersTable />
+        <StatsBar showCheckedIn={showCheckedIn} setShowCheckedIn={setShowCheckedIn} />
+        <UsersTable showCheckedIn={showCheckedIn} />
       </Container>
     </>
   )
