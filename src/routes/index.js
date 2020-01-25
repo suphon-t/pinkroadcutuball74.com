@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom"
 import { UserRoute, AdminRoute, StaffRoute } from "./RouteTypes"
 
 import Landing from "../pages/Landing"
-import Register from "../pages/Register"
 import Login from "../pages/Login"
 import Logout from "../pages/Logout"
 import RegisterSuccess from "../pages/RegisterSuccess"
@@ -14,6 +13,7 @@ import AdminLogin from "../pages/AdminLogin"
 import CheckInTicket from "../pages/CheckInTicket"
 import FullScreenLoading from "../components/FullScreenLoading"
 
+const Register = lazy(() => import("../pages/Register"))
 const StaffScan = lazy(() => import("../pages/StaffScan"))
 const Admin = lazy(() => import("../admin"))
 const RandomScreen = lazy(() => import("../admin/pages/RandomScreen"))

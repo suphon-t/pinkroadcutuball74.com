@@ -25,7 +25,8 @@ import vars from "../styles/vars"
 import PageHeader from "../components/PageHeader"
 import DialogSelect from "../components/DialogSelect"
 import { useAuthContext } from "../auth"
-import { userSchema, useFacultyOptions } from "../utils"
+import { userSchema } from "../utils/validation"
+import { useFacultyOptions } from "../utils"
 
 const FacultyContainer = styled(Form.Item)`
   margin-bottom: -4px;
