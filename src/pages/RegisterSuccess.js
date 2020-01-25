@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import ContentCard from "../components/ContentCard"
 import OrangeButton from "../components/OrangeButton"
 
-import success from "../images/success.svg"
+import { ReactComponent as Success } from "../images/success.svg"
 import styled from "styled-components"
 import vars from "../styles/vars"
 
@@ -39,7 +39,7 @@ function RegisterSuccess() {
   return (
     <>
       <ContentCard id="register-success" style={{ textAlign: 'center' }}>
-        <img style={{marginTop: 80}} src={success} alt="" />
+        <Success style={{ marginTop: 80 }} />
         <Title>{t('register.success.title')}</Title>
         <Subtitle>{t('register.success.subtitle')}</Subtitle>
         <Link to="/">

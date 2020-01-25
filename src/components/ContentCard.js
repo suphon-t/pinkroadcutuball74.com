@@ -16,7 +16,7 @@ import { between } from "polished"
 import breakpoints from "../styles/breakpoints"
 import OrangeButton from "./OrangeButton"
 
-import back from "../images/arrow-back.svg"
+import { ReactComponent as BackIcon } from "../images/arrow-back.svg"
 
 const Header = styled.div`
   display: flex;
@@ -33,16 +33,12 @@ const BackButton = styled(OrangeButton)`
   margin: 16px;
   padding: 0;
 
-  &::after {
-    content: '';
+  svg {
     display: block;
     width: 24px;
     height: 24px;
     margin: auto;
-    background: ${vars.darkBlue};
-    mask-image: url(${back});
-    mask-position: center;
-    mask-size: cover;
+    fill: ${vars.darkBlue};
   }
 
   ${up("xl")} {
@@ -115,7 +111,11 @@ const ContentCard = React.forwardRef(({ loading, children, ...rest }, ref) => {
   return (
     <div style={{ opacity: loading ? 0 : 1 }}>
       <Header>
-        { canGoBack ? <BackButton alt={t('back')} onClick={history.goBack} /> : <Space /> }
+        { canGoBack ? (
+          <BackButton alt={t('back')} onClick={history.goBack}>
+            <BackIcon />
+          </BackButton>
+        ) : <Space /> }
         <Logo to="/">
           <picture>
             <source type="image/webp" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktopWebp2x} 2x, ${logoDesktopWebp} 1x`} />
