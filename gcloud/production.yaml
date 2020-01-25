@@ -13,7 +13,12 @@ handlers:
     static_files: dist/\1
     upload: dist/.*\.(json|ico|js|txt)$
 
-  - url: .*
+  - url: /
     static_files: dist/index.html
     upload: dist/index.html
+    expiration: '0s'
+
+  - url: .*
+    static_files: dist/200.html
+    upload: dist/200.html
     expiration: '0s'

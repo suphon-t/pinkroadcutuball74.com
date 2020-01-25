@@ -39,6 +39,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "postbuild": "react-snap",
     "test": "react-app-rewired test"
   },
   "eslintConfig": {
@@ -57,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "react-snap": "^1.23.0",
     "source-map-explorer": "^2.2.2"
   }
 }
