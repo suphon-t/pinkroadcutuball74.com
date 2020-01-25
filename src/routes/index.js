@@ -18,7 +18,6 @@ import { isEventDay } from "../utils"
 const Register = lazy(() => import(/* webpackPrefetch: true */ "../pages/Register"))
 const StaffScan = lazy(() => import("../pages/StaffScan"))
 const Admin = lazy(() => import("../admin"))
-const RandomScreen = lazy(() => import("../admin/pages/RandomScreen"))
 
 function Routes() {
   return (
@@ -42,9 +41,6 @@ function Routes() {
           <Route path="/admin/login" component={AdminLogin} />
           <AdminRoute path="/admin">
             <Admin />
-          </AdminRoute>
-          <AdminRoute path="/adminext/random">
-            <RandomScreen />
           </AdminRoute>
           <Route component={NoMatch} />
         </Switch>

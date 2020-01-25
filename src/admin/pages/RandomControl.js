@@ -1,41 +1,86 @@
 import React, { useEffect, useState, useCallback } from "react"
-import { Button } from "antd"
+import styled from "styled-components"
 
-import { usePromise } from "../../api"
+import FullScreenLoading from "../../components/FullScreenLoading"
 import Channel from "../../utils/Channel"
+import Layout from "./Layout"
+import vars from "../../styles/vars"
+import { List, Card, Typography, Button, notification } from "antd"
+
+const { Title } = Typography
+
+const TopPanel = styled.div`
+  margin: 24px 0;
+`
 
 function RandomControl() {
-  const [received, setReceived] = useState(false)
-  const { data, loading, setPromise } = usePromise()
+  const [connecting, setConnecting] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [channel, setChannel] = useState(null)
+  const [data, setData] = useState([])
+
+  const randomAgain = useCallback(() => {
+    setLoading(true)
+    channel.send('pls give more')
+  }, [channel])
 
   useEffect(() => {
-    setPromise(new Promise(resolve => resolve([])))
-  }, [setPromise])
-
-  const fakeRandom = useCallback(() => {
-    const next = `${Math.round(Math.random() * 8999) + 1000}`
-    setPromise(new Promise(resolve => resolve([next, ...data])))
-  }, [setPromise, data])
-  
-  useEffect(() => {
-    const channel = new Channel('randomScreen', action => {
-      if (action === 'opened') {
-        channel.send('results', data)
-      }
-      if (action === 'received') {
-        setReceived(true)
+    const channel = new Channel('randomScreen', (action, payload) => {
+      switch (action) {
+        case 'yo i got these':
+          setConnecting(false)
+          setLoading(false)
+          setData(payload)
+          break
+        case 'im done':
+          setLoading(false)
+          break
+        case 'heyyy':
+          const { type, data } = payload
+          notification[type](data)
+          break
+        default:
+          break
       }
     })
-    setReceived(false)
-    channel.send('results', data)
+    channel.send('hey im here')
+    setChannel(channel)
     return () => channel.close()
-  }, [data])
-
+  }, [])
+  
   return (
-    <div>
-      Received: {`${received}`}<br />
-      <Button type="primary" onClick={fakeRandom} disabled={loading}>Fake random</Button>
-    </div>
+    <Layout>
+      { connecting ? <FullScreenLoading color={vars.pink} /> : (
+        <>
+          <TopPanel>
+            <Button type="primary" shape="round" size="large" onClick={randomAgain} loading={loading}>Random again</Button>
+          </TopPanel>
+          <Title>Previous entries</Title>
+          <List
+            grid={{
+              gutter: 16,
+              xs: 1,
+              sm: 2,
+              md: 4,
+              lg: 4,
+              xl: 6,
+              xxl: 3,
+            }}
+            dataSource={data}
+            renderItem={item => (
+              <List.Item>
+                <Card>
+                  <List.Item.Meta
+                    title={item.number}
+                    description={item.name}
+                  />
+                </Card>
+              </List.Item>
+            )}
+          />
+        </>
+      ) }
+    </Layout>
   )
 }
 

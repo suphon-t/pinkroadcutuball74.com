@@ -2,7 +2,8 @@ import React from "react"
 import { Switch, Route, useRouteMatch } from "react-router-dom"
 import { createGlobalStyle } from "styled-components"
 
-import Home from "./pages/home"
+import AdminHome from "./pages/AdminHome"
+import RandomScreen from "./pages/RandomScreen"
 import RandomControl from "./pages/RandomControl"
 
 const AdminGlobalStyle = createGlobalStyle`
@@ -21,8 +22,9 @@ function Admin() {
     <>
       <AdminGlobalStyle />
       <Switch>
-        <Route path={path} exact component={Home} />
-        <Route path={`${path}/random`} component={RandomControl} />
+        <Route path={path} exact component={AdminHome} />
+        <Route path={`${path}/random`} component={RandomScreen} />
+        <Route path={`${path}/control`} component={RandomControl} />
       </Switch>
     </>
   )

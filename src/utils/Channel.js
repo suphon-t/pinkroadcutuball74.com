@@ -16,10 +16,15 @@ class Channel {
   }
 
   send(action, payload) {
-    localStorage.setItem(this.name, JSON.stringify({
-      current: Date.now(),
-      data: { action, payload },
-    }))
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        localStorage.setItem(this.name, JSON.stringify({
+          current: Date.now(),
+          data: { action, payload },
+        }))
+        resolve()
+      }, 0)
+    })
   }
 }
 
