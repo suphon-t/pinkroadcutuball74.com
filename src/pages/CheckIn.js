@@ -13,7 +13,7 @@ import ContentCard from "../components/ContentCard"
 import Flex from "../components/Flex"
 import ButtonBar from "../components/ButtonBar"
 import vars from "../styles/vars"
-import LogoutButton from "../components/LogoutButton"
+import LogoutButtonFloating from "../components/LogoutButtonFloating"
 
 const Container = styled.div`
   margin: 36px 0;
@@ -81,7 +81,7 @@ const CheckIn = withContentRect('bounds')(({ measureRef, measure, contentRect })
           </Flex>
         </Container>
       </ContentCard>
-      <LogoutButton />
+      <LogoutButtonFloating />
     </>
   )
 })

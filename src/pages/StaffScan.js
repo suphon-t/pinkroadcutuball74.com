@@ -9,7 +9,7 @@ import { useCurrentTime } from "../utils"
 import { usePostStatus } from "../api"
 import styled from "styled-components"
 import vars from "../styles/vars"
-import LogoutButton from "../components/LogoutButton"
+import LogoutButtonFloating from "../components/LogoutButtonFloating"
 
 const LoadingIcon = styled(Icon)`
   display: block;
@@ -86,7 +86,7 @@ function StaffScan() {
           { loading && <LoadingIcon type="loading" /> }
         </BottomBar>
       </ContentCard>
-      <LogoutButton />
+      <LogoutButtonFloating />
     </>
   )
 }

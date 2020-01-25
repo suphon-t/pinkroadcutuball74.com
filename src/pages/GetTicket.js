@@ -8,7 +8,7 @@ import ticketWebp from "../images/ticket.webp"
 import ticketWebp2x from "../images/ticket@2x.webp"
 import { isHiDpi, supportsWebP } from "../utils"
 import FullScreenLoading from "../components/FullScreenLoading"
-import LogoutButton from "../components/LogoutButton"
+import LogoutButtonFloating from "../components/LogoutButtonFloating"
 
 function GetTicket({ ticket }) {
   let background = null
@@ -33,7 +33,7 @@ function GetTicket({ ticket }) {
         <Ticket data={ticket} background={background} style={{ borderRadius: 10 }} />
       </ContentCard>
       <div style={{ opacity: loading ? 0 : 1 }}>
-        <LogoutButton />
+        <LogoutButtonFloating />
       </div>
     </>
   )
