@@ -41,22 +41,22 @@ function StaffScan() {
   const checkin = useCallback(async () => {
     if (!userId) return
     try {
-      const { data } = await sendCheckin({ id: userId })
-      if (data.error) {
+      await sendCheckin({ id: userId })
+      notification['success']({
+        message: `Checked in ${userId}`,
+      })
+    } catch (err) {
+      if (err?.response?.data) {
         notification['error']({
           message: `Failed to check in ${userId}`,
-          description: data.error_description,
+          description: err?.response?.data.error_description,
         })
       } else {
-        notification['success']({
-          message: `Checked in ${userId}`,
+      notification['error']({
+          message: `Failed to check in ${userId}`,
+          description: JSON.stringify(err),
         })
       }
-    } catch (err) {
-      notification['error']({
-        message: `Failed to check in ${userId}`,
-        description: JSON.stringify(err),
-      })
     }
   }, [userId, sendCheckin])
 
