@@ -13,7 +13,7 @@ import AdminLogin from "../pages/AdminLogin"
 import CheckInTicket from "../pages/CheckInTicket"
 import FullScreenLoading from "../components/FullScreenLoading"
 
-const Register = lazy(() => import("../pages/Register"))
+const Register = lazy(() => import(/* webpackPrefetch: true */ "../pages/Register"))
 const StaffScan = lazy(() => import("../pages/StaffScan"))
 const Admin = lazy(() => import("../admin"))
 const RandomScreen = lazy(() => import("../admin/pages/RandomScreen"))

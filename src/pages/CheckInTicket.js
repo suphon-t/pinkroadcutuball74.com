@@ -4,7 +4,7 @@ import GetTicket from "./GetTicket"
 import { useGet } from "../api"
 import FullScreenLoading from "../components/FullScreenLoading"
 
-const CheckIn = lazy(() => import("../pages/CheckIn"))
+const CheckIn = lazy(() => import(/* webpackPrefetch: true */ "../pages/CheckIn"))
 
 function CheckInTicket() {
   const { data, error, execute: refresh } = useGet('/getticket')
