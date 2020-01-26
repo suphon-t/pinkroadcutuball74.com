@@ -24,21 +24,21 @@ function UserRoutes() {
   return (
     <SafeArea all>
       <Switch>
-          <Route path="/" exact component={Landing} />
-          <Route path="/register" exact component={Register} />
-          <Route path="/register/success" component={RegisterSuccess} />
-          { isEventDay ? <Route path="/login" component={TicketLogin} /> : <Route path="/login" component={Login} /> }
-          <Route path="/logout" component={Logout} />
-          <UserRoute path="/user">
-            <User />
-          </UserRoute>
-          <UserRoute path="/ticket">
-            <CheckInTicket />
-          </UserRoute>
-          <StaffRoute path="/staff/scan">
-            <StaffScan />
-          </StaffRoute>
-          <Route component={NoMatch} />
+        <Route path="/" exact component={Landing} />
+        <Route path="/register" exact component={Register} />
+        <Route path="/register/success" component={RegisterSuccess} />
+        { isEventDay ? <Route path="/login" component={TicketLogin} /> : <Route path="/login" component={Login} /> }
+        <Route path="/logout" component={Logout} />
+        <UserRoute path="/user">
+          <User />
+        </UserRoute>
+        <UserRoute path="/ticket">
+          <CheckInTicket />
+        </UserRoute>
+        <StaffRoute path="/staff/scan">
+          <StaffScan />
+        </StaffRoute>
+        <Route component={NoMatch} />
       </Switch>
     </SafeArea>
   )
