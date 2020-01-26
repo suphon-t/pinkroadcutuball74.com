@@ -117,7 +117,7 @@ const ContentCard = React.forwardRef(({ loading, children, ...rest }, ref) => {
     <div style={{ opacity: loading ? 0 : 1 }}>
       <Header>
         { canGoBack ? (
-          <BackButton alt={t('back')} onClick={history.goBack}>
+          <BackButton aria-label={t('back')} onClick={history.goBack}>
             <BackIcon />
           </BackButton>
         ) : <Space /> }
