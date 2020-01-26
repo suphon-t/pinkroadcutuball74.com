@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect, useMemo, useRef } from "react"
+import React, { useState, useCallback, useEffect, useMemo } from "react"
 import styled, { css } from "styled-components"
 import { darken, lighten } from "polished"
 import { useTranslation } from "react-i18next"
-import { Table, Pagination, Input, Icon, Affix } from "antd"
+import { Table, Pagination, Input, Icon, } from "antd"
 import debounce from "lodash.debounce"
 import { up, down } from "styled-breakpoints"
 
@@ -13,6 +13,7 @@ import { useGet } from "../../api"
 import BlurBehind from "../../components/BlurBehind"
 import SafeArea from "../../components/SafeArea"
 import EditUserModal from "./EditUserModal"
+import Sticky from "../../components/Sticky"
 
 const { Column } = Table
 
@@ -90,16 +91,21 @@ const PaginationContainer = styled.div`
   }
 `
 
-const AffixedContainer = styled(BlurBehind)`
+const StickyArea = styled(BlurBehind)`
   background: rgba(255, 255, 255, 0.72);
 
-  .ant-affix > &::after {
+  &::after {
     content: '';
     position: absolute;
     top: 0;
     width: 100%;
     height: 1px;
-    background: rgba(0, 0, 0, 0.16);
+    background: transparent;
+    transition: background-color ${vars.transitionLength};
+    
+    .stuck > & {
+      background: rgba(0, 0, 0, 0.16);
+    }
   }
 `
 
@@ -184,11 +190,6 @@ function UsersTable({ showCheckedIn }) {
     </ControlBox>
   )
 
-  const affixRef = useRef()
-  useEffect(() => {
-    affixRef.current && affixRef.current.updatePosition()
-  })
-
   return (
     <div>
       <SafeArea left right min={16}>
@@ -213,13 +214,13 @@ function UsersTable({ showCheckedIn }) {
           <Column title="Created" dataIndex="createdAt" key="createdAt" render={tags => formatDt(tags)} />
         </StyledTable>
       </SafeArea>
-      <Affix ref={affixRef} offsetBottom={0}>
-        <AffixedContainer>
+      <Sticky bottom>
+        <StickyArea>
           <SafeArea left right min={16}>
             { controls }
           </SafeArea>
-        </AffixedContainer>
-      </Affix>
+        </StickyArea>
+      </Sticky>
       <EditUserModal
         data={(editingRow !== undefined && users[editingRow]) || {}}
         visible={editVisible}

@@ -55,7 +55,7 @@ function AdminBar() {
   return (
     <>
       <Bar>{ header }</Bar>
-      <div style={{ opacity: 0 }}>{ header }</div>
+      <div style={{ visibility: 'hidden' }}>{ header }</div>
     </>
   )
 }
