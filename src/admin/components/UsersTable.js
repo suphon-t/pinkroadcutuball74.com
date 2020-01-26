@@ -13,7 +13,7 @@ import vars from "../../styles/vars"
 import { useForm, FormContext } from "react-hook-form"
 import Field from "../../components/Field"
 import DialogSelect from "../../components/DialogSelect"
-import { useFacultyOptions, useWindowDimensions } from "../../utils"
+import { useFacultyOptions, useWindowDimensions, formatQueueNumber } from "../../utils"
 import { userSchema } from "../../utils/validation"
 import Title from "../../components/Title"
 import OrangeButton from "../../components/OrangeButton"
@@ -97,6 +97,19 @@ const PaginationContainer = styled.div`
     width: 100%;
 
     justify-content: center;
+  }
+`
+
+const AffixedContainer = styled(BlurBehind)`
+  background: rgba(255, 255, 255, 0.72);
+
+  .ant-affix > &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.16);
   }
 `
 
@@ -206,7 +219,7 @@ function UsersTable({ showCheckedIn }) {
           pagination={false}
           scroll={{ x: 'max-content' }}
         >
-          <Column title="Number" dataIndex="number" key="number" />
+          <Column title="Number" dataIndex="number" key="number" render={tags => formatQueueNumber(tags)} />
           <Column title="ID" dataIndex="id" key="id" />
           <Column title="Name" dataIndex="name" key="name" />
           <Column title="Telephone" dataIndex="tel" key="tel" />
@@ -216,11 +229,11 @@ function UsersTable({ showCheckedIn }) {
         </StyledTable>
       </SafeArea>
       <Affix ref={affixRef} offsetBottom={0}>
-        <BlurBehind>
+        <AffixedContainer>
           <SafeArea left right min={16}>
             { controls }
           </SafeArea>
-        </BlurBehind>
+        </AffixedContainer>
       </Affix>
       <EditModal 
         data={(editingRow !== undefined && users[editingRow]) || {}}
@@ -305,12 +318,17 @@ function EditModal({ data, onDone, reload, loading: tableLoading, ...props }) {
           <Timestamp>
             <p>Created at {createdAt}</p>
             <p>Last modified at {modifiedAt}</p>
-            <p>{ checkedInAt ? `Checked in at ${checkedInAt}` : (
+            { checkedInAt ? (
               <>
+                <p>Checked in at {checkedInAt}</p>
+                <p>Queue number: {formatQueueNumber(data?.number)}</p>
+              </>
+            ) : (
+              <p>
                 {`Hasn't checked in yet `}
                 <Button type="primary" size="small" onClick={onCheckIn} loading={loading}>Check in</Button>
-              </>
-            ) }</p>
+              </p>
+            ) }
           </Timestamp>
           <ButtonBar style={{ direction: 'rtl', marginTop: 16 }}>
             <OrangeButton background="#40edc2" color="white" type="submit" disabled={loading}>Save</OrangeButton>

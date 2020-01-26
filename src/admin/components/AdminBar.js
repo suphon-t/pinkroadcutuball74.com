@@ -14,7 +14,7 @@ const Bar = styled(BlurBehind)`
   width: 100vw;
   z-index: 999;
 
-  background: rgba(255, 255, 255, .35);
+  background: rgba(255, 255, 255, 0.72);
   box-shadow: 0 12px 45px -22px rgba(0, 0, 0, .35);
 `
 
