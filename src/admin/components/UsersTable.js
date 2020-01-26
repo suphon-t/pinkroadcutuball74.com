@@ -23,7 +23,6 @@ import { parseISO, format } from "date-fns"
 import BlurBehind from "../../components/BlurBehind"
 import SafeArea from "../../components/SafeArea"
 import { up, down } from "styled-breakpoints"
-import Flex from "../../components/Flex"
 
 const { Column } = Table
 
@@ -37,7 +36,12 @@ const ControlBox = styled.div`
   display: flex;
   padding: 16px 0;
 
+  ${down('sm')} {
+    padding: 8px 0;
+  }
+
   flex-flow: wrap;
+  align-items: center;
   justify-content: space-between;
   
   ${horizontalPadding}
@@ -76,6 +80,10 @@ const StyledTable = styled(Table)`
 
 const StyledInput = styled(Input)`
   margin-bottom: 8px;
+
+  ${up('md')} {
+    margin-bottom: 16px;
+  }
 
   ${up('xl')} {
     width: 250px;
@@ -164,7 +172,8 @@ function UsersTable({ showCheckedIn }) {
         prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />} />
       <PaginationContainer>
         <Pagination 
-          simple={width < 768}
+          simple={width < 576}
+          size="small"
           current={page} 
           total={count} 
           showTotal={total => `Total ${total} items`}
