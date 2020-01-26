@@ -118,3 +118,8 @@ export function formatQueueNumber(number) {
   }
   return str
 }
+
+export function formatDt(dt) {
+  if (!dt) return dt
+  return format(parseISO(dt), 'HH:mm:ss dd/MM/yyyy')
+}
