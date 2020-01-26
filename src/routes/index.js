@@ -38,7 +38,6 @@ function UserRoutes() {
           <StaffRoute path="/staff/scan">
             <StaffScan />
           </StaffRoute>
-          <Route path="/admin/login" component={AdminLogin} />
           <Route component={NoMatch} />
       </Switch>
     </SafeArea>
@@ -50,6 +49,7 @@ function Routes() {
     <BrowserRouter>
       <Suspense fallback={<FullScreenLoading />}>
         <Switch>
+          <Route path="/admin/login" component={AdminLogin} />
           <AdminRoute path="/admin">
             <Admin />
           </AdminRoute>
