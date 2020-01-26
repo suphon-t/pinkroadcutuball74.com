@@ -20,24 +20,30 @@ function Sticky(props) {
   const topDetectorRef = useRef()
   const bottomDetectorRef = useRef()
 
+  const { top, bottom } = props
+
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
-      setStuck(entries.some(entry => entry.intersectionRatio < 1))
+      setStuck(entries[0].intersectionRatio < 1)
     }, {
       threshold: [1],
     })
     
-    observer.observe(topDetectorRef.current)
-    observer.observe(bottomDetectorRef.current)
+    if (top) {
+      observer.observe(topDetectorRef.current)
+    }
+    if (bottom) {
+      observer.observe(bottomDetectorRef.current)
+    }
 
     return () => observer.disconnect()
   }, [])
 
   return (
     <>
-      <TopDetector top={props.top} ref={topDetectorRef} />
+      <TopDetector top={top} ref={topDetectorRef} />
       <StickyContent className={stuck && 'stuck'} {...props} />
-      <BottomDetector bottom={props.bottom} ref={bottomDetectorRef} />
+      <BottomDetector bottom={bottom} ref={bottomDetectorRef} />
     </>
   )
 }
