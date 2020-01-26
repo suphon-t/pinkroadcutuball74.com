@@ -3,15 +3,16 @@ import styled from "styled-components"
 import { PageHeader, Button } from "antd"
 import { useHistory, Link } from "react-router-dom"
 import vars from "../../styles/vars"
+import BlurBehind from "../../components/BlurBehind"
 
-const Bar = styled.div`
+const Bar = styled(BlurBehind)`
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   z-index: 999;
 
-  background: ${vars.white};
+  background: rgba(255, 255, 255, .35);
   box-shadow: 0 12px 45px -22px rgba(0, 0, 0, .35);
 `
 

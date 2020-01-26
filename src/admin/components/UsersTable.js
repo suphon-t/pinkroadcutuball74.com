@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react"
+import React, { useState, useCallback, useEffect, useMemo, useRef } from "react"
 import styled from "styled-components"
 import { darken, lighten } from "polished"
 import { useTranslation } from "react-i18next"
@@ -19,6 +19,7 @@ import OrangeButton from "../../components/OrangeButton"
 import ButtonBar from "../../components/ButtonBar"
 
 import { parseISO, format } from "date-fns"
+import BlurBehind from "../../components/BlurBehind"
 
 const { Column } = Table
 
@@ -56,12 +57,6 @@ const StyledTable = styled(Table)`
     &:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
       background: ${darken(.005, checkInRowBg)};
     }
-  }
-`
-
-const AffixedContainer = styled.div`
-  .ant-affix > & {
-    backdrop-filter: saturate(180%) blur(15px);
   }
 `
 
@@ -146,13 +141,14 @@ function UsersTable({ showCheckedIn }) {
     </ControlBox>
   )
 
+  const affixRef = useRef()
+  useEffect(() => {
+    affixRef.current && affixRef.current.updatePosition()
+  })
+
   return (
     <div>
-      <Affix offsetTop={65}>
-        <AffixedContainer>
-          { controls }
-        </AffixedContainer>
-      </Affix>
+      { controls }
       <StyledTable 
         style={{ margin: '0 64px' }}
         loading={loading}
@@ -170,7 +166,11 @@ function UsersTable({ showCheckedIn }) {
         <Column title="Faculty" dataIndex="faculty" key="faculty" render={tags => t(`facultyNames.${tags}`)} />
         <Column title="Created" dataIndex="createdAt" key="createdAt" render={tags => formateDt(tags)} />
       </StyledTable>
-      { controls }
+      <Affix ref={affixRef} offsetBottom={0}>
+        <BlurBehind>
+          { controls }
+        </BlurBehind>
+      </Affix>
       <EditModal 
         data={(editingRow !== undefined && users[editingRow]) || {}}
         visible={editVisible}
