@@ -4,6 +4,7 @@ import vars from "../../styles/vars"
 import { useTranslation } from "react-i18next"
 
 import LoadingIcon from "../../components/LoadingIcon"
+import { formatQueueNumber } from "../../utils"
 
 const rightPaneColor = '#F18B84'
 
@@ -68,15 +69,6 @@ const PreviousResults = styled.p`
   line-height: 128px;
 `
 
-function formatNumber(number) {
-  if (!number) return number
-  let str = `${number}`
-  while (str.length < 4) {
-    str = '0' + str
-  }
-  return str
-}
-
 function Random({ className, current, previous, loading }) {
   const { t } = useTranslation()
   if (loading) {
@@ -92,7 +84,7 @@ function Random({ className, current, previous, loading }) {
         <Result viewBox="0 0 1210 1024" fill={vars.white}>
           <rect x="135" y="315" width="5" height="328" />
           <text x="200" y="390" className="title">{t('random.current')}</text>
-          <text x="200" y="638" className="number">{formatNumber(current?.number)}</text>
+          <text x="200" y="638" className="number">{formatQueueNumber(current?.number)}</text>
         </Result>
       </Left>
       <Right>
@@ -101,7 +93,7 @@ function Random({ className, current, previous, loading }) {
         <PreviousResults>
           {previous.map(item => (
             <span key={item.number}>
-              {formatNumber(item.number)}
+              {formatQueueNumber(item.number)}
               <br />
             </span>
           ))}

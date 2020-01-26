@@ -95,7 +95,7 @@ export function usePostStatus(url, isJson = true) {
   return { ...result, execute }
 }
 
-export function useGet(url, params = {}) {
+export function useGet(url, params = {}, auto = true) {
   const paramsJson = JSON.stringify(params)
   const paramsMemo = useMemo(() => JSON.parse(paramsJson), [paramsJson])
   const { http } = useHttpContext()
@@ -104,7 +104,9 @@ export function useGet(url, params = {}) {
     return setPromise(http.get(url, { params: paramsMemo }))
   }, [http, url, paramsMemo, setPromise])
   useEffect(() => {
-    execute()
-  }, [url, execute])
+    if (auto) {
+      execute()
+    }
+  }, [url, execute, auto])
   return { ...result, execute }
 }

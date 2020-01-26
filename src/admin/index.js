@@ -4,7 +4,7 @@ import { createGlobalStyle } from "styled-components"
 
 import AdminHome from "./pages/AdminHome"
 import RandomScreen from "./pages/RandomScreen"
-import RandomControl from "./pages/RandomControl"
+import RandomBackend from "./pages/RandomBackend"
 
 const AdminGlobalStyle = createGlobalStyle`
   body {
@@ -24,7 +24,7 @@ function Admin() {
       <Switch>
         <Route path={path} exact component={AdminHome} />
         <Route path={`${path}/random`} component={RandomScreen} />
-        <Route path={`${path}/control`} component={RandomControl} />
+        <Route path={`${path}/control`} component={RandomBackend} />
       </Switch>
     </>
   )

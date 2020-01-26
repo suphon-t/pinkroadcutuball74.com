@@ -109,3 +109,12 @@ export function useWindowDimensions() {
 
   return windowDimensions
 }
+
+export function formatQueueNumber(number) {
+  if (!number) return number
+  let str = `${number}`
+  while (str.length < 4) {
+    str = '0' + str
+  }
+  return str
+}
