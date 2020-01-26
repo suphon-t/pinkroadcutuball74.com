@@ -2,7 +2,7 @@
 
 env: standard
 runtime: nodejs10
-service: default
+service: www
 
 handlers:
   - url: /static
