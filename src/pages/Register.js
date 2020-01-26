@@ -32,15 +32,6 @@ const FacultyContainer = styled(Form.Item)`
   margin-bottom: -4px;
 `
 
-const TosLabel = styled.label`
-  display: inline-block;
-  margin-top: 23px;
-
-  font-weight: normal;
-  font-size: 12px !important;
-  line-height: 14px;
-`
-
 const SubmitButton = styled(OrangeButton)`
   margin: 34px auto 0 auto;
 `
@@ -160,13 +151,6 @@ function Register() {
               <DialogSelect options={facultyOptions} />
             </Field>
 
-            <TosLabel>
-              ในการกดลงทะเบียน ฉันยอมรับ
-              <TosModal title="ข้อตกลงการให้บริการ" />
-              และอนุญาตให้เว็บไซต์เก็บใช้และบันทึกข้อมูลของฉันตาม
-              <TosModal title="นโยบายความเป็นส่วนตัว" />
-            </TosLabel>
-
             <ButtonBar style={{ direction: 'rtl' }}>
               <SubmitButton type="submit">{t("register.submit")}</SubmitButton>
               <BackButton />
@@ -179,36 +163,6 @@ function Register() {
         </div>
       </ContentCard>
     </FormContext>
-  )
-}
-
-const TosTitle = styled(ConfirmationText)`
-  margin: 0 8px;
-`
-
-function TosModal({ title, children, ...rest }) {
-  const { t } = useTranslation()
-  const [visible, setVisible] = useState(false)
-  const handleClick = useCallback(e => {
-    e.preventDefault()
-    setVisible(true)
-  }, [])
-  const close = useCallback(() => setVisible(false), [])
-  return (
-    <>
-      <a {...rest} onClick={handleClick}>
-        {title}
-      </a>
-      <CustomModal visible={visible} onCancel={close}>
-        <TosTitle>{title}</TosTitle>
-        {children}
-        <ModalFooter>
-          <Button shape="round" onClick={close} type="primary">
-            {t("register.dialog.ok")}
-          </Button>
-        </ModalFooter>
-      </CustomModal>
-    </>
   )
 }
 
