@@ -100,7 +100,7 @@ function EnterNumber({ title, count, active, ...props }) {
     <Card active={active} {...props}>
       <Title>{title}</Title>
       <Number>
-        { count ? `${count} ${t('admin.person')}` : (
+        { count !== undefined ? `${count} ${t('admin.person')}` : (
           <Icon type="loading" spin />
         )}
       </Number>
