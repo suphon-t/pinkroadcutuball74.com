@@ -14,16 +14,16 @@ import AdminLogin from "../pages/AdminLogin"
 import CheckInTicket from "../pages/CheckInTicket"
 import FullScreenLoading from "../components/FullScreenLoading"
 import { isEventDay } from "../utils"
+import SafeArea from "../components/SafeArea"
 
 const Register = lazy(() => import(/* webpackPrefetch: true */ "../pages/Register"))
 const StaffScan = lazy(() => import("../pages/StaffScan"))
 const Admin = lazy(() => import("../admin"))
 
-function Routes() {
+function UserRoutes() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<FullScreenLoading />}>
-        <Switch>
+    <SafeArea all>
+      <Switch>
           <Route path="/" exact component={Landing} />
           <Route path="/register" exact component={Register} />
           <Route path="/register/success" component={RegisterSuccess} />
@@ -39,10 +39,21 @@ function Routes() {
             <StaffScan />
           </StaffRoute>
           <Route path="/admin/login" component={AdminLogin} />
+          <Route component={NoMatch} />
+      </Switch>
+    </SafeArea>
+  )
+}
+
+function Routes() {
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<FullScreenLoading />}>
+        <Switch>
           <AdminRoute path="/admin">
             <Admin />
           </AdminRoute>
-          <Route component={NoMatch} />
+          <Route component={UserRoutes} />
         </Switch>
       </Suspense>
     </BrowserRouter>

@@ -2,8 +2,9 @@ import React from "react"
 import styled from "styled-components"
 import { PageHeader, Button } from "antd"
 import { useHistory, Link } from "react-router-dom"
-import vars from "../../styles/vars"
+
 import BlurBehind from "../../components/BlurBehind"
+import SafeArea from "../../components/SafeArea"
 
 const Bar = styled(BlurBehind)`
   position: fixed;
@@ -20,15 +21,17 @@ function AdminBar() {
   const history = useHistory()
 
   const header = (
-    <PageHeader
-      onBack={history.goBack}
-      title="CUTUBALL Admin Dashboard"
-      extra={[
-        <Link key="1" to="/logout">
-          <Button type="primary">Logout</Button>
-        </Link>,
-      ]}
-    />
+    <SafeArea top left right>
+      <PageHeader
+        onBack={history.goBack}
+        title="CUTUBALL Admin Dashboard"
+        extra={[
+          <Link key="1" to="/logout">
+            <Button type="primary">Logout</Button>
+          </Link>,
+        ]}
+      />
+    </SafeArea>
   )
 
   return (

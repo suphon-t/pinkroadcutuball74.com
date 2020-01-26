@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { darken, lighten } from "polished"
 import { useTranslation } from "react-i18next"
 import { Table, Pagination, Form, Popconfirm, notification, Input, Icon, Button, Affix } from "antd"
@@ -20,8 +20,16 @@ import ButtonBar from "../../components/ButtonBar"
 
 import { parseISO, format } from "date-fns"
 import BlurBehind from "../../components/BlurBehind"
+import SafeArea from "../../components/SafeArea"
+import { up } from "styled-breakpoints"
 
 const { Column } = Table
+
+const horizontalPadding = css`
+  ${up('xl')} {
+    margin: 0 64px;
+  }
+`
 
 const ControlBox = styled.div`
   display: flex;
@@ -29,11 +37,15 @@ const ControlBox = styled.div`
 
   flex-flow: wrap;
   justify-content: space-between;
+  
+  ${horizontalPadding}
 `
 
 const checkInRowBg = 'rgba(64, 237, 194, 0.18)'
 
 const StyledTable = styled(Table)`
+  ${horizontalPadding}
+
   .ant-table-thead > tr > th {
     background: ${vars.pink};
     color: ${vars.white};
@@ -122,7 +134,7 @@ function UsersTable({ showCheckedIn }) {
   }), [])
 
   const controls = (
-    <ControlBox style={{ margin: '0 64px' }}>
+    <ControlBox>
       <Input
         style={{ width: 250, marginRight: 16 }} 
         value={searchValue}
@@ -148,27 +160,30 @@ function UsersTable({ showCheckedIn }) {
 
   return (
     <div>
-      { controls }
-      <StyledTable 
-        style={{ margin: '0 64px' }}
-        loading={loading}
-        dataSource={users} 
-        rowClassName={record => record.checkedinAt && 'checked-in'}
-        rowKey={record => record.id} 
-        onRow={handleRow}
-        pagination={false}
-      >
-        <Column title="Number" dataIndex="number" key="number" />
-        <Column title="ID" dataIndex="id" key="id" />
-        <Column title="Name" dataIndex="name" key="name" />
-        <Column title="Telephone" dataIndex="tel" key="tel" />
-        <Column title="E-mail" dataIndex="email" key="email" />
-        <Column title="Faculty" dataIndex="faculty" key="faculty" render={tags => t(`facultyNames.${tags}`)} />
-        <Column title="Created" dataIndex="createdAt" key="createdAt" render={tags => formateDt(tags)} />
-      </StyledTable>
+      <SafeArea left right min={16}>
+        { controls }
+        <StyledTable
+          loading={loading}
+          dataSource={users} 
+          rowClassName={record => record.checkedinAt && 'checked-in'}
+          rowKey={record => record.id} 
+          onRow={handleRow}
+          pagination={false}
+        >
+          <Column title="Number" dataIndex="number" key="number" />
+          <Column title="ID" dataIndex="id" key="id" />
+          <Column title="Name" dataIndex="name" key="name" />
+          <Column title="Telephone" dataIndex="tel" key="tel" />
+          <Column title="E-mail" dataIndex="email" key="email" />
+          <Column title="Faculty" dataIndex="faculty" key="faculty" render={tags => t(`facultyNames.${tags}`)} />
+          <Column title="Created" dataIndex="createdAt" key="createdAt" render={tags => formateDt(tags)} />
+        </StyledTable>
+      </SafeArea>
       <Affix ref={affixRef} offsetBottom={0}>
         <BlurBehind>
-          { controls }
+          <SafeArea left right min={16}>
+            { controls }
+          </SafeArea>
         </BlurBehind>
       </Affix>
       <EditModal 

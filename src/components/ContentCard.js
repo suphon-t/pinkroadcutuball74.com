@@ -17,6 +17,7 @@ import breakpoints from "../styles/breakpoints"
 import OrangeButton from "./OrangeButton"
 
 import { ReactComponent as BackIcon } from "../images/arrow-back.svg"
+import SafeArea from "./SafeArea"
 
 const Header = styled.div`
   display: flex;
@@ -46,10 +47,14 @@ const BackButton = styled(OrangeButton)`
   }
 `
 
-const Logo = styled(Link)`
+const LogoSafeArea = styled(SafeArea)`
   position: absolute;
   top: 0;
   right: 0;
+`
+
+const Logo = styled(Link)`
+  display: block;
   padding: 16px 10px;
 
   img {
@@ -116,14 +121,16 @@ const ContentCard = React.forwardRef(({ loading, children, ...rest }, ref) => {
             <BackIcon />
           </BackButton>
         ) : <Space /> }
-        <Logo to="/">
-          <picture>
-            <source type="image/webp" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktopWebp2x} 2x, ${logoDesktopWebp} 1x`} />
-            <source type="image/png" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktop2x} 2x, ${logoDesktop} 1x`} />
-            <source type="image/png" media={`(max-width: ${breakpoints.lg})`} srcSet={`${logoMobile2x} 2x, ${logoMobile} 1x`} />
-            <img src={logoDesktop} alt={t('appname')} />
-          </picture>
-        </Logo>
+        <LogoSafeArea top right>
+          <Logo to="/">
+            <picture>
+              <source type="image/webp" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktopWebp2x} 2x, ${logoDesktopWebp} 1x`} />
+              <source type="image/png" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktop2x} 2x, ${logoDesktop} 1x`} />
+              <source type="image/png" media={`(max-width: ${breakpoints.lg})`} srcSet={`${logoMobile2x} 2x, ${logoMobile} 1x`} />
+              <img src={logoDesktop} alt={t('appname')} />
+            </picture>
+          </Logo>
+        </LogoSafeArea>
       </Header>
       <Card ref={ref} {...rest}>{children}</Card>
     </div>

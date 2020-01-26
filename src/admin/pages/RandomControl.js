@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react"
 import styled from "styled-components"
+import { List, Card, Typography, Button, notification } from "antd"
 
 import FullScreenLoading from "../../components/FullScreenLoading"
 import Channel from "../../utils/Channel"
 import Layout from "./Layout"
 import vars from "../../styles/vars"
-import { List, Card, Typography, Button, notification } from "antd"
+import SafeArea from "../../components/SafeArea"
 
 const { Title } = Typography
 
@@ -51,7 +52,7 @@ function RandomControl() {
   return (
     <Layout>
       { connecting ? <FullScreenLoading color={vars.pink} /> : (
-        <>
+        <SafeArea all>
           <TopPanel>
             <Button type="primary" shape="round" size="large" onClick={randomAgain} loading={loading}>Random again</Button>
           </TopPanel>
@@ -78,7 +79,7 @@ function RandomControl() {
               </List.Item>
             )}
           />
-        </>
+        </SafeArea>
       ) }
     </Layout>
   )
