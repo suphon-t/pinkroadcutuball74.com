@@ -4,12 +4,17 @@ import { useTranslation } from "react-i18next"
 
 import { useGet } from "../../api"
 import StatsNumber from "./StatsNumber"
+import { down } from "styled-breakpoints"
 
 const Container = styled.div`
   display: flex;
   margin: 56px 0;
 
   justify-content: center;
+
+  ${down('sm')} {
+    margin: 24px -8px;
+  }
 `
 
 const RegisterNumber = styled(StatsNumber)`

@@ -8,11 +8,12 @@ import qs from "qs"
 
 import { useHttpContext, usePromise, useGet } from "../../api"
 import CustomModal from "../../components/CustomModal"
+import { Up } from "../../styles/breakpoints"
 import vars from "../../styles/vars"
 import { useForm, FormContext } from "react-hook-form"
 import Field from "../../components/Field"
 import DialogSelect from "../../components/DialogSelect"
-import { useFacultyOptions } from "../../utils"
+import { useFacultyOptions, useWindowDimensions } from "../../utils"
 import { userSchema } from "../../utils/validation"
 import Title from "../../components/Title"
 import OrangeButton from "../../components/OrangeButton"
@@ -21,7 +22,8 @@ import ButtonBar from "../../components/ButtonBar"
 import { parseISO, format } from "date-fns"
 import BlurBehind from "../../components/BlurBehind"
 import SafeArea from "../../components/SafeArea"
-import { up } from "styled-breakpoints"
+import { up, down } from "styled-breakpoints"
+import Flex from "../../components/Flex"
 
 const { Column } = Table
 
@@ -69,6 +71,24 @@ const StyledTable = styled(Table)`
     &:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
       background: ${darken(.005, checkInRowBg)};
     }
+  }
+`
+
+const StyledInput = styled(Input)`
+  margin-bottom: 8px;
+
+  ${up('xl')} {
+    width: 250px;
+    margin: 0 16px 0 0;
+  }
+`
+
+const PaginationContainer = styled.div`
+  ${down('lg')} {
+    display: flex;
+    width: 100%;
+
+    justify-content: center;
   }
 `
 
@@ -133,23 +153,27 @@ function UsersTable({ showCheckedIn }) {
     }
   }), [])
 
+  const { width } = useWindowDimensions()
+
   const controls = (
     <ControlBox>
-      <Input
-        style={{ width: 250, marginRight: 16 }} 
+      <StyledInput
         value={searchValue}
         onChange={onSearch}
         placeholder="Search users"
         prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />} />
-      <Pagination 
-        current={page} 
-        total={count} 
-        showTotal={total => `Total ${total} items`}
-        showSizeChanger
-        onShowSizeChange={onShowSizeChange}
-        pageSize={pageSize}
-        pageSizeOptions={['10', '20', '50', '100']}
-        onChange={setPage} />
+      <PaginationContainer>
+        <Pagination 
+          simple={width < 768}
+          current={page} 
+          total={count} 
+          showTotal={total => `Total ${total} items`}
+          showSizeChanger
+          onShowSizeChange={onShowSizeChange}
+          pageSize={pageSize}
+          pageSizeOptions={['10', '20', '50', '100']}
+          onChange={setPage} />
+      </PaginationContainer>
     </ControlBox>
   )
 
@@ -161,7 +185,9 @@ function UsersTable({ showCheckedIn }) {
   return (
     <div>
       <SafeArea left right min={16}>
-        { controls }
+        <Up breakpoint="xl">
+          { controls }
+        </Up>
         <StyledTable
           loading={loading}
           dataSource={users} 
@@ -169,6 +195,7 @@ function UsersTable({ showCheckedIn }) {
           rowKey={record => record.id} 
           onRow={handleRow}
           pagination={false}
+          scroll={{ x: 'max-content' }}
         >
           <Column title="Number" dataIndex="number" key="number" />
           <Column title="ID" dataIndex="id" key="id" />

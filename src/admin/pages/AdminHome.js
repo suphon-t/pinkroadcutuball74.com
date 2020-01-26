@@ -10,7 +10,7 @@ function AdminHome() {
 
   return (
     <Layout style={{ margin: 0 }}>
-      <SafeArea left right>
+      <SafeArea left right min={16}>
         <StatsBar style={{ margin: '0 64px' }} showCheckedIn={showCheckedIn} setShowCheckedIn={setShowCheckedIn} />
       </SafeArea>
       <UsersTable showCheckedIn={showCheckedIn} />

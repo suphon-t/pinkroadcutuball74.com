@@ -3,6 +3,8 @@ import facultyCodes from "../i18n/faculty-codes"
 import { useMemo, useState, useCallback, useEffect } from "react"
 import { parseISO, format } from "date-fns"
 
+export const isEventDay = new Date() > parseISO('2020-02-08T04:00:00+07:00')
+
 export const idNumberPattern = /^(\d{1})(\d{4})(\d{5})(\d{2})(\d{1})$/
 export const telPattern = /^(\d{2,4})(\d{3})(\d{4})$/
 export const emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -85,4 +87,25 @@ export const supportsWebP = (() => {
   return false;
 })()
 
-export const isEventDay = new Date() > parseISO('2020-02-08T04:00:00+07:00')
+function getWindowDimensions() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  }
+}
+
+// https://stackoverflow.com/a/36862446
+export function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions())
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions())
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  return windowDimensions
+}
