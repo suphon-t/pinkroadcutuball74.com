@@ -52,7 +52,7 @@ const RefreshIcon = styled(Icon)`
   }
 `
 
-const CheckIn = withContentRect('bounds')(({ measureRef, measure, contentRect }) => {
+const CheckIn = withContentRect("bounds")(({ measureRef, contentRect, refresh }) => {
   const { t } = useTranslation()
   const { userId } = useAuthContext()
   const time = useCurrentTime()
@@ -67,15 +67,19 @@ const CheckIn = withContentRect('bounds')(({ measureRef, measure, contentRect })
       <ContentCard ref={measureRef}>
         <Container>
           <CenterAlign>
-            <Title>{t('scanqr.title')}<br />{t('scanqr.title2')}</Title>
-            <Subtitle>{t('scanqr.subtitle')}</Subtitle>
+            <Title>
+              {t("scanqr.title")}
+              <br />
+              {t("scanqr.title2")}
+            </Title>
+            <Subtitle>{t("scanqr.subtitle")}</Subtitle>
           </CenterAlign>
-          <Flex style={{ justifyContent: 'center' }}>
+          <Flex style={{ justifyContent: "center" }}>
             <Flex direction="column">
               <QRBox size={size} value={qrValue} />
               <BottomBar>
-                { time }
-                <RefreshIcon type="reload" />
+                {time}
+                <RefreshIcon type="reload" onClick={refresh} />
               </BottomBar>
             </Flex>
           </Flex>
