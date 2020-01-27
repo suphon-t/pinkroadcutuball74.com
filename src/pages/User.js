@@ -3,7 +3,6 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 
 import { useGet } from "../api"
-import vars from "../styles/vars"
 import Title from "../components/Title"
 import UserInfo from "../components/UserInfo"
 import ContentCard from "../components/ContentCard"
@@ -15,14 +14,10 @@ const DataTitle = styled(Title)`
   margin: 1rem 0 2.5rem;
 `
 
-const TosLabel = styled.label`
+const Notes = styled.label`
   display: inline-block;
   font-size: 0.85rem !important;
   line-height: 1rem;
-`
-
-const PinkLabel = styled(TosLabel)`
-  color: ${vars.pink};
 `
 
 const Info = styled(UserInfo)`
@@ -40,9 +35,11 @@ function User() {
 
         <Info user={data && data.data} />
         
-        <TosLabel>{t("userdata.contact1")}</TosLabel>
-        <PinkLabel>{t("userdata.contact2")}</PinkLabel>
-        <TosLabel>{t("userdata.contact3")}</TosLabel>
+        <Notes>
+          {t("userdata.contact1")}
+          <a href="mailto:slhh947@gmail.com"> slhh947@gmail.com </a>
+          {t("userdata.contact3")}
+        </Notes>
 
         <LogoutButtonBar>
           <Link to="/">
