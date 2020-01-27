@@ -24,11 +24,11 @@ const Overlay = styled.svg`
 
   .queue-number {
     font-family: 'Gotham Ultra';
-    font-size: 186px;
+    font-size: 220.72px;
   }
 
   .name {
-    font-size: 45px;
+    font-size: 54px;
   }
 `
 
@@ -38,8 +38,8 @@ function Ticket({ data, background, ...rest }) {
     <Container background={background} {...rest}>
       <Overlay viewBox='0 0 910 1214'>
         <TicketOverlay />
-        <text x="50%" y="562.74" textAnchor="middle" className="queue-number">{formatQueueNumber(number)}</text>
-        <text x="50%" y="639" textAnchor="middle" className="name">{name}</text>
+        <text x="50%" y="700.61" textAnchor="middle" className="queue-number">{formatQueueNumber(number)}</text>
+        <text x="50%" y="790.91" textAnchor="middle" className="name">{name}</text>
       </Overlay>
     </Container>
   )
