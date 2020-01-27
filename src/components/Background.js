@@ -4,20 +4,11 @@ import styled from "styled-components"
 import background from "../images/background.svg"
 import backgroundLand from "../images/background-land.svg"
 
-const Container = styled.div`
-  display: flex;
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  z-index: -1;
-
-  flex-direction: column-reverse;
-`
-
 const Art = styled.img`
-  width: 100%;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  z-index: -99;
 
   object-fit: cover;
   content: url(${background});
@@ -28,11 +19,7 @@ const Art = styled.img`
 `
 
 function Background() {
-  return (
-    <Container id="background">
-      <Art alt="" />
-    </Container>
-  )
+  return <Art alt="" />
 }
 
 export default Background
