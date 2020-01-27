@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next"
 import facultyCodes from "../i18n/faculty-codes"
 import { useMemo, useState, useCallback, useEffect } from "react"
 import { parseISO, format } from "date-fns"
-import { between } from "polished"
 
 export const isEventDay = new Date() > parseISO("2020-02-08T04:00:00+07:00")
 
@@ -121,8 +120,4 @@ export function formatQueueNumber(number) {
 export function formatDt(dt) {
   if (!dt) return dt
   return format(parseISO(dt), "HH:mm:ss dd/MM/yyyy")
-}
-
-export function clamp(min, max, screenMin, screenMax) {
-  return `min(${max}, max(${min}, ${between(min, max, screenMin, screenMax)}))`
 }
