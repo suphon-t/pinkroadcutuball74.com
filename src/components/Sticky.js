@@ -37,7 +37,7 @@ function Sticky(props) {
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [top, bottom])
 
   return (
     <>
