@@ -2,8 +2,10 @@ import { useTranslation } from "react-i18next"
 import facultyCodes from "../i18n/faculty-codes"
 import { useMemo, useState, useCallback, useEffect } from "react"
 import { parseISO, format } from "date-fns"
+import { css } from "styled-components"
+import { between } from "polished"
 
-export const isEventDay = new Date() > parseISO('2020-02-08T04:00:00+07:00')
+export const isEventDay = new Date() > parseISO("2020-02-08T04:00:00+07:00")
 
 export const idNumberPattern = /^(\d{1})(\d{4})(\d{5})(\d{2})(\d{1})$/
 export const telPattern = /^(\d{2,4})(\d{3})(\d{4})$/
@@ -17,10 +19,8 @@ export function validateIdNumber(value) {
     return false
   }
   const digits = Array.from(value.substring(0, 12)).map(ch => parseInt(ch))
-  const sum = digits
-    .map((d, i) => d * (13 - i))
-    .reduce((a, b) => a + b, 0)
-  const checkDigit = (11 - sum % 11) % 10
+  const sum = digits.map((d, i) => d * (13 - i)).reduce((a, b) => a + b, 0)
+  const checkDigit = (11 - (sum % 11)) % 10
   return checkDigit === parseInt(value[12])
 }
 
@@ -33,17 +33,17 @@ export function useFacultyOptions() {
   return useMemo(() => {
     return facultyCodes.map(code => ({
       value: code,
-      label: t(`facultyNames.${code}`),
+      label: t(`facultyNames.${code}`)
     }))
   }, [t])
 }
 
 export function parseToken(token) {
-  if (typeof token !== 'string') {
+  if (typeof token !== "string") {
     return undefined
   }
-  
-  const parts = token.split('.')
+
+  const parts = token.split(".")
   if (parts.length !== 3) {
     return undefined
   }
@@ -54,8 +54,8 @@ export function parseToken(token) {
   }
 }
 
-export function useCurrentTime(disp = 'HH:mm:ss') {
-  const [time, setTime] = useState('')
+export function useCurrentTime(disp = "HH:mm:ss") {
+  const [time, setTime] = useState("")
 
   const updateTime = useCallback(() => {
     setTime(format(new Date(), disp))
@@ -77,20 +77,20 @@ export const isHiDpi = matchMedia("(-webkit-min-device-pixel-ratio: 2), (min-dev
 
 // https://stackoverflow.com/a/27232658
 export const supportsWebP = (() => {
-  const elem = document.createElement('canvas')
-  if (!!(elem.getContext && elem.getContext('2d'))) {
-      // was able or not to get WebP representation
-      return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
+  const elem = document.createElement("canvas")
+  if (!!(elem.getContext && elem.getContext("2d"))) {
+    // was able or not to get WebP representation
+    return elem.toDataURL("image/webp").indexOf("data:image/webp") === 0
   }
 
   // very old browser like IE 8, canvas not supported
-  return false;
+  return false
 })()
 
 function getWindowDimensions() {
   return {
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: window.innerHeight
   }
 }
 
@@ -103,8 +103,8 @@ export function useWindowDimensions() {
       setWindowDimensions(getWindowDimensions())
     }
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
   }, [])
 
   return windowDimensions
@@ -114,12 +114,16 @@ export function formatQueueNumber(number) {
   if (!number) return number
   let str = `${number}`
   while (str.length < 4) {
-    str = '0' + str
+    str = "0" + str
   }
   return str
 }
 
 export function formatDt(dt) {
   if (!dt) return dt
-  return format(parseISO(dt), 'HH:mm:ss dd/MM/yyyy')
+  return format(parseISO(dt), "HH:mm:ss dd/MM/yyyy")
+}
+
+export function clamp(min, max, screenMin, screenMax) {
+  return css`min(${max}, max(${min}, ${between(min, max, screenMin, screenMax)}))`
 }

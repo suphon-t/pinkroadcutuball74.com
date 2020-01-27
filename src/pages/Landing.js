@@ -13,9 +13,8 @@ import logo from "../images/logo-landing.png"
 import logo2x from "../images/logo-landing@2x.png"
 import logoWebp from "../images/logo-landing.webp"
 import logoWebp2x from "../images/logo-landing@2x.webp"
-import { between } from "polished"
 import { up } from "styled-breakpoints"
-import { isEventDay } from "../utils"
+import { isEventDay, clamp } from "../utils"
 
 const Center = styled.div`
   width: 100%;
@@ -23,10 +22,9 @@ const Center = styled.div`
 `
 
 const Logo = styled.img`
-  width: ${between('77px', '158px', '375px', '1440px')};
-  height: ${between('61px', '125.5px', '375px', '1440px')};
-  margin-top: ${between('41px', '87px', '375px', '1440px')};
-  margin-bottom: ${between('35px', '26px', '375px', '1440px')};
+  height: ${clamp("61px", "80px", "375px", "1440px")};
+  margin-top: ${clamp("41px", "64px", "375px", "1440px")};
+  margin-bottom: ${clamp("35px", "26px", "375px", "1440px")};
 `
 
 const TitleContainer = styled.div`
@@ -43,7 +41,7 @@ const TitleContainer = styled.div`
 `
 
 const Line1 = styled.p`
-  font-size: ${between('20px', '33px', '375px', '1440px')};
+  font-size: ${clamp("20px", "33px", "375px", "1440px")};
   font-weight: 500;
 `
 
@@ -52,8 +50,8 @@ const Line2 = styled.h1`
   font-size: 85px;
   font-weight: bold;
 
-  ${up('lg')} {
-    font-size: ${between('85px', '90px', breakpoints.lg, '1440px')};
+  ${up("lg")} {
+    font-size: ${clamp("85px", "90px", breakpoints.lg, "1440px")};
   }
 `
 
@@ -66,12 +64,8 @@ const Line3 = styled.h1`
 const ButtonsContainer = styled.div`
   display: flex;
   width: 100%;
-  margin-top: ${between('150px', '150px', '375px', breakpoints.xxxl)};
-  margin-bottom: ${between('39px', '108px', '375px', breakpoints.xxxl)};
-  
-  @media (min-width: ${breakpoints.xxxl}) {
-    margin-top: 200px;
-  }
+  margin-top: ${clamp("150px", "150px", "375px", breakpoints.xxxl)};
+  margin-bottom: ${clamp("39px", "108px", "375px", breakpoints.xxxl)};
 
   flex-direction: column;
   justify-content: center;
@@ -79,20 +73,20 @@ const ButtonsContainer = styled.div`
 `
 
 const LandingButton = styled(OrangeButton)`
-  width: ${between('226px', '350px', '375px', '1440px')};
-  height: ${between('50px', '70px', '375px', '1440px')};
+  width: ${clamp("226px", "350px", "375px", "1440px")};
+  height: ${clamp("50px", "70px", "375px", "1440px")};
 
   font-weight: 400;
-  font-size: ${between('24px', '36px', '375px', '1440px')};
+  font-size: ${clamp("24px", "36px", "375px", "1440px")};
 
-  ${up('md')} {
+  ${up("md")} {
     border-width: 2px;
   }
 `
 
 const RegisterLink = styled(Link)`
-  margin-top: ${between('16px', '28px', '375px', '1440px')};
-  
+  margin-top: ${clamp("16px", "28px", "375px", "1440px")};
+
   ${LandingButton} {
     background: ${vars.white};
     box-shadow: none;
@@ -100,16 +94,25 @@ const RegisterLink = styled(Link)`
 `
 
 const GetStatusButton = styled(Link)`
-  margin-top: ${between('32px', '24px', '375px', '1440px')};
+  margin-top: ${clamp("32px", "24px", "375px", "1440px")};
 
   color: ${vars.darkBlue};
-  font-size: ${between('18px', '24px', '375px', '1440px')};
+  font-size: ${clamp("18px", "24px", "375px", "1440px")};
   text-decoration: underline;
+`
+
+const Everything = styled.div`
+  display: flex;
+  min-height: 100vh;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 function Landing() {
   return (
-    <div>
+    <Everything>
       <Center>
         <picture>
           <source type="image/webp" srcSet={`${logoWebp2x} 2x, ${logoWebp} 1x`} />
@@ -127,15 +130,14 @@ function Landing() {
             งานฟุตบอลประเพณี <br /> จุฬาฯ - ธรรมศาสตร์ ครั้งที่ 74
           </Line1>
           <Line2>
-            BAKA<br />
+            BAKA
+            <br />
           </Line2>
-          <Line3>
-            Pink Road
-          </Line3>
+          <Line3>Pink Road</Line3>
         </Down>
       </TitleContainer>
       <ButtonsContainer>
-        { isEventDay ? (
+        {isEventDay ? (
           <>
             <Link to="/ticket">
               <LandingButton type="primary">รับบัตรเข้างาน</LandingButton>
@@ -151,9 +153,9 @@ function Landing() {
             </Link>
             <GetStatusButton to="/user">ตรวจสอบข้อมูล</GetStatusButton>
           </>
-        ) }
+        )}
       </ButtonsContainer>
-    </div>
+    </Everything>
   )
 }
 
