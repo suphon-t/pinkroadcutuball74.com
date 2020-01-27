@@ -42,7 +42,7 @@ function Login() {
         { (loading, error) => (
           <LoginForm layout="vertical">
             { error }
-            <Field name="username" title={t("idNumber")} pattern="\d*" disabled={loading} />
+            <Field name="username" title={t("idNumber")} pattern="\d*" disabled={loading} autoFocus />
             <Field name="password" title={t("phoneNumber")} type="tel" disabled={loading} />
             <ButtonBar style={{ direction: 'rtl' }}>
               <SubmitButton type="submit" disabled={loading}>{t('login.submit')}</SubmitButton>
