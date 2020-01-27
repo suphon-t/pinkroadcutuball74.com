@@ -2,25 +2,25 @@ import React, { useEffect, useState } from "react"
 import ContentCard from "../components/ContentCard"
 import Ticket from "../components/Ticket"
 
-import ticketImg from "../images/ticket.png"
-import ticket2x from "../images/ticket@2x.png"
-import ticketWebp from "../images/ticket.webp"
-import ticketWebp2x from "../images/ticket@2x.webp"
-import { isHiDpi, supportsWebP } from "../utils"
+import ticketImg from "../images/ticket.jpg"
+import ticket2x from "../images/ticket@2x.jpg"
+import { isHiDpi, useWindowDimensions } from "../utils"
 import FullScreenLoading from "../components/FullScreenLoading"
 import LogoutButtonFloating from "../components/LogoutButtonFloating"
 
 function GetTicket({ ticket }) {
-  let background = null
-  if (supportsWebP) {
-    background = isHiDpi ? ticketWebp2x : ticketWebp
-  } else {
-    background = isHiDpi ? ticket2x : ticketImg
-  }
+  const { width } = useWindowDimensions()
+  // Small: 368x491, @2x: 738x982
+  // Large: 638x851, @2x: 1276x1702
+  const largeTicket = width >= 992
+  const useHiDpi = isHiDpi && largeTicket
+
+  const background = useHiDpi ? ticket2x : ticketImg
 
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
     const img = new Image()
     img.onload = () => setLoading(false)
     img.src = background

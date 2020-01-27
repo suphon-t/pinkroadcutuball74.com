@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
+import { ReactComponent as TicketOverlay } from "../images/ticket-overlay.svg"
 import { formatQueueNumber } from "../utils"
 
 const Container = styled.div`
@@ -21,18 +22,13 @@ const Overlay = styled.svg`
   width: 100%;
   height: 100%;
 
-  .title {
-    font-family: 'Gotham Thin';
-    font-size: 56.4296px;
-  }
-
   .queue-number {
     font-family: 'Gotham Ultra';
-    font-size: 140.5601px;
+    font-size: 186px;
   }
 
   .name {
-    font-size: 31px;
+    font-size: 45px;
   }
 `
 
@@ -41,9 +37,9 @@ function Ticket({ data, background, ...rest }) {
   return (
     <Container background={background} {...rest}>
       <Overlay viewBox='0 0 910 1214'>
-        <text x="50%" y="430.7996" textAnchor="middle" className="title">Queue Number</text>
-        <text x="50%" y="605" textAnchor="middle" className="queue-number">{formatQueueNumber(number)}</text>
-        <text x="50%" y="655" textAnchor="middle" className="name">{name}</text>
+        <TicketOverlay />
+        <text x="50%" y="562.74" textAnchor="middle" className="queue-number">{formatQueueNumber(number)}</text>
+        <text x="50%" y="639" textAnchor="middle" className="name">{name}</text>
       </Overlay>
     </Container>
   )
