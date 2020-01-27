@@ -28,10 +28,9 @@ const FieldInput = styled(CustomInput)`
   background-color: transparent;
 `
 
-function Field(props) {
+function Field({ name, title, as, noLabel, children, ...rest }) {
   const { control, errors } = useFormContext()
   const { t } = useTranslation()
-  const { name, title, as, children, ...rest } = props
 
   const Container = as || FormItem
 
@@ -42,7 +41,7 @@ function Field(props) {
 
   return (
     <div>
-      <FieldLabel htmlFor={id}>{title}</FieldLabel>
+      { !noLabel && <FieldLabel htmlFor={id}>{title}</FieldLabel> }
       <Container hasFeedback validateStatus={status} help={help}>
         <Controller
           id={id}

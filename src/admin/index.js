@@ -7,10 +7,6 @@ import RandomScreen from "./pages/RandomScreen"
 import RandomBackend from "./pages/RandomBackend"
 
 const AdminGlobalStyle = createGlobalStyle`
-  body {
-    background: white;
-  }
-
   #background {
     display: none;
   }

@@ -14,6 +14,7 @@ import BlurBehind from "../../components/BlurBehind"
 import SafeArea from "../../components/SafeArea"
 import EditUserModal from "./EditUserModal"
 import Sticky from "../../components/Sticky"
+import PrefixIcon from "../../components/PrefixIcon"
 
 const { Column } = Table
 
@@ -173,7 +174,7 @@ function UsersTable({ showCheckedIn }) {
         value={searchValue}
         onChange={onSearch}
         placeholder="Search users"
-        prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />} />
+        prefix={<PrefixIcon type="search" />} />
       <PaginationContainer>
         <Pagination 
           simple={width < 576}

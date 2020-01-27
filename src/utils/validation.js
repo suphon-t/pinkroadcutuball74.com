@@ -11,8 +11,8 @@ export const userSchema = yup.object().shape({
     .max(255, "invalidValue"),
   ID: yup
     .string()
-    .nationalId("invalidValue")
-    .required(),
+    .required()
+    .nationalId("invalidValue"),
   tel: yup
     .string()
     .required()
@@ -27,3 +27,5 @@ export const userSchema = yup.object().shape({
     .required()
     .oneOf(facultyCodes, "invalidValue")
 })
+
+export default yup

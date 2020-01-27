@@ -1,29 +1,14 @@
 import React, { useCallback, useState } from "react"
-import styled from "styled-components"
-import { useTranslation } from "react-i18next"
 import { useForm, FormContext } from "react-hook-form"
-import { Form, Alert } from "antd"
+import { Alert } from "antd"
 import { useLocation, Redirect } from "react-router-dom"
 
 import { usePostStatus } from "../api"
 import { useAuthContext } from "../auth"
-import ContentCard from "../components/ContentCard"
-import OrangeButton from "../components/OrangeButton"
 import PageHeader from "../components/PageHeader"
-import BackButton from "../components/BackButton"
-import ButtonBar from "../components/ButtonBar"
 
-const SubmitButton = styled(OrangeButton)`
-  margin: 34px auto 0 auto;
-`
-
-const LoginForm = styled(Form)`
-  padding: 50px 0 0 0;
-`
-
-function Login({ title, subtitle, buttonTitle = 'login.submit', target = '/user', children }) {
-  const { t } = useTranslation()
-  const methods = useForm()
+function BaseLogin({ title, subtitle, target = '/user', validationSchema, errorMsg, children }) {
+  const methods = useForm({ validationSchema })
   const { getValues, handleSubmit } = methods
   const { isAuthenticated, login } = useAuthContext()
   const location = useLocation()
@@ -52,27 +37,20 @@ function Login({ title, subtitle, buttonTitle = 'login.submit', target = '/user'
     return <Redirect to={location.state?.from || target} />
   }
 
+  const error = hasError && (
+    <Alert
+      type="error"
+      message={errorMsg}
+      closable
+      onClose={clearError} />
+  )
+
   return (
     <FormContext {...methods}>
-      <ContentCard>
-        <PageHeader title={title} subtitle={subtitle} />
-        <LoginForm layout="vertical" onSubmit={handleSubmit(onSubmit)}>
-          { hasError && (
-            <Alert
-              type="error"
-              message={t('login.wrongCredentials')}
-              closable
-              onClose={clearError} />
-          )}
-          { children(loading) }
-          <ButtonBar style={{ direction: 'rtl' }}>
-            <SubmitButton type="submit" disabled={loading}>{t(buttonTitle)}</SubmitButton>
-            <BackButton />
-          </ButtonBar>
-        </LoginForm>
-      </ContentCard>
+      <PageHeader title={title} subtitle={subtitle} />
+      { React.cloneElement(children(loading, error), { onSubmit: handleSubmit(onSubmit) }) }
     </FormContext>
   )
 }
 
-export default Login
+export default BaseLogin

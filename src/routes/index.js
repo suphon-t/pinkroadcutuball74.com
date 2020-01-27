@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react"
-import { BrowserRouter, Switch, Route } from "react-router-dom"
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 
 import { UserRoute, AdminRoute, StaffRoute } from "./RouteTypes"
 
@@ -35,6 +35,9 @@ function UserRoutes() {
         <UserRoute path="/ticket">
           <CheckInTicket />
         </UserRoute>
+        <Route path="/staff">
+          <Redirect to="/staff/scan" />
+        </Route>
         <StaffRoute path="/staff/scan">
           <StaffScan />
         </StaffRoute>
