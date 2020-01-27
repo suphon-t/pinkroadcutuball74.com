@@ -35,7 +35,7 @@ function UserRoutes() {
         <UserRoute path="/ticket">
           <CheckInTicket />
         </UserRoute>
-        <Route path="/staff">
+        <Route path="/staff" exact>
           <Redirect to="/staff/scan" />
         </Route>
         <StaffRoute path="/staff/scan">

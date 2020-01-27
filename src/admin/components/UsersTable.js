@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useMemo } from "react"
 import styled, { css } from "styled-components"
 import { darken, lighten } from "polished"
 import { useTranslation } from "react-i18next"
-import { Table, Pagination, Input, Icon, } from "antd"
+import { Table, Pagination, Input } from "antd"
 import debounce from "lodash.debounce"
 import { up, down } from "styled-breakpoints"
 
