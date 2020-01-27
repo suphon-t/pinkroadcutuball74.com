@@ -3,12 +3,9 @@ import { Link, useHistory } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import styled from "styled-components"
 
-import logoMobile from "../images/logo-mobile.png"
-import logoMobile2x from "../images/logo-mobile@2x.png"
+import logoSvg from "../images/logo.svg"
 import logoDesktop from "../images/logo-desktop.png"
 import logoDesktop2x from "../images/logo-desktop@2x.png"
-import logoDesktopWebp from "../images/logo-desktop.webp"
-import logoDesktopWebp2x from "../images/logo-desktop@2x.webp"
 
 import { down, up } from "styled-breakpoints"
 import vars from "../styles/vars"
@@ -124,9 +121,8 @@ const ContentCard = React.forwardRef(({ loading, children, ...rest }, ref) => {
         <LogoSafeArea top right>
           <Logo to="/">
             <picture>
-              <source type="image/webp" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktopWebp2x} 2x, ${logoDesktopWebp} 1x`} />
+              <source type="image/svg+xml" srcSet={logoSvg} />
               <source type="image/png" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktop2x} 2x, ${logoDesktop} 1x`} />
-              <source type="image/png" media={`(max-width: ${breakpoints.lg})`} srcSet={`${logoMobile2x} 2x, ${logoMobile} 1x`} />
               <img src={logoDesktop} alt={t('appname')} />
             </picture>
           </Logo>

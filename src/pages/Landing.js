@@ -9,10 +9,9 @@ import OrangeButton from "../components/OrangeButton"
 import styled from "styled-components"
 import breakpoints, { Up, Down } from "../styles/breakpoints"
 
+import logoSvg from "../images/logo.svg"
 import logo from "../images/logo-landing.png"
 import logo2x from "../images/logo-landing@2x.png"
-import logoWebp from "../images/logo-landing.webp"
-import logoWebp2x from "../images/logo-landing@2x.webp"
 import { up } from "styled-breakpoints"
 import { isEventDay, clamp } from "../utils"
 
@@ -118,7 +117,7 @@ function Landing() {
     <Everything>
       <Center>
         <picture>
-          <source type="image/webp" srcSet={`${logoWebp2x} 2x, ${logoWebp} 1x`} />
+          <source type="image/svg+xml" srcSet={logoSvg} />
           <source type="image/png" srcSet={`${logo2x} 2x, ${logo} 1x`} />
           <Logo src={logo} alt="" />
         </picture>
