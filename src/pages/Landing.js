@@ -22,7 +22,7 @@ const Center = styled.div`
 `
 
 const Logo = styled.img`
-  height: ${clamp("61px", "80px", "375px", "1440px")};
+  height: ${clamp("61px", "120px", "375px", "1440px")};
   margin-top: ${clamp("41px", "64px", "375px", "1440px")};
   margin-bottom: ${clamp("35px", "26px", "375px", "1440px")};
 `
@@ -103,11 +103,14 @@ const GetStatusButton = styled(Link)`
 
 const Everything = styled.div`
   display: flex;
-  min-height: 100vh;
 
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+
+  ${up('xl')} {
+    min-height: 100vh;
+  }
 `
 
 function Landing() {
