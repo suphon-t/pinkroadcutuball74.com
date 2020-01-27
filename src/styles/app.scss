@@ -10,7 +10,25 @@
   src: url("../fonts/Gotham\ Ultra.otf");
 }
 
-body {
+body > #background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -99;
+
   background: linear-gradient(180deg, #f9c455 0%, #ee7398 35.42%);
   background-attachment: fixed;
+  
+  & > div {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    object-fit: cover;
+    content: url("../images/background.svg");
+
+    @media screen and (orientation: landscape) {
+      content: url("../images/background-land.svg");
+    }
+  }
 }
