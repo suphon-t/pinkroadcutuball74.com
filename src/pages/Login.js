@@ -10,7 +10,7 @@ function Login() {
   return (
     <BaseLogin title={t('login.title')} subtitle={t('login.subtitle')}>
       { loading => <>
-        <Field name="username" title={t("idNumber")} pattern="\d+|admin" disabled={loading} />
+        <Field name="username" title={t("idNumber")} pattern="\d*" disabled={loading} />
         <Field name="password" title={t("phoneNumber")} type="tel" disabled={loading} />
       </> }
     </BaseLogin>
