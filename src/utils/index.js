@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next"
 import facultyCodes from "../i18n/faculty-codes"
 import { useMemo, useState, useCallback, useEffect } from "react"
 import { parseISO, format } from "date-fns"
-import { css } from "styled-components"
 import { between } from "polished"
 
 export const isEventDay = new Date() > parseISO("2020-02-08T04:00:00+07:00")
@@ -125,5 +124,5 @@ export function formatDt(dt) {
 }
 
 export function clamp(min, max, screenMin, screenMax) {
-  return css`min(${max}, max(${min}, ${between(min, max, screenMin, screenMax)}))`
+  return `min(${max}, max(${min}, ${between(min, max, screenMin, screenMax)}))`
 }
