@@ -14,8 +14,10 @@ function CheckInTicket() {
   useEffect(() => {
     if (data) {
       localStorage.setItem('ticket', JSON.stringify(data.data[0]))
+    } else if (error) {
+      localStorage.removeItem('ticket')
     }
-  }, [data])
+  }, [data, error])
 
   if (!ticket && !error) {
     return <FullScreenLoading />
