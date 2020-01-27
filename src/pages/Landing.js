@@ -43,7 +43,7 @@ const TitleContainer = styled.div`
 `
 
 const Line1 = styled.p`
-  font-size: ${between('20px', '46px', '375px', '1440px')};
+  font-size: ${between('20px', '33px', '375px', '1440px')};
   font-weight: 500;
 `
 
@@ -53,7 +53,7 @@ const Line2 = styled.h1`
   font-weight: bold;
 
   ${up('lg')} {
-    font-size: ${between('85px', '130px', breakpoints.lg, '1440px')};
+    font-size: ${between('85px', '90px', breakpoints.lg, '1440px')};
   }
 `
 
@@ -66,8 +66,12 @@ const Line3 = styled.h1`
 const ButtonsContainer = styled.div`
   display: flex;
   width: 100%;
-  margin-top: ${between('150px', '247px', '375px', '1440px')};
-  margin-bottom: ${between('39px', '108px', '375px', '1440px')};
+  margin-top: ${between('150px', '150px', '375px', breakpoints.xxxl)};
+  margin-bottom: ${between('39px', '108px', '375px', breakpoints.xxxl)};
+  
+  @media (min-width: ${breakpoints.xxxl}) {
+    margin-top: 200px;
+  }
 
   flex-direction: column;
   justify-content: center;
@@ -75,11 +79,11 @@ const ButtonsContainer = styled.div`
 `
 
 const LandingButton = styled(OrangeButton)`
-  width: ${between('226px', '375px', '375px', '1440px')};
-  height: ${between('50px', '83px', '375px', '1440px')};
+  width: ${between('226px', '350px', '375px', '1440px')};
+  height: ${between('50px', '70px', '375px', '1440px')};
 
   font-weight: 400;
-  font-size: ${between('24px', '40px', '375px', '1440px')};
+  font-size: ${between('24px', '36px', '375px', '1440px')};
 
   ${up('md')} {
     border-width: 2px;
@@ -90,7 +94,7 @@ const RegisterLink = styled(Link)`
   margin-top: ${between('16px', '28px', '375px', '1440px')};
   
   ${LandingButton} {
-    background: transparent;
+    background: ${vars.white};
     box-shadow: none;
   }
 `
@@ -99,7 +103,7 @@ const GetStatusButton = styled(Link)`
   margin-top: ${between('32px', '24px', '375px', '1440px')};
 
   color: ${vars.darkBlue};
-  font-size: ${between('18px', '30px', '375px', '1440px')};
+  font-size: ${between('18px', '24px', '375px', '1440px')};
   text-decoration: underline;
 `
 
