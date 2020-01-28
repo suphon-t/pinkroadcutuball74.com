@@ -1,9 +1,10 @@
-import React, { useCallback, useState, useEffect } from "react"
+import React, { useCallback, useState, useEffect, useRef } from "react"
 import { useHistory, Link } from "react-router-dom"
 import { useForm, FormContext } from "react-hook-form"
 import { useTranslation, Trans } from "react-i18next"
 import styled from "styled-components"
 import { down, up } from "styled-breakpoints"
+import ReCAPTCHA from "react-google-recaptcha";
 
 // ant design
 import { Form, Button } from "antd"
@@ -27,6 +28,7 @@ import DialogSelect from "../components/DialogSelect"
 import { useAuthContext } from "../auth"
 import { userSchema } from "../utils/validation"
 import { useFacultyOptions, isEventDay } from "../utils"
+import config from "../config"
 
 const FacultyContainer = styled(Form.Item)`
   margin-bottom: -4px;
@@ -96,10 +98,11 @@ function Register() {
   }, [])
 
   const history = useHistory()
-  const confirmSubmit = useCallback(() => {
+  const confirmSubmit = useCallback((token) => {
+    if (!token) return
     callAsync(async () => {
       try {
-        const values = getValues()
+        const values = {...getValues(), "g-recaptcha-response": token}
         await http.post('/register', values)
         const loginData = await http.post('/token', {
           username: values.ID,
@@ -122,6 +125,13 @@ function Register() {
     })
   }, [callAsync, getValues, history, http, login])
 
+  const recaptchaRef = useRef()
+
+  const validateSubmit = useCallback(() => {
+    recaptchaRef.current.execute()
+  }, [])
+
+
   const confirmModal = (
     <CustomModal visible={modalVisible} onCancel={() => setModalVisible(false)}>
       <ConfirmationText>{t("register.dialog.title")}</ConfirmationText>
@@ -130,7 +140,7 @@ function Register() {
         <Button shape="round" onClick={() => setModalVisible(false)}>
           {t("register.dialog.cancel")}
         </Button>
-        <Button shape="round" onClick={confirmSubmit} type="primary" loading={loading}>
+        <Button shape="round" onClick={validateSubmit} type="primary" loading={loading}>
           {t("register.dialog.ok")}
         </Button>
       </ModalFooter>
@@ -159,6 +169,12 @@ function Register() {
             {confirmModal}
             <DuplicateIdModal visible={isDuplicate} onCancel={closeDuplicate} />
             <ErrorModal description={errorDescription} onCancel={closeError} />
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              size="invisible"
+              sitekey={config.recaptchaSiteKey}
+              onChange={confirmSubmit}
+            />
           </Form>
         </div>
       </ContentCard>
