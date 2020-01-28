@@ -15,6 +15,7 @@ import ButtonBar from "../components/ButtonBar"
 import vars from "../styles/vars"
 import LogoutButtonFloating from "../components/LogoutButtonFloating"
 import CurrentTime from "../components/CurrentTime"
+import LoadingIcon from "../components/LoadingIcon"
 
 const Container = styled.div`
   margin: 36px 0;
@@ -53,7 +54,7 @@ const RefreshIcon = styled(Icon)`
   }
 `
 
-const CheckIn = withContentRect("bounds")(({ measureRef, contentRect, refresh }) => {
+const CheckIn = withContentRect("bounds")(({ measureRef, contentRect, refresh, loading }) => {
   const { t } = useTranslation()
   const { userId } = useAuthContext()
   const [, time] = useCurrentTime({ timeout: 2000 })
@@ -83,7 +84,11 @@ const CheckIn = withContentRect("bounds")(({ measureRef, contentRect, refresh })
               <QRBox size={size} value={qrValue} />
               <BottomBar>
                 <CurrentTime />
-                <RefreshIcon type="reload" onClick={refresh} />
+                { loading ? (
+                  <Icon type="loading" spin style={{ color: vars.pink }} />
+                ) : (
+                  <RefreshIcon type="reload" onClick={refresh} />
+                )}
               </BottomBar>
             </Flex>
           </Flex>
