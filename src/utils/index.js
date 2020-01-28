@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import facultyCodes from "../i18n/faculty-codes"
-import { useMemo, useState, useCallback, useEffect } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { parseISO, format } from "date-fns"
 
 export const isEventDay = new Date() > parseISO("2020-02-08T04:00:00+07:00")
@@ -52,22 +52,28 @@ export function parseToken(token) {
   }
 }
 
-export function useCurrentTime(disp = "HH:mm:ss") {
-  const [time, setTime] = useState("")
+function getCurrentTime(disp) {
+  const date = new Date()
+  return [format(date, disp), date.getTime()]
+}
 
-  const updateTime = useCallback(() => {
-    setTime(format(new Date(), disp))
-  }, [disp])
+export function useCurrentTime(opts) {
+  const disp = opts?.disp !== undefined ? opts.disp : 'HH:mm:ss'
+  const timeout = opts?.timeout !== undefined ? opts.timeout : 1000
+  const [time, setTime] = useState(() => getCurrentTime(disp))
 
   useEffect(() => {
     const clear = setInterval(() => {
-      updateTime()
-    }, 1000)
-    updateTime()
+      setTime(getCurrentTime(disp))
+    }, timeout)
     return () => clearInterval(clear)
-  }, [updateTime])
+  }, [disp, timeout])
 
   return time
+}
+
+export function useTimeFormat(time, disp = 'HH:mm:ss') {
+  return useMemo(() => time && format(new Date(time), disp), [time, disp])
 }
 
 // https://www.kirupa.com/html5/detecting_retina_high_dpi.htm

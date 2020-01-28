@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom"
 import BaseLogin from "./BaseLogin"
 import Field from "../components/Field"
 import PrefixIcon from "../components/PrefixIcon"
+import SafeArea from "../components/SafeArea"
 
 const GlobalStyle = createGlobalStyle`
   #background {
@@ -17,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const Container = styled.div`
+const Container = styled(SafeArea)`
   display: flex;
   
   flex-direction: column;
@@ -37,7 +38,7 @@ function AdminLogin() {
   return (
     <>
       <GlobalStyle />
-      <Container>
+      <Container all>
         <StyledPageHeader onBack={history.goBack} title="Admin Login" />
         <BaseLogin title="" errorMsg="Wrong username or password">
           { (loading, error) => (

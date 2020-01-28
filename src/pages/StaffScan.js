@@ -1,45 +1,80 @@
-import React, { useCallback, useEffect, useState, useMemo } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import QrReader from "react-qr-reader"
 import qs from "qs"
 
-import ContentCard from "../components/ContentCard"
-import ButtonBar from "../components/ButtonBar"
-import { notification, Icon } from "antd"
-import { useCurrentTime } from "../utils"
+import { notification, Modal, Typography, Button } from "antd"
+import { useTimeFormat } from "../utils"
 import { usePostStatus } from "../api"
-import styled from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
 import vars from "../styles/vars"
-import LogoutButtonFloating from "../components/LogoutButtonFloating"
+import { useHistory, Link } from "react-router-dom"
+import ContentContainer from "../components/ContentContainer"
+import CustomPageHeader from "../components/CustomPageHeader"
+import CurrentTime from "../components/CurrentTime"
 
-const LoadingIcon = styled(Icon)`
-  display: block;
+const { Title, Text } = Typography
 
-  color: ${vars.pink};
-  font-size: 48px;
+const GlobalStyle = createGlobalStyle`
+  #background {
+    background: ${vars.white} !important;
+
+    & > div {
+      display: none;
+    }
+  }
 `
 
-const BottomBar = styled(ButtonBar)`
+const BottomBar = styled.div`
   height: 80px;
 
-  align-items: center;
+  text-align: center;
   color: ${vars.darkBlue};
   font-size: 24px;
 `
 
+const Container = styled.div`
+  margin: 40px 0;
+  padding-bottom: 100%;
+  position: relative;
+  box-shadow: 0px 10px 48px 10px rgba(0,0,0,0.35);
+
+  & > :first-child {
+    left: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+`
+
 function StaffScan() {
-  const time = useCurrentTime()
+  const history = useHistory()
   const [url, setUrl] = useState(window.location.href)
-  const userId = useMemo(() => {
-    if (!url) return undefined
-    const parts = url.split('?')
-    if (parts.length !== 2) return undefined
-    return qs.parse(parts[1]).userId
-  }, [url])
+  const [scanInfo, setScanInfo] = useState(undefined)
+  const [modalVisible, setModalVisible] = useState(false)
+
+  useEffect(() => {
+    const qrData = extractQrData(url)
+    if (qrData?.userId !== scanInfo?.userId) {
+      const newInfo = qrData && {
+        ...qrData,
+        scanTime: new Date().getTime()
+      }
+      setScanInfo(newInfo)
+      if (newInfo) {
+        setModalVisible(true)
+      }
+    }
+  }, [url, scanInfo])
+
+  const closeModal = useCallback(() => {
+    setModalVisible(false)
+  }, [])
 
   const { loading, execute: sendCheckin } = usePostStatus('/staff/checkin', false)
 
   const checkin = useCallback(async () => {
-    if (!userId) return
+    const { userId } = scanInfo
     try {
       await sendCheckin({ id: userId })
       notification['success']({
@@ -58,37 +93,94 @@ function StaffScan() {
         })
       }
     }
-  }, [userId, sendCheckin])
-
-  useEffect(() => {
-    checkin()
-  }, [checkin])
+    history.replace('/staff/scan')
+    setModalVisible(false)
+  }, [scanInfo, sendCheckin, history])
 
   const handleScan = useCallback(data => {
     setUrl(data)
   }, [])
 
-  const handleError = useCallback(() => {
+  const handleError = useCallback(() => {}, [])
 
-  }, [])
+  const genTime = useTimeFormat(scanInfo?.gen)
+  const scanTime = useTimeFormat(scanInfo?.scanTime)
 
   return (
     <>
-      <ContentCard>
-        <QrReader
-          delay={300}
-          onScan={handleScan}
-          onError={handleError}
-          style={{ width: '100%' }}
+      <GlobalStyle />
+      <CustomPageHeader
+        onBack={history.goBack}
+        title="Scan"
+        extra={[
+          <Link key="1" to="/logout">
+            <Button type="primary">Logout</Button>
+          </Link>,
+        ]}
         />
+      <ContentContainer>
+        <Container>
+          { !modalVisible && <QrReader
+            delay={300}
+            onScan={handleScan}
+            onError={handleError}
+            style={{ width: '100%' }}
+          /> }
+        </Container>
         <BottomBar>
-          { time }
-          { loading && <LoadingIcon type="loading" /> }
+          <CurrentTime />
         </BottomBar>
-      </ContentCard>
-      <LogoutButtonFloating />
+      </ContentContainer>
+      <Modal
+        title="Check in"
+        onOk={checkin}
+        onCancel={closeModal}
+        confirmLoading={loading}
+        visible={modalVisible}>
+        <Title>{scanInfo?.userId}</Title>
+        <Text
+          style={{ fontSize: 20 }}
+          level={3}
+          type={
+            getTextType(scanInfo?.gen, scanInfo?.scanTime)
+          }
+          >
+          Gen: {genTime}
+        </Text>
+        <br />
+        <Text
+          style={{ fontSize: 20 }}
+          level={3}
+        >
+          Scan: {scanTime}
+        </Text>
+      </Modal>
     </>
   )
+}
+
+function extractQrData(url) {
+  try {
+    const parts = url.split('?')
+    const data = qs.parse(parts[1])
+    return {
+      ...data,
+      gen: parseInt(data.gen),
+    }
+  } catch {
+    return undefined
+  }
+}
+
+function getTextType(time1, time2) {
+  const diff = Math.abs(time1 - time2)
+  if (diff < 5000) {
+    return undefined
+  } else if (diff < 10000) {
+    return 'warning'
+  } else {
+    return 'danger'
+  }
 }
 
 export default StaffScan

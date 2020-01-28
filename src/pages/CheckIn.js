@@ -14,6 +14,7 @@ import Flex from "../components/Flex"
 import ButtonBar from "../components/ButtonBar"
 import vars from "../styles/vars"
 import LogoutButtonFloating from "../components/LogoutButtonFloating"
+import CurrentTime from "../components/CurrentTime"
 
 const Container = styled.div`
   margin: 36px 0;
@@ -55,9 +56,12 @@ const RefreshIcon = styled(Icon)`
 const CheckIn = withContentRect("bounds")(({ measureRef, contentRect, refresh }) => {
   const { t } = useTranslation()
   const { userId } = useAuthContext()
-  const time = useCurrentTime()
+  const [, time] = useCurrentTime({ timeout: 2000 })
 
-  const qrValue = `${window.location.origin}/staff/scan?${qs.stringify({ userId })}`
+  const qrValue = `${window.location.origin}/staff/scan?${qs.stringify({ 
+    userId,
+    gen: time,
+  })}`
 
   const { width } = contentRect.bounds
   const size = Math.max((width || 0) - 112, 200)
@@ -78,7 +82,7 @@ const CheckIn = withContentRect("bounds")(({ measureRef, contentRect, refresh })
             <Flex direction="column">
               <QRBox size={size} value={qrValue} />
               <BottomBar>
-                {time}
+                <CurrentTime />
                 <RefreshIcon type="reload" onClick={refresh} />
               </BottomBar>
             </Flex>

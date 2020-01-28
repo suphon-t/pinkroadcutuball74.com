@@ -1,11 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import { PageHeader, Button } from "antd"
+import { Button } from "antd"
 import { useHistory, Link } from "react-router-dom"
 
 import BlurBehind from "../../components/BlurBehind"
 import SafeArea from "../../components/SafeArea"
 import { Up, Down } from "../../styles/breakpoints"
+import CustomPageHeader from "../../components/CustomPageHeader"
 
 const Bar = styled(BlurBehind)`
   position: fixed;
@@ -18,24 +19,12 @@ const Bar = styled(BlurBehind)`
   box-shadow: 0 12px 45px -22px rgba(0, 0, 0, .35);
 `
 
-const StyledPageHeader = styled(PageHeader)`
-  @media (max-width: 576px) {
-    .ant-page-header-heading-extra {
-      display: unset;
-      float: right;
-      width: unset;
-      padding-top: unset;
-      overflow: unset;
-    }
-  }
-`
-
 function AdminBar() {
   const history = useHistory()
 
   const header = (
     <SafeArea top left right>
-      <StyledPageHeader
+      <CustomPageHeader
         onBack={history.goBack}
         title={(
           <>

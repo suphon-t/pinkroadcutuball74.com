@@ -7,7 +7,7 @@ import logoSvg from "../images/logo.svg"
 import logoDesktop from "../images/logo-desktop.png"
 import logoDesktop2x from "../images/logo-desktop@2x.png"
 
-import { down, up } from "styled-breakpoints"
+import { up } from "styled-breakpoints"
 import vars from "../styles/vars"
 import { between } from "polished"
 import breakpoints from "../styles/breakpoints"
@@ -15,6 +15,7 @@ import OrangeButton from "./OrangeButton"
 
 import { ReactComponent as BackIcon } from "../images/arrow-back.svg"
 import SafeArea from "./SafeArea"
+import ContentContainer from "./ContentContainer"
 
 const Header = styled.div`
   display: flex;
@@ -78,30 +79,14 @@ const Logo = styled(Link)`
   }
 `
 
-const sideMargin = between('30px', '88px', breakpoints.sm, breakpoints.md)
-
-const Card = styled.div`
-  display: block;
-  margin: 0 ${sideMargin} 30px ${sideMargin};
+const Card = styled(ContentContainer)`
   padding: 20px 36px 28px 36px;
 
   background: ${vars.white};
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 
-  ${down("xs")} {
-    margin: 0 15px 30px 15px;
-  }
-
-  ${up("md")} {
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
   ${up("xl")} {
-    width: 670px;
-    margin-top: 18px;
     padding: 43px 67px 67px 67px;
   }
 `
