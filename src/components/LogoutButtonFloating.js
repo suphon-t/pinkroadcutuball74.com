@@ -6,7 +6,7 @@ import vars from "../styles/vars"
 
 function LogoutButtonFloating() {
   return (
-    <Flex justifyContent="center" style={{ marginBottom: 30 }}>
+    <Flex justifyContent="center">
       <LogoutButton background={vars.darkBlue} color={vars.orange} />
     </Flex>
   )

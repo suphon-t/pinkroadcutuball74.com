@@ -65,3 +65,7 @@ export {
 export {
   default as CloseOutline
 } from "@ant-design/icons/lib/outline/CloseOutline"
+
+export {
+  default as GithubOutline
+} from "@ant-design/icons/lib/outline/GithubOutline"

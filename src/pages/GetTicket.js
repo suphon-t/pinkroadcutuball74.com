@@ -29,12 +29,12 @@ function GetTicket({ ticket }) {
   return (
     <>
       { loading && <FullScreenLoading /> }
-      <ContentCard style={{ padding: 16 }} loading={loading}>
+      <ContentCard
+        style={{ padding: 16 }}
+        loading={loading}
+        footer={<LogoutButtonFloating />}>
         <Ticket data={ticket} background={background} style={{ borderRadius: 10 }} />
       </ContentCard>
-      <div style={{ opacity: loading ? 0 : 1 }}>
-        <LogoutButtonFloating />
-      </div>
     </>
   )
 }

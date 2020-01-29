@@ -1,7 +1,7 @@
 import React from "react"
 import { Link, useHistory } from "react-router-dom"
 import { useTranslation } from "react-i18next"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import logoSvg from "../images/logo.svg"
 import logoDesktop from "../images/logo-desktop.png"
@@ -16,6 +16,7 @@ import OrangeButton from "./OrangeButton"
 import { ReactComponent as BackIcon } from "../images/arrow-back.svg"
 import SafeArea from "./SafeArea"
 import ContentContainer from "./ContentContainer"
+import Footer from "./Footer"
 
 const Header = styled.div`
   display: flex;
@@ -88,15 +89,22 @@ const Card = styled(ContentContainer)`
 
   ${up("xl")} {
     padding: 43px 67px 67px 67px;
+    margin-top: 18px;
   }
 `
 
-const ContentCard = React.forwardRef(({ loading, children, ...rest }, ref) => {
+const Layout = styled.div`
+  ${({ loading }) => loading && css`
+    opacity: 0;
+  `}
+`
+
+const ContentCard = React.forwardRef(({ loading, children, footer, ...rest }, ref) => {
   const { t } = useTranslation()
   const history = useHistory()
   const canGoBack = history.length > 1
   return (
-    <div style={{ opacity: loading ? 0 : 1 }}>
+    <Layout loading={loading}>
       <Header>
         { canGoBack ? (
           <BackButton aria-label={t('back')} onClick={history.goBack}>
@@ -114,7 +122,9 @@ const ContentCard = React.forwardRef(({ loading, children, ...rest }, ref) => {
         </LogoSafeArea>
       </Header>
       <Card ref={ref} {...rest}>{children}</Card>
-    </div>
+      {footer && <div style={{ marginTop: 30 }}>{footer}</div>}
+      <Footer />
+    </Layout>
   )
 })
 

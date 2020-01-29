@@ -9,10 +9,12 @@ const sideMargin = between('30px', '88px', breakpoints.sm, breakpoints.md)
 
 const Container = styled.div`
   display: block;
-  margin: 0 ${sideMargin} 30px ${sideMargin};
+  margin-left: ${sideMargin};
+  margin-right: ${sideMargin};
 
   ${down("xs")} {
-    margin: 0 15px 30px 15px;
+    margin-left: 15px;
+    margin-right: 15px;
   }
 
   ${up("md")} {
@@ -23,7 +25,6 @@ const Container = styled.div`
 
   ${up("xl")} {
     width: 670px;
-    margin-top: 18px;
   }
 `
 

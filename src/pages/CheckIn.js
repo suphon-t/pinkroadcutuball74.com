@@ -68,7 +68,9 @@ const CheckIn = withContentRect("bounds")(({ measureRef, contentRect, refresh, l
 
   return (
     <>
-      <ContentCard ref={measureRef}>
+      <ContentCard 
+        ref={measureRef}
+        footer={<LogoutButtonFloating />}>
         <Container>
           <CenterAlign>
             <Title>
@@ -93,7 +95,6 @@ const CheckIn = withContentRect("bounds")(({ measureRef, contentRect, refresh, l
           </Flex>
         </Container>
       </ContentCard>
-      <LogoutButtonFloating />
     </>
   )
 })
