@@ -99,10 +99,10 @@ function Register() {
   }, [])
 
   const history = useHistory()
-  const confirmSubmit = useCallback(() => {
+  const confirmSubmit = useCallback(token => {
     callAsync(async () => {
       try {
-        const values = {...getValues(), "g-recaptcha-response": recaptchaToken}
+        const values = {...getValues(), "g-recaptcha-response": token || recaptchaToken}
         await http.post('/register', values)
         const loginData = await http.post('/token', {
           username: values.ID,
@@ -137,7 +137,7 @@ function Register() {
 
   const onRecaptchaChange = useCallback(token => {
     setRecaptchaToken(token)
-    confirmSubmit()
+    confirmSubmit(token)
   }, [confirmSubmit])
 
   const onRecaptchaExpired = useCallback(() => {
