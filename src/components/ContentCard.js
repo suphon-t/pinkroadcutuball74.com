@@ -17,6 +17,7 @@ import { ReactComponent as BackIcon } from "../images/arrow-back.svg"
 import SafeArea from "./SafeArea"
 import ContentContainer from "./ContentContainer"
 import Footer from "./Footer"
+import { landingRoute } from "../utils"
 
 const Header = styled.div`
   display: flex;
@@ -112,7 +113,7 @@ const ContentCard = React.forwardRef(({ loading, children, footer, ...rest }, re
           </BackButton>
         ) : <Space /> }
         <LogoSafeArea top right>
-          <Logo to="/">
+          <Logo to={landingRoute}>
             <picture>
               <source type="image/svg+xml" srcSet={logoSvg} />
               <source type="image/png" media={`(min-width: ${breakpoints.lg})`} srcSet={`${logoDesktop2x} 2x, ${logoDesktop} 1x`} />

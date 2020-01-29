@@ -2,6 +2,7 @@ import React from "react"
 import styled, { keyframes } from "styled-components"
 
 import LoadingIcon from "./LoadingIcon"
+import StatusBarLayout from "./StatusBarLayout"
 
 const delayedFadeIn = keyframes`
   0% { opacity: 0; }
@@ -9,7 +10,7 @@ const delayedFadeIn = keyframes`
   100% { opacity: 1; }
 `
 
-export default styled.div.attrs(({ theme, ...props }) => ({
+export default styled(StatusBarLayout).attrs(({ theme, ...props }) => ({
   children: <LoadingIcon {...props} />,
 }))`
   position: fixed;

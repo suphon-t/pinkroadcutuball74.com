@@ -10,9 +10,9 @@ handlers:
     expiration: '31536000s'
     secure: always
 
-  - url: /(.*\.(json|ico|js|txt))$
+  - url: /(.*\.(json|ico|js|txt|png))$
     static_files: dist/\1
-    upload: dist/.*\.(json|ico|js|txt)$
+    upload: dist/.*\.(json|ico|js|txt|png)$
     secure: always
 
   - url: /

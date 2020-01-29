@@ -15,6 +15,7 @@ import logoSvg from "../images/logo.svg"
 import logo from "../images/logo-landing.png"
 import logo2x from "../images/logo-landing@2x.png"
 import { isEventDay } from "../utils"
+import SafeArea from "../components/SafeArea"
 
 const Center = styled.div`
   width: 100%;
@@ -101,7 +102,7 @@ const GetStatusButton = styled(Link)`
   text-decoration: underline;
 `
 
-const Everything = styled.div`
+const Everything = styled(SafeArea)`
   display: flex;
 
   flex-direction: column;
@@ -115,7 +116,7 @@ const Everything = styled.div`
 
 function Landing() {
   return (
-    <Everything>
+    <Everything all>
       <Center>
         <picture>
           <source type="image/svg+xml" srcSet={logoSvg} />

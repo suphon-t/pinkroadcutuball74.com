@@ -9,6 +9,7 @@ import ContentCard from "../components/ContentCard"
 import OrangeButton from "../components/OrangeButton"
 import { useTranslation } from "react-i18next"
 import LogoutButtonBar from "../components/LogoutButtonBar"
+import { landingRoute } from "../utils"
 
 const DataTitle = styled(Title)`
   margin: 1rem 0 2.5rem;
@@ -42,7 +43,7 @@ function User() {
         </Notes>
 
         <LogoutButtonBar>
-          <Link to="/">
+          <Link to={landingRoute}>
             <OrangeButton>{t("userdata.back")}</OrangeButton>
           </Link>
         </LogoutButtonBar>

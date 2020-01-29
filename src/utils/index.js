@@ -127,3 +127,6 @@ export function formatDt(dt) {
   if (!dt) return dt
   return format(parseISO(dt), "HH:mm:ss dd/MM/yyyy")
 }
+
+export const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+export const landingRoute = isStandalone ? '/home' : '/'

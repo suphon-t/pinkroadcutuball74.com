@@ -27,7 +27,7 @@ import PageHeader from "../components/PageHeader"
 import DialogSelect from "../components/DialogSelect"
 import { useAuthContext } from "../auth"
 import { userSchema } from "../utils/validation"
-import { useFacultyOptions, isEventDay } from "../utils"
+import { useFacultyOptions, isEventDay, landingRoute } from "../utils"
 import config from "../config"
 
 const FacultyContainer = styled(Form.Item)`
@@ -206,7 +206,7 @@ function DuplicateIdModal(props) {
         </Trans>
       </p>
       <ModalFooter>
-        <Link to="/">
+        <Link to={landingRoute}>
           <Button shape="round">{t("register.backtohome")}</Button>
         </Link>
         <Button shape="round" type="primary" onClick={props.onCancel}>{t("register.duplicate.again")}</Button>
