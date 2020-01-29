@@ -15,7 +15,6 @@ import ButtonBar from "../components/ButtonBar"
 import vars from "../styles/vars"
 import LogoutButtonFloating from "../components/LogoutButtonFloating"
 import CurrentTime from "../components/CurrentTime"
-import LoadingIcon from "../components/LoadingIcon"
 
 const Container = styled.div`
   margin: 36px 0;
