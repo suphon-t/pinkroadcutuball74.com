@@ -73,6 +73,7 @@ function Register() {
   const [modalVisible, setModalVisible] = useState(false)
   const [isDuplicate, setIsDuplicate] = useState(false)
   const [errorDescription, setErrorDescription] = useState(undefined)
+  const [recaptchaToken, setRecaptchaToken] = useState(undefined)
 
   const closeDuplicate = useCallback(() => {
     setIsDuplicate(false)
@@ -98,11 +99,10 @@ function Register() {
   }, [])
 
   const history = useHistory()
-  const confirmSubmit = useCallback((token) => {
-    if (!token) return
+  const confirmSubmit = useCallback(() => {
     callAsync(async () => {
       try {
-        const values = {...getValues(), "g-recaptcha-response": token}
+        const values = {...getValues(), "g-recaptcha-response": recaptchaToken}
         await http.post('/register', values)
         const loginData = await http.post('/token', {
           username: values.ID,
@@ -123,14 +123,26 @@ function Register() {
         setModalVisible(false)
       }
     })
-  }, [callAsync, getValues, history, http, login])
+  }, [callAsync, getValues, history, http, login, recaptchaToken])
 
   const recaptchaRef = useRef()
 
   const validateSubmit = useCallback(() => {
-    recaptchaRef.current.execute()
-  }, [])
+    if (recaptchaToken) {
+      confirmSubmit()
+    } else {
+      recaptchaRef.current.execute()
+    }
+  }, [recaptchaToken, confirmSubmit])
 
+  const onRecaptchaChange = useCallback(token => {
+    setRecaptchaToken(token)
+    confirmSubmit()
+  }, [confirmSubmit])
+
+  const onRecaptchaExpired = useCallback(() => {
+    setRecaptchaToken(undefined)
+  }, [])
 
   const confirmModal = (
     <CustomModal visible={modalVisible} onCancel={() => setModalVisible(false)}>
@@ -173,7 +185,8 @@ function Register() {
               ref={recaptchaRef}
               size="invisible"
               sitekey={config.recaptchaSiteKey}
-              onChange={confirmSubmit}
+              onChange={onRecaptchaChange}
+              onExpired={onRecaptchaExpired}
             />
           </Form>
         </div>
