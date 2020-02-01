@@ -32,20 +32,20 @@ const LoginForm = styled(Form)`
   padding-top: 36px;
 `
 
-function Login() {
+function Login({ title = 'login.title', subtitle = 'login.subtitle', button = 'login.submit', target }) {
   const { t } = useTranslation()
 
   return (
     <ContentCard>
-      <PageHeader title={t('login.title')} subtitle={t('login.subtitle')} />
+      <PageHeader title={t(title)} subtitle={t(subtitle)} />
       <BaseLogin validationSchema={validationSchema} errorMsg={t('login.wrongCredentials')}>
         { (loading, error) => (
-          <LoginForm layout="vertical">
+          <LoginForm layout="vertical" target={target}>
             { error }
             <Field name="username" title={t("idNumber")} pattern="\d*" disabled={loading} autoFocus />
             <Field name="password" title={t("phoneNumber")} type="tel" disabled={loading} />
             <ButtonBar style={{ direction: 'rtl' }}>
-              <SubmitButton type="submit" disabled={loading}>{t('login.submit')}</SubmitButton>
+              <SubmitButton type="submit" disabled={loading}>{t(button)}</SubmitButton>
               <BackButton />
             </ButtonBar>
           </LoginForm>
