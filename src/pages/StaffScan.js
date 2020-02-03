@@ -11,6 +11,8 @@ import { useHistory, Link } from "react-router-dom"
 import ContentContainer from "../components/ContentContainer"
 import CustomPageHeader from "../components/CustomPageHeader"
 import CurrentTime from "../components/CurrentTime"
+import OrangeButton from "../components/OrangeButton"
+import ButtonBar from "../components/ButtonBar"
 
 const { Title, Text } = Typography
 
@@ -73,8 +75,8 @@ function StaffScan() {
 
   const { loading, execute: sendCheckin } = usePostStatus('/staff/checkin', false)
 
-  const checkin = useCallback(async () => {
-    const { userId } = scanInfo
+  const checkin = useCallback(async info => {
+    const { userId } = info
     try {
       await sendCheckin({ id: userId })
       notification['success']({
@@ -95,7 +97,13 @@ function StaffScan() {
     }
     history.replace('/staff/scan')
     setModalVisible(false)
-  }, [scanInfo, sendCheckin, history])
+  }, [sendCheckin, history])
+
+  useEffect(() => {
+    if (scanInfo && Math.abs(scanInfo.gen - scanInfo.scanTime) < 5000) {
+      checkin(scanInfo)
+    }
+  }, [checkin, scanInfo])
 
   const handleScan = useCallback(data => {
     setUrl(data)
@@ -133,9 +141,8 @@ function StaffScan() {
       </ContentContainer>
       <Modal
         title="Check in"
-        onOk={checkin}
         onCancel={closeModal}
-        confirmLoading={loading}
+        footer={null}
         visible={modalVisible}>
         <Title>{scanInfo?.userId}</Title>
         <Text
@@ -154,6 +161,11 @@ function StaffScan() {
         >
           Scan: {scanTime}
         </Text>
+        <ButtonBar style={{ marginTop: 16 }}>
+          <OrangeButton background="#40edc2" color="white" disabled={loading} onClick={() => checkin(scanInfo)}>
+            { loading ? 'Saving...' : 'Check in'}
+          </OrangeButton>
+        </ButtonBar>
       </Modal>
     </>
   )
