@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import vars from "../../styles/vars"
 import { useTranslation } from "react-i18next"
 
@@ -11,7 +11,9 @@ const rightPaneColor = '#F18B84'
 const Container = styled.div`
   display: flex;
 
-  background: linear-gradient(209.11deg, #F9C455 21.96%, #EE7398 89.62%);
+  ${({ noBackground }) => !noBackground && css`
+    background: linear-gradient(209.11deg, #F9C455 21.96%, #EE7398 89.62%);
+  `}
 `
 
 const Left = styled.div`
@@ -69,7 +71,7 @@ const PreviousResults = styled.p`
   line-height: 128px;
 `
 
-function Random({ className, current, previous, loading }) {
+function Random({ className, current, previous, loading, ...props }) {
   const { t } = useTranslation()
   if (loading) {
     return (
@@ -79,7 +81,7 @@ function Random({ className, current, previous, loading }) {
     )
   }
   return (
-    <Container className={className}>
+    <Container className={className} {...props}>
       <Left>
         <Result viewBox="0 0 1210 1024" fill={vars.white}>
           <rect x="135" y="315" width="5" height="328" />
@@ -87,7 +89,7 @@ function Random({ className, current, previous, loading }) {
           <text x="200" y="638" className="number">{formatQueueNumber(current?.number)}</text>
         </Result>
       </Left>
-      <Right>
+      { previous && (<Right>
         <PreviousTitle>{t('random.previous')}</PreviousTitle>
         <TitleLine />
         <PreviousResults>
@@ -98,7 +100,7 @@ function Random({ className, current, previous, loading }) {
             </span>
           ))}
         </PreviousResults>
-      </Right>
+      </Right>) }
     </Container>
   )
 }

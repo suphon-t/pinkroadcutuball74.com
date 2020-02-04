@@ -3,7 +3,7 @@ import { Switch, Route, useRouteMatch } from "react-router-dom"
 import { createGlobalStyle } from "styled-components"
 
 import AdminHome from "./pages/AdminHome"
-import RandomScreen from "./pages/RandomScreen"
+import RandomShow from "./pages/RandomShow"
 import RandomBackend from "./pages/RandomBackend"
 
 const AdminGlobalStyle = createGlobalStyle`
@@ -19,7 +19,7 @@ function Admin() {
       <AdminGlobalStyle />
       <Switch>
         <Route path={path} exact component={AdminHome} />
-        <Route path={`${path}/random`} component={RandomScreen} />
+        <Route path={`${path}/random`} component={RandomShow} />
         <Route path={`${path}/control`} component={RandomBackend} />
       </Switch>
     </>
