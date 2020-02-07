@@ -3,6 +3,7 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
 
 import { AuthProvider } from "./auth"
 import { HttpProvider } from "./api"
+import LanguageObserver from "./components/LanguageObserver"
 import Routes from "./routes"
 
 // style
@@ -36,6 +37,7 @@ function App() {
     <Providers>
       <GlobalStyle />
       <ThemeProvider theme={{ breakpoints }}>
+        <LanguageObserver />
         <Content>
           <Routes />
         </Content>

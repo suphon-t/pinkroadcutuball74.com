@@ -32,7 +32,8 @@ function GetTicket({ ticket }) {
       <ContentCard
         style={{ padding: 16 }}
         loading={loading}
-        footer={<LogoutButtonFloating />}>
+        footer={<LogoutButtonFloating />}
+        noLanguage>
         <Ticket data={ticket} background={background} style={{ borderRadius: 10 }} />
       </ContentCard>
     </>

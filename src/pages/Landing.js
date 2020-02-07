@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { between } from "polished"
 import { up } from "styled-breakpoints"
+import { useTranslation } from "react-i18next"
 
 // style
 import vars from "../styles/vars"
@@ -16,6 +17,7 @@ import logo from "../images/logo-landing.png"
 import logo2x from "../images/logo-landing@2x.png"
 import { isEventDay } from "../utils"
 import SafeArea from "../components/SafeArea"
+import LanguageSwitcher from "../components/LanguageSwitcher"
 
 const Center = styled.div`
   width: 100%;
@@ -114,9 +116,24 @@ const Everything = styled(SafeArea)`
   }
 `
 
+const LanguageContainer = styled.div`
+  position: absolute;
+  top: 22px;
+  right: 15px;
+
+  ${up('xl')} {
+    top: 40px;
+    right: 40px;
+  }
+`
+
 function Landing() {
+  const { t } = useTranslation()
   return (
     <Everything all>
+      <LanguageContainer>
+        <LanguageSwitcher />
+      </LanguageContainer>
       <Center>
         <picture>
           <source type="image/svg+xml" srcSet={logoSvg} />
@@ -126,12 +143,14 @@ function Landing() {
       </Center>
       <TitleContainer>
         <Up breakpoint="lg">
-          <Line1>งานฟุตบอลประเพณี จุฬาฯ - ธรรมศาสตร์ ครั้งที่ 74</Line1>
+          <Line1>{t('appname')}</Line1>
           <Line2>BAKA Pink Road</Line2>
         </Up>
         <Down breakpoint="md">
           <Line1>
-            งานฟุตบอลประเพณี <br /> จุฬาฯ - ธรรมศาสตร์ ครั้งที่ 74
+            {t('landing.line1')}
+            <br />
+            {t('landing.line2')}
           </Line1>
           <Line2>
             BAKA
@@ -144,18 +163,18 @@ function Landing() {
         {isEventDay ? (
           <>
             <Link to="/ticket">
-              <LandingButton type="primary">รับบัตรเข้างาน</LandingButton>
+              <LandingButton type="primary">{t('login.edtitle')}</LandingButton>
             </Link>
             <RegisterLink to="/register">
-              <LandingButton type="primary">ลงทะเบียน</LandingButton>
+              <LandingButton type="primary">{t('register.submit')}</LandingButton>
             </RegisterLink>
           </>
         ) : (
           <>
             <Link to="/register">
-              <LandingButton type="primary">ลงทะเบียน</LandingButton>
+              <LandingButton type="primary">{t('register.submit')}</LandingButton>
             </Link>
-            <GetStatusButton to="/user">ตรวจสอบข้อมูล</GetStatusButton>
+            <GetStatusButton to="/user">{t('register.checkinfo')}</GetStatusButton>
           </>
         )}
       </ButtonsContainer>

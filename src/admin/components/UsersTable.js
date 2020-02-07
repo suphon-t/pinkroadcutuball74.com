@@ -15,6 +15,7 @@ import SafeArea from "../../components/SafeArea"
 import EditUserModal from "./EditUserModal"
 import Sticky from "../../components/Sticky"
 import PrefixIcon from "../../components/PrefixIcon"
+import { usePref, ADMIN_PAGE_SIZE } from "../../preferences"
 
 const { Column } = Table
 
@@ -112,7 +113,7 @@ const StickyArea = styled(BlurBehind)`
 
 function UsersTable({ showCheckedIn }) {
   const { t } = useTranslation()
-  const [pageSize, setPageSize] = useState(() => JSON.parse(localStorage.getItem('adminPageSize') || '10'))
+  const [pageSize, setPageSize] = usePref(ADMIN_PAGE_SIZE)
   const [page, setPage] = useState(1)
   const [query, setQuery] = useState('')
   const debounceSetQuery = useMemo(() => debounce(newQuery => {
@@ -141,8 +142,7 @@ function UsersTable({ showCheckedIn }) {
     const newPage = first / newSize + 1
     setPage(Math.floor(newPage))
     setPageSize(newSize)
-    localStorage.setItem('adminPageSize', JSON.stringify(newSize))
-  }, [page, pageSize])
+  }, [page, pageSize, setPageSize])
 
   const users = (data && data.data.users) || []
   const count = (data && data.data.users_count) || 1

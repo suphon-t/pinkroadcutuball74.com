@@ -24,6 +24,16 @@ const validationSchema = yup.object().shape({
     .matches(telPattern, "invalidValue"),
 })
 
+const validationSchemaEn = yup.object().shape({
+  username: yup
+    .string()
+    .required(),
+  password: yup
+    .string()
+    .required()
+    .matches(telPattern, "invalidValue"),
+})
+
 const SubmitButton = styled(OrangeButton)`
   margin: 34px auto 0 auto;
 `
@@ -33,16 +43,17 @@ const LoginForm = styled(Form)`
 `
 
 function Login({ title = 'login.title', subtitle = 'login.subtitle', button = 'login.submit', target }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isEn = i18n.language === 'en'
 
   return (
     <ContentCard>
       <PageHeader title={t(title)} subtitle={t(subtitle)} />
-      <BaseLogin validationSchema={validationSchema} errorMsg={t('login.wrongCredentials')}>
+      <BaseLogin validationSchema={isEn ? validationSchemaEn : validationSchema} errorMsg={t('login.wrongCredentials')}>
         { (loading, error) => (
           <LoginForm layout="vertical" target={target}>
             { error }
-            <Field name="username" title={t("idNumber")} pattern="\d*" disabled={loading} autoFocus />
+            <Field name="username" title={t("idNumber")} pattern={isEn ? undefined : "\\d*"} disabled={loading} autoFocus />
             <Field name="password" title={t("phoneNumber")} type="tel" disabled={loading} />
             <ButtonBar style={{ direction: 'rtl' }}>
               <SubmitButton type="submit" disabled={loading}>{t(button)}</SubmitButton>

@@ -26,7 +26,7 @@ import vars from "../styles/vars"
 import PageHeader from "../components/PageHeader"
 import DialogSelect from "../components/DialogSelect"
 import { useAuthContext } from "../auth"
-import { userSchema } from "../utils/validation"
+import { userSchema, userSchemaEn } from "../utils/validation"
 import { useFacultyOptions, isEventDay, landingRoute } from "../utils"
 import config from "../config"
 
@@ -66,10 +66,11 @@ const ModalFooter = styled.div`
 `
 
 function Register() {
+  const { t, i18n } = useTranslation()
+  const isEn = i18n.language === 'en'
   const { isAuthenticated } = useAuthContext()
-  const methods = useForm({ validationSchema: userSchema })
+  const methods = useForm({ validationSchema: isEn ? userSchemaEn : userSchema })
   const { getValues, handleSubmit } = methods
-  const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false)
   const [isDuplicate, setIsDuplicate] = useState(false)
   const [errorDescription, setErrorDescription] = useState(undefined)
@@ -166,7 +167,7 @@ function Register() {
           <PageHeader title={t(isEventDay ? 'register.edtitle' : 'register.title')} subtitle={t('register.subtitle')} />
           <Form style={{ marginTop: 28 }} layout="vertical" onSubmit={handleSubmit(onSubmit)}>
             <Field name="name" title={t("fullname")} autoComplete="name" autoFocus />
-            <Field name="ID" title={t("idNumber")} pattern="\d*" />
+            <Field name="ID" title={t("idNumber")} pattern={isEn ? undefined : "\\d*"} />
             <Field name="tel" title={t("phoneNumber")} autoComplete="tel" type="tel" />
             <Field name="email" title={t("email")} autoComplete="email" type="email" />
             <Field name="faculty" title={t("faculty")} as={FacultyContainer}>

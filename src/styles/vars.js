@@ -16,6 +16,7 @@ export default {
   grey4: 'rgba(25, 33, 52, 0.4)',
   grey5: 'rgba(25, 33, 52, 0.5)',
   grey6: 'rgba(25, 33, 52, 0.6)',
+  grey75: 'rgba(25, 33, 52, 0.75)',
 
   inputColor: 'rgba(0, 0, 0, 0.65)',
 

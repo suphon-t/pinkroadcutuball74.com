@@ -10,7 +10,7 @@ import logoDesktop2x from "../images/logo-desktop@2x.png"
 import { up } from "styled-breakpoints"
 import vars from "../styles/vars"
 import { between } from "polished"
-import breakpoints from "../styles/breakpoints"
+import breakpoints, { Down, Up } from "../styles/breakpoints"
 import OrangeButton from "./OrangeButton"
 
 import { ReactComponent as BackIcon } from "../images/arrow-back.svg"
@@ -18,6 +18,7 @@ import SafeArea from "./SafeArea"
 import ContentContainer from "./ContentContainer"
 import Footer from "./Footer"
 import { landingRoute } from "../utils"
+import LanguageSwitcher from "./LanguageSwitcher"
 
 const Header = styled.div`
   display: flex;
@@ -49,8 +50,11 @@ const BackButton = styled(OrangeButton)`
 
 const LogoSafeArea = styled(SafeArea)`
   position: absolute;
+  display: flex;
   top: 0;
   right: 0;
+
+  flex-direction: row;
 `
 
 const Logo = styled(Link)`
@@ -82,6 +86,7 @@ const Logo = styled(Link)`
 `
 
 const Card = styled(ContentContainer)`
+  position: relative;
   padding: 20px 36px 28px 36px;
 
   background: ${vars.white};
@@ -100,7 +105,18 @@ const Layout = styled.div`
   `}
 `
 
-const ContentCard = React.forwardRef(({ loading, children, footer, ...rest }, ref) => {
+const LanguageContainerMobile = styled.div`
+  margin-top: 18px;
+  margin-right: 4px;
+`
+
+const LanguageContainerDesktop = styled.div`
+  position: absolute;
+  top: 28px;
+  right: 28px;
+`
+
+const ContentCard = React.forwardRef(({ loading, children, footer, noLanguage, ...rest }, ref) => {
   const { t } = useTranslation()
   const history = useHistory()
   const canGoBack = history.length > 1
@@ -113,6 +129,11 @@ const ContentCard = React.forwardRef(({ loading, children, footer, ...rest }, re
           </BackButton>
         ) : <Space /> }
         <LogoSafeArea top right>
+          <Down breakpoint="md">
+            <LanguageContainerMobile>
+              <LanguageSwitcher />
+            </LanguageContainerMobile>
+          </Down>
           <Logo to={landingRoute}>
             <picture>
               <source type="image/svg+xml" srcSet={logoSvg} />
@@ -122,7 +143,14 @@ const ContentCard = React.forwardRef(({ loading, children, footer, ...rest }, re
           </Logo>
         </LogoSafeArea>
       </Header>
-      <Card ref={ref} {...rest}>{children}</Card>
+      <Card ref={ref} {...rest}>
+        { !noLanguage && <Up breakpoint="xl">
+          <LanguageContainerDesktop>
+            <LanguageSwitcher />
+          </LanguageContainerDesktop>
+        </Up> }
+        {children}
+      </Card>
       {footer && <div style={{ marginTop: 30 }}>{footer}</div>}
       <Footer />
     </Layout>

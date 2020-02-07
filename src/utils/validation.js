@@ -28,4 +28,27 @@ export const userSchema = yup.object().shape({
     .oneOf(facultyCodes, "invalidValue")
 })
 
+export const userSchemaEn = yup.object().shape({
+  name: yup
+    .string()
+    .required()
+    .max(255, "invalidValue"),
+  ID: yup
+    .string()
+    .required(),
+  tel: yup
+    .string()
+    .required()
+    .matches(telPattern, "invalidValue"),
+  email: yup
+    .string()
+    .required()
+    .max(255, "invalidValue")
+    .matches(emailPattern, "invalidValue"),
+  faculty: yup
+    .string()
+    .required()
+    .oneOf(facultyCodes, "invalidValue")
+})
+
 export default yup

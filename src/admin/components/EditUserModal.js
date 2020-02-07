@@ -10,7 +10,7 @@ import { useForm, FormContext } from "react-hook-form"
 import Field from "../../components/Field"
 import DialogSelect from "../../components/DialogSelect"
 import { useFacultyOptions, formatQueueNumber, formatDt } from "../../utils"
-import { userSchema } from "../../utils/validation"
+import { userSchemaEn } from "../../utils/validation"
 import Title from "../../components/Title"
 import OrangeButton from "../../components/OrangeButton"
 import ButtonBar from "../../components/ButtonBar"
@@ -23,7 +23,7 @@ function EditUserModal({ data, onDone, reload, loading: tableLoading, ...props }
   const { t } = useTranslation()
   const { http } = useHttpContext()
   const facultyOptions = useFacultyOptions()
-  const methods = useForm({ validationSchema: userSchema, mode: 'onChange' })
+  const methods = useForm({ validationSchema: userSchemaEn, mode: 'onChange' })
   const { setValue, triggerValidation, handleSubmit } = methods
 
   const { loading: saving, setPromise } = usePromise()
