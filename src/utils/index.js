@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next"
 import facultyCodes from "../i18n/faculty-codes"
 import { useMemo, useState, useEffect } from "react"
-import { parseISO, format } from "date-fns"
+import moment from "moment"
 
-export const isEventDay = new Date() > parseISO("2020-02-08T04:00:00+07:00")
+export const isEventDay = new Date() > moment("2020-02-08T04:00:00+07:00")
 
 export const idNumberPattern = /^(\d{1})(\d{4})(\d{5})(\d{2})(\d{1})$/
 export const telPattern = /^(\d{2,4})(\d{3})(\d{4})$/
@@ -53,8 +53,8 @@ export function parseToken(token) {
 }
 
 function getCurrentTime(disp) {
-  const date = new Date()
-  return [format(date, disp), date.getTime()]
+  const date = moment()
+  return [date.format(disp), date.valueOf()]
 }
 
 export function useCurrentTime(opts) {
@@ -73,7 +73,7 @@ export function useCurrentTime(opts) {
 }
 
 export function useTimeFormat(time, disp = 'HH:mm:ss') {
-  return useMemo(() => time && format(new Date(time), disp), [time, disp])
+  return useMemo(() => time && moment(time).format(disp), [time, disp])
 }
 
 // https://www.kirupa.com/html5/detecting_retina_high_dpi.htm
@@ -125,7 +125,7 @@ export function formatQueueNumber(number) {
 
 export function formatDt(dt) {
   if (!dt) return dt
-  return format(parseISO(dt), "HH:mm:ss dd/MM/yyyy")
+  return moment(dt).format('HH:mm:ss DD/MM/YYYY')
 }
 
 export const isStandalone = window.matchMedia('(display-mode: standalone)').matches
