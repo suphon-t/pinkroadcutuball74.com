@@ -132,7 +132,9 @@ function Landing() {
   return (
     <Everything all>
       <LanguageContainer>
-        <LanguageSwitcher />
+        <SafeArea top right>
+          <LanguageSwitcher />
+        </SafeArea>
       </LanguageContainer>
       <Center>
         <picture>

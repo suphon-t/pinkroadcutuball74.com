@@ -129,7 +129,7 @@ const ContentCard = React.forwardRef(({ loading, children, footer, noLanguage, .
           </BackButton>
         ) : <Space /> }
         <LogoSafeArea top right>
-          <Down breakpoint="md">
+          <Down breakpoint="lg">
             <LanguageContainerMobile>
               <LanguageSwitcher />
             </LanguageContainerMobile>
